@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property int $ID
+ * @property string $EmployeeID
+ * @property int $TeamID
+ * @property string $EnqueueTime
+ * @property int $ActiveTickets
+ * @property string $OnlineStatus
+ * @property Team $team
+ * @property Employee $employee
+ */
+class Queue extends Model
+{
+    /**
+     * The table associated with the model.
+     * 
+     * @var string
+     */
+    protected $table = 'Queue';
+
+    /**
+     * The primary key for the model.
+     * 
+     * @var string
+     */
+    protected $primaryKey = 'ID';
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['EmployeeID', 'TeamID', 'EnqueueTime', 'ActiveTickets', 'OnlineStatus'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team', 'TeamID', 'TeamID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\Employee', 'EmployeeID', 'EmployeeID');
+    }
+}
