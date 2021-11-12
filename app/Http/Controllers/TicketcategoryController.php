@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketCategoryResource;
 use App\Models\Ticketcategory;
 use App\Models\Team;
 use App\Models\Ticket;
@@ -132,5 +133,13 @@ class TicketcategoryController extends Controller
     public function destroy(Ticketcategory $ticketcategory)
     {
         //
+    }
+
+    public function getall(Ticketcategory $ticketcategory){
+
+        return TicketCategoryResource::collection(TicketCategory::all());
+    }
+    public function getone(Ticketcategory $ticketcategory){
+        return new TicketCategoryResource ($ticketcategory);
     }
 }

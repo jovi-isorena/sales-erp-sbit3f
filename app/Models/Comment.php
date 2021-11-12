@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $CommentID
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    use HasFactory;
+    public $timestamps = false;
+    
     /**
      * The table associated with the model.
      * 
@@ -40,7 +44,7 @@ class Comment extends Model
      */
     public function ticket()
     {
-        return $this->belongsTo('App\Ticket', 'TicketNo', 'TicketNo');
+        return $this->belongsTo('App\Models\Ticket', 'TicketNo', 'TicketNo');
     }
 
     /**
@@ -48,6 +52,6 @@ class Comment extends Model
      */
     public function employee()
     {
-        return $this->belongsTo('App\Employee', 'ReplyingRepId', 'EmployeeID');
+        return $this->belongsTo('App\Models\Employee', 'ReplyingRepId', 'EmployeeID');
     }
 }

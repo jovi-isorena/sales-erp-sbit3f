@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 /**
  * @property string $OrderID
@@ -19,6 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
+    use HasFactory;
+
+    public $timestamps = false;
     /**
      * The table associated with the model.
      * 

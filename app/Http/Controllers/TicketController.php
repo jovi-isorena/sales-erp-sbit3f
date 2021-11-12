@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TicketResource;
+use App\Models\Customer;
 use App\Models\Ticket;
+use App\Models\Employee;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
 
@@ -108,5 +111,35 @@ class TicketController extends Controller
         $newid = '00000000000' . $newid;
         $newid = substr($newid, strlen($newid)-10);
         return $newid;
+    }
+
+    public function tickets(){
+        return TicketResource::collection(Ticket::all());
+    }
+
+    public function ticketsby(Customer $customer){
+        return TicketResource::collection(Ticket::latest('CreatedDatetime')->where('CreatedBy', $customer->CustomerID)->get());
+    }
+
+    public function ticketsfor(Employee $employee){
+        return TicketResource::collection(
+            Ticket::oldest('AssignedDatetime')
+                ->where('AssignedEmployee', $employee->EmployeeID)
+                ->where('TicketStatus', 'Open')
+                ->with('customer')
+                ->with('comments')
+                ->get()
+        );
+    }
+
+    public function countticketsfor(Employee $employee){
+        return Ticket::oldest('AssignedDatetime')
+            ->where('AssignedEmployee', $employee->EmployeeID)
+            ->where('TicketStatus', 'Open')
+            ->count();
+    }
+
+    public function ticket(Ticket $ticket){
+        return new TicketResource ($ticket); 
     }
 }
