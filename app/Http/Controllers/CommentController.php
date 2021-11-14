@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Ticket;
+use App\Models\Queue;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -37,7 +38,52 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $createdRow = Comment::create([
+            'TicketNo' => $request->input('TicketNo'),
+            'CreatedDatetime' => now('Asia/Manila'),
+            'FromRep' => $request->input('FromRep'),
+            'ReplyingRepId' => $request->input('ReplyingRepId'),
+            'Content' => $request->input('Content')
+        ]);
+
+        $ticket = Ticket::where('TicketNo', $request->input('TicketNo'))
+            ->first();
+        $ticket->update([
+            'EnqueuedDatetime' => null,
+            'AssignedDatetime' => null,
+            'Unread' => 1
+        ]);
+
+        $queue = Queue::where('EmployeeID', $request->input('ReplyingRepId'))
+            ->first();
+        $queue->update([
+            'ActiveTickets' => $queue->employee->tickets->where('EnqueuedDatetime', '<>', null)->count() - 1
+        ]);
+        return $createdRow;
+        
+    }
+
+    public function storeCustomerComment(Request $request){
+        $request->validate([
+            'Content' => 'required'
+        ]);
+        Comment::create([
+            'TicketNo' => $request->input('TicketNo'),
+            'CreatedDatetime' => now('Asia/Manila'),
+            'FromRep' => 0,
+            'ReplyingRepId' => null,
+            'Content' => $request->input('Content')
+        ]);
+
+        $ticket = Ticket::where('TicketNo', $request->input('TicketNo'))
+            ->first();
+        $ticket->update([
+            'EnqueuedDatetime' => now('Asia/Manila'),
+            'AssignedEmployee' => null,
+            'Unread' => 0
+        ]);
+
+        return back();
     }
 
     public function countcommentsforticket(Ticket $ticket){

@@ -6,6 +6,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Customer;
 use App\Models\Ticket;
 use App\Models\Employee;
+use App\Models\Comment;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,8 @@ class TicketController extends Controller
             'AssignedTeam' => $category->AssignedTeam,
             'Content' => $request->input('concern'),
             'CreatedBy' => $request->session()->get('CustomerID'),
-            'TicketStatus' => 'Open'
+            'TicketStatus' => 'Open',
+            'Unread' => 0
         ]);
         
         return redirect( route('myTicket'));
@@ -67,7 +69,22 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        $ticket->update([
+            'Unread' => 0
+        ]);
+        // $answered = Comment::where('TicketNo', $ticket->TicketNo)
+        //     ->latest('CreatedDatetime')
+        //     // ->firstOrNull()
+        //     // ->FromRep;
+        //     ;
+        // dd($ticket->comments[count($ticket->comments)-1]);
+        if(count($ticket->comments) > 0){
+            $answered = $ticket->comments[count($ticket->comments)-1]->FromRep; 
+        } else $answered = 0;
+        return view('ticket.show', [
+            'ticket' => $ticket,
+            'answered' => $answered
+        ]);
     }
 
     /**
@@ -126,6 +143,7 @@ class TicketController extends Controller
             Ticket::oldest('AssignedDatetime')
                 ->where('AssignedEmployee', $employee->EmployeeID)
                 ->where('TicketStatus', 'Open')
+                ->where('EnqueuedDatetime', '<>', null)
                 ->with('customer')
                 ->with('comments')
                 ->get()
@@ -135,6 +153,7 @@ class TicketController extends Controller
     public function countticketsfor(Employee $employee){
         return Ticket::oldest('AssignedDatetime')
             ->where('AssignedEmployee', $employee->EmployeeID)
+            ->where('EnqueuedDatetime', '<>', null)
             ->where('TicketStatus', 'Open')
             ->count();
     }
@@ -142,4 +161,24 @@ class TicketController extends Controller
     public function ticket(Ticket $ticket){
         return new TicketResource ($ticket); 
     }
+
+    public function closeTicket(Request $request, Ticket $ticket){
+        $request->validate([
+            'csat1' => 'required',
+            'csat2' => 'required',
+            'nps' => 'required'
+        ]);
+        $ticket->update([
+            'CSAT1' => $request->input('csat1'),
+            'CSAT2' => $request->input('csat2'),
+            'NPS' => $request->input('nps'),
+            'Feedback' => $request->input('feedback'),
+            'ClosedDatetime' => now('Asia/Manila'),
+            'TicketStatus' => 'Closed',
+            'RatingDateTime' => now('Asia/Manila')
+        ]);
+
+        return redirect( route('myTicket'));
+    }
+    
 }

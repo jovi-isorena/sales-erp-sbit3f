@@ -35,4 +35,5 @@ Route::get('/ticket/{ticket}', [TicketController::class, 'ticket']);
 
 Route::get('/commentsforticket/{ticket}', [CommentController::class, 'getcommentsforticket']);
 Route::get('/countcommentsforticket/{ticket}', [CommentController::class, 'countcommentsforticket']);
+Route::post('/comment/store', [CommentController::class, 'store']);
 

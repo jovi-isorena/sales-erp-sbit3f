@@ -1,6 +1,6 @@
 document.onreadystatechange = function(){
     if(document.readyState == 'complete'){
-    
+        setTimeout(5000);
         setInterval(checkDisplayedTickets, 2000);
     }
 }
@@ -81,11 +81,11 @@ function createTicketTabContent(ticket){
     let ret = `
         <div class="tab-pane fade" id="content${ticket['id']}" role="tabpanel" aria-labelledby="${ticket['id']}-tab">
             <div class="card">
-                <div class="card-header">
-                    <span class="card-title">
+                <div class="card-header d-md-flex justify-content-between align-items-center">
+                    <span class="card-title align-items-center">
                         <strong>Ticket# ${ticket['id']}</strong>
                     </span>
-                    <button type="button" class="btn-close" aria-label="Close"></button>
+                    <button type="button" id="close-${ticket['id']}" class="d-none btn-danger rounded align-items-center" aria-label="Close" onclick="closetab('${ticket['id']}')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="card-body">
                     <p>Customer Name: ${ticket['attributes'].Customer['FirstName']} ${ticket['attributes'].Customer['MiddleName']} ${ticket['attributes'].Customer['LastName']}</p>
@@ -104,11 +104,16 @@ function createTicketTabContent(ticket){
                     
                     <hr>
                     
-                    <div class="mb-3">
-                        <textarea row=4 placeholder="Enter your response here" class="form-control" name="response-${ticket['id']}" id="response-${ticket['id']}"></textarea>
-                    </div>
-                    <div class="d-md-flex justify-content-end">
-                        <button class="btn btn-primary" onclick=submitResponse('${ticket['id']}')>Submit</input>
+                    <div class="position-relative">
+                        <div class="w-100 position-absolute top-0  d-none justify-content-center align-items-center alert alert-success opacity-75" style="height:100%;z-index:10">
+                            <span class="">Response submitted. You may close this window now.</span>
+                        </div>    
+                        <div class="mb-3">
+                            <textarea placeholder="Enter your response here..." class="form-control" name="response-${ticket['id']}" style="height:100px" id="response-${ticket['id']}" onkeyup="revalidateTextArea(this)"></textarea>
+                        </div>
+                        <div class="d-md-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-primary" onclick="submitResponse('${ticket['id']}', this)">Submit</button>
+                        </div>
                     </div>
                     
 

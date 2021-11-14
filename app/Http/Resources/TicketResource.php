@@ -34,7 +34,9 @@ class TicketResource extends JsonResource
                 'CSAT1' => $this->CSAT1, 
                 'CSAT2' => $this->CSAT2, 
                 'NPS' => $this->NPS, 
+                'Feedback' => $this->Feedback,
                 'RatingDatetime' => $this->RatingDatetime,
+                'Unread' => $this->Unread,
                 'Customer' => [
                     'FirstName' => $this->customer->FirstName, 
                     'MiddleName' => $this->customer->MiddleName, 

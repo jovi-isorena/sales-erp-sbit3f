@@ -140,6 +140,19 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'csat1' => [
+            'required' => 'Do not forget this one.'
+        ],
+        'csat2' => [
+            'required' => 'Do not forget this one.'
+        ],
+        'nps' => [
+            'required' => 'Do not forget this one.'
+        ],
+        'Content' => [
+            'required' => 'Looks like you forgot to tell us your concern.'
+        ],
+        
     ],
 
     /*

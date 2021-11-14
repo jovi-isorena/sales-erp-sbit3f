@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @property string $TicketNo
@@ -64,8 +65,11 @@ class Ticket extends Model
     /**
      * @var array
      */
-    protected $fillable = ['TicketNo', 'CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'RatingDatetime'];
+    protected $fillable = ['TicketNo', 'CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
 
+    // public function getCreatedDatetimeAttribute($value){
+    //     return date($value);
+    // }
     /**
      * Indicates if the model should be timestamped.
      * 
@@ -119,5 +123,13 @@ class Ticket extends Model
     public function representativehandledtickets()
     {
         return $this->hasMany('App\Models\Representativehandledticket', 'TicketNo', 'TicketNo');
+    }
+    public function messages()
+    {
+        return [
+            'csat1.required' => 'Do not forget this one!',
+            'csat2.required' => 'Do not forget this one!',
+            'nps.required' => 'Do not forget this one!',
+        ];
     }
 }

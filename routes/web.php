@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketcategoryController;
 use App\Http\Controllers\TicketingslaController;
@@ -66,6 +67,8 @@ Route::get('/customer/newticket',[CustomerController::class, 'newticket'])
 //TICKET
 Route::post('/ticket/store', [TicketController::class, 'store'])
     ->name('ticketStore');
+Route::get('/ticket/show/{ticket}', [TicketController::class, 'show']);
+Route::put('/ticket/{ticket}', [TicketController::class, 'closeTicket']);
 
 //SESSION
 Route::get('/login', [SessionController::class, 'login'])
@@ -89,3 +92,6 @@ Route::get('queue/reset', [QueueController::class, 'reset'])
     ->name('resetQueue');
 Route::get('queue/dequeue', [QueueController::class, 'dequeue'])
     ->name('dequeue');
+
+//COMMENT
+Route::post('/comment/customercomment', [CommentController::class, 'storeCustomerComment']);

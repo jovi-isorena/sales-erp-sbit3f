@@ -19,10 +19,12 @@ class CustomerController extends Controller
         return view('customer.index');
     }
 
-    public function myticket()
+    public function myticket(Request $request)
     {
         $tickets = Ticket::latest('CreatedDatetime')
             ->where('CreatedBy', session('CustomerID'))
+            ->where('TicketStatus', 'like', $request->get('status') ?? '%%')
+            ->with('ticketcategory')
             ->get();
         return view('customer.myticket', [
             'tickets' => $tickets

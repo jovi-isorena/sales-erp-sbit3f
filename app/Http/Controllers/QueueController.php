@@ -34,7 +34,8 @@ class QueueController extends Controller
             'reps' => $reps->load('queue')
                 ->load('tickets')
                 ->load('team'),
-            'tickets' => Ticket::where('AssignedEmployee', null)
+            'tickets' => Ticket::where('EnqueuedDatetime', '<>', null)
+                ->where('AssignedDatetime', null)
                 ->where('TicketStatus', 'Open')
                 ->get(),
                 // ->count()
@@ -79,7 +80,10 @@ class QueueController extends Controller
                 ['EmployeeID' => $employee->EmployeeID],
                 ['TeamID' => $employee->TeamID,
                 'EnqueueTime' => now('Asia/Manila'),
-                'ActiveTickets' => $employee->tickets->count(),
+                // 'ActiveTickets' => $employee->tickets->count(),
+                'ActiveTickets' => Ticket::where('AssignedEmployee', $employee->EmployeeID)
+                    ->where('AssignedDatetime', '<>', null )
+                    ->count(),
                 'OnlineStatus' => $request->input('status')
                 ]
             );
@@ -99,13 +103,15 @@ class QueueController extends Controller
         $ticketOnQueue = Ticket::where('TicketStatus','Open')
             ->where('AssignedEmployee', null)
             ->where('AssignedTeam', $request->input('team'))
+            ->where('EnqueuedDatetime', '<>', null)
             ->count();
         if($employeeOnQueue > 0 && $ticketOnQueue > 0)
         {
-            $currentTicket = Ticket::oldest('CreatedDateTime')
+            $currentTicket = Ticket::oldest('EnqueuedDatetime')
                 ->where('TicketStatus', 'Open')
                 ->where('AssignedEmployee', null)
                 ->where('AssignedTeam', $request->input('team'))
+                ->where('EnqueuedDatetime', '<>', null)
                 ->first();
             $currentRep = Queue::where('ActiveTickets', '<', $ticketConcurrency)
                 ->where('OnlineStatus', 'active')
@@ -137,6 +143,7 @@ class QueueController extends Controller
             ->update([
                 'AssignedEmployee' => null,
                 'AssignedDateTime' => null
+                
             ]);
         Queue::where('ActiveTickets', '>', 0)
             ->update([

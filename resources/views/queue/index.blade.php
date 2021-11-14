@@ -51,7 +51,7 @@
                         Team: <br>{{ $rep->team->TeamName }}
                     </div>
                     <div class="col">
-                        Active Tickets: <br>{{ $rep->tickets->count() }}
+                        Active Tickets: <br>{{ $rep->tickets->where('EnqueuedDatetime', '<>', null)->count() }}
                     </div>
                     <div class="col">
                         <select name="status" id="status" class="form-select custom-select ">
