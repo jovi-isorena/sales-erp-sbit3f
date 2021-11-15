@@ -13,7 +13,6 @@ function checkDisplayedTickets(){
             url: '/api/countticketsfor/' + userid,
             method: "GET",
             success: function (data) {
-                // data = JSON.parse(data);
                 let loadedtickets = getCurrentLoadedTickets();
                 if(ticketTabs.children().length < data){
                     loadTickets(userid, loadedtickets);
@@ -78,6 +77,7 @@ function createTicketTabPill(ticket){
 }
 
 function createTicketTabContent(ticket){
+    let categorySelectList = createCategorySelectList(ticket['id'], ticket['attributes'].AssignedTeam);
     let ret = `
         <div class="tab-pane fade" id="content${ticket['id']}" role="tabpanel" aria-labelledby="${ticket['id']}-tab">
             <div class="card">
@@ -85,7 +85,34 @@ function createTicketTabContent(ticket){
                     <span class="card-title align-items-center">
                         <strong>Ticket# ${ticket['id']}</strong>
                     </span>
-                    <button type="button" id="close-${ticket['id']}" class="d-none btn-danger rounded align-items-center" aria-label="Close" onclick="closetab('${ticket['id']}')"><i class="fas fa-times"></i></button>
+                    <div id="transferDiv-${ticket['id']}">
+                        <button type="button" class="btn btn-primary rounded-pill" id="transfer-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#transferModal-${ticket['id']}">Transfer</button>
+                        <div class="modal fade" id="transferModal-${ticket['id']}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Transferring Ticket# ${ticket['id']}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Choose new category:
+                                        <select onchange="categorychanged('transferFooter-${ticket['id']}')" id="newcategory-${ticket['id']}" class="custom-select">
+                                            <option hidden selected>Select new Category</option>
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer" style="display:none" id="transferFooter-${ticket['id']}">
+                                        <button type="button" class="btn btn-primary" onclick="transfer('${ticket['id']}')" data-bs-dismiss="modal">Transfer</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary rounded-pill" id="escalate-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#escalateModal-${ticket['id']}">Escalate</button>
+                    </div>
+                    <div id="closeDiv-${ticket['id']}" style="display:none">
+                        <button type="button"  class=" btn-danger rounded align-items-center" aria-label="Close" onclick="closetab('${ticket['id']}')"><i class="fas fa-times"></i></button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <p>Customer Name: ${ticket['attributes'].Customer['FirstName']} ${ticket['attributes'].Customer['MiddleName']} ${ticket['attributes'].Customer['LastName']}</p>
@@ -158,4 +185,26 @@ function createTicketTabContent(ticket){
         </div>
     `;
     return ret;
+}
+
+
+function createCategorySelectList(ticketno, currentTeam){
+    let newcategories = [];
+    $.ajax({
+        url: '/api/categories' ,
+        method: "GET",
+        success: function (data) {
+            data['data'].map( category => {
+                if(category['attributes'].AssignedTeam != currentTeam){
+                    $('#newcategory-' + ticketno).append(`<option value=${category['id']}>[${category['attributes'].AssignedTeamName}] ${category['attributes'].Name}</option>`);
+                    console.log(category);
+                }
+            });
+        },
+        error: function (err) {
+            console.log(err.responseText)
+        }
+    });
+
+
 }

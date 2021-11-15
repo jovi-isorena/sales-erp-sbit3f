@@ -99,6 +99,7 @@
     <script src="{{ asset('js/loadcomment.js') }}"></script>
     <script src="{{ asset('js/submitresponse.js') }}"></script>
     <script src="{{ asset('js/closetickettab.js') }}"></script>
+    <script src="{{ asset('js/transferticket.js') }}"></script>
     
 
 

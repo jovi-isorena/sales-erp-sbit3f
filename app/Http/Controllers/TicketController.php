@@ -6,6 +6,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Customer;
 use App\Models\Ticket;
 use App\Models\Employee;
+use App\Models\Queue;
 use App\Models\Comment;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
@@ -179,6 +180,27 @@ class TicketController extends Controller
         ]);
 
         return redirect( route('myTicket'));
+    }
+
+    public function transfer(Request $request){
+        $ticket = Ticket::where('TicketNo', $request->input('TicketNo'))->first();
+        $empid = $ticket->AssignedEmployee;
+        $category = TicketCategory::where('CategoryID', $request->input('CategoryID'))->first();
+        $newticket = $ticket->update([
+            'CategoryID' => $request->input('CategoryID'),
+            'AssignedTeam' => $category->AssignedTeam,
+            'AssignedEmployee' => null,
+            'AssignedDatetime' => null,
+            'TransferringTeam' => $ticket->AssignedTeam,
+            'PriorityLevel' => $category->DefaultPriority
+
+        ]); 
+        $queue = Queue::where('EmployeeID', $empid)->first();
+        $newcount = $queue->ActiveTickets - 1;
+        $queue->update([
+            'ActiveTickets' => $newcount
+        ]);
+        return $newticket;
     }
     
 }

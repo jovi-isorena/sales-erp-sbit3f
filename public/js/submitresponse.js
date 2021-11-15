@@ -23,17 +23,21 @@ function submitResponse(ticketno, btnsubmit){
             success: function (data) {
                 // data = JSON.parse(data);
                 console.log(data);
-                if(data.length > 0){
-                    console.log('data is more than 0');
-                    response.prop("disabled", "disabled");
-                }
+                // if(data.length > 0){
+                //     console.log('data is more than 0');
+                //     response.prop("disabled", "disabled");
+                // }
                 if(data != null){
                     console.log('data is not null');
                     response.prop("disabled", "disabled");
                     $(btnsubmit).prop("disabled", "disabled");
                     $(btnsubmit).parent().parent().children(0).removeClass('d-none');
                     $(btnsubmit).parent().parent().children(0).addClass('d-md-flex');
-                    $(`#close-${ticketno}`).removeClass('d-none');
+                    // $(`#close-${ticketno}`).removeClass('d-none');
+                    console.log($('#transferDiv-' + ticketno));
+                    console.log($('#closeDiv-' + ticketno));
+                    $('#transferDiv-' + ticketno).remove();
+                    $('#closeDiv-' + ticketno).show();
                 }
                
             },

@@ -142,4 +142,5 @@ class TicketcategoryController extends Controller
     public function getone(Ticketcategory $ticketcategory){
         return new TicketCategoryResource ($ticketcategory);
     }
+
 }

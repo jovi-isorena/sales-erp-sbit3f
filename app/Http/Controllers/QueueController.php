@@ -141,6 +141,15 @@ class QueueController extends Controller
         // $queues = Queue::all();
         Ticket::where('TicketStatus', 'Open')
             ->update([
+                'ClosedDatetime'=> null, 
+                'TicketStatus'=>'Open',
+                'TransferringTeam' => null,
+                'CSAT1'=> null,
+                'CSAT2'=> null,
+                'NPS'=> null,
+                'Feedback'=> null,
+                'RatingDatetime'=> null,
+                'Unread'=> 0, 
                 'AssignedEmployee' => null,
                 'AssignedDateTime' => null
                 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Team;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TicketCategoryResource extends JsonResource
@@ -20,6 +21,7 @@ class TicketCategoryResource extends JsonResource
             'attributes' => [
                 'Name' => $this->Name, 
                 'AssignedTeam' => $this->AssignedTeam, 
+                'AssignedTeamName' => Team::find($this->AssignedTeam)->TeamName,
                 'DefaultPriority' => $this->DefaultPriority, 
                 'isActive' => $this->isActive
             ]
