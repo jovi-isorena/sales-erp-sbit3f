@@ -4,6 +4,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TicketcategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\QueueController;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/orders/{customer}', [OrderController::class, 'ordersby']);
 
 Route::get('/tickets', [TicketController::class, 'tickets']);
+Route::get('ticketsqueue', [TicketController::class, 'ticketsOnQueue']);
 Route::get('/tickets/{customer}', [TicketController::class, 'ticketsby']);
 Route::get('/ticketsfor/{employee}', [TicketController::class, 'ticketsfor']);
 Route::get('/countticketsfor/{employee}', [TicketController::class, 'countticketsfor']);
@@ -38,5 +40,9 @@ Route::post('/ticket/transfer', [TicketController::class, 'transfer']);
 Route::get('/commentsforticket/{ticket}', [CommentController::class, 'getcommentsforticket']);
 Route::get('/countcommentsforticket/{ticket}', [CommentController::class, 'countcommentsforticket']);
 Route::post('/comment/store', [CommentController::class, 'store']);
+
+Route::post('/assignTicket', [QueueController::class, 'assign']);
+Route::get('/queue', [QueueController::class, 'show']);
+
 
 

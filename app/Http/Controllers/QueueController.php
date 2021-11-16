@@ -7,6 +7,7 @@ use App\Models\Queue;
 use App\Models\Team;
 use App\Models\Ticket;
 use App\Models\Ticketingsla;
+use App\Http\Resources\QueueResource;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class QueueController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['assign','show']);
     }
         
     public function index()
@@ -128,8 +129,8 @@ class QueueController extends Controller
                 'EnqueueTime' => now('Asia/Manila')
             ]);
         }
-
-        return redirect(route('queue'));
+        return 1;
+        // return redirect(route('queue'));
 
 
     }
@@ -174,9 +175,11 @@ class QueueController extends Controller
      * @param  \App\Models\Queue  $queue
      * @return \Illuminate\Http\Response
      */
-    public function show(Queue $queue)
+
+   
+    public function show()
     {
-        //
+        return QueueResource::collection(Queue::all());
     }
 
     /**

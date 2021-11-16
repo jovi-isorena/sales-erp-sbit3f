@@ -135,6 +135,13 @@ class TicketController extends Controller
         return TicketResource::collection(Ticket::all());
     }
 
+    public function ticketsOnQueue(){
+        return TicketResource::collection(Ticket::where('EnqueuedDatetime', '<>', null)
+            ->where('AssignedDatetime', null)
+            ->where('TicketStatus', 'Open')
+            ->get());
+    }
+
     public function ticketsby(Customer $customer){
         return TicketResource::collection(Ticket::latest('CreatedDatetime')->where('CreatedBy', $customer->CustomerID)->get());
     }
