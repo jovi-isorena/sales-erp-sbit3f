@@ -11,7 +11,7 @@
                 <h3 class="mr-3">{{ $team->TeamName }} Queue</h3>
                 <h5>Tickets on Queue: <span class="ticketOnQueue">{{ $tickets->where('AssignedTeam', $team->TeamID)->count() }}<span></h5>
                 <div class="form-check form-switch pl-5">
-                    <input class="form-check-input switch" type="checkbox" role="switch" id="switch-{{ $team->TeamID }}" name="switch-{{ $team->TeamID }}" value="{{ $team->TeamID }}" data-bs-toggle="#btn-{{ $team->TeamID }}" >
+                    <input class="form-check-input switch" type="checkbox" role="switch" id="switch-{{ $team->TeamID }}" name="switch-{{ $team->TeamID }}" value="{{ $team->TeamID }}" data-bs-toggle="#btn-{{ $team->TeamID }}" onchange="checkQueue()">
                     <label class="form-check-label" for="switch-{{ $team->TeamID }}">Automate</label>
                 </div>
                 <form action="{{ route('assign') }}" method="post">

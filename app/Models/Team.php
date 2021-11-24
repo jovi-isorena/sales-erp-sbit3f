@@ -41,7 +41,7 @@ class Team extends Model
      */
     public function employee()
     {
-        return $this->belongsTo('App\Employee', 'TeamLeader', 'EmployeeID');
+        return $this->belongsTo('App\Models\Employee', 'TeamLeader', 'EmployeeID');
     }
 
     /**
@@ -49,7 +49,7 @@ class Team extends Model
      */
     public function department()
     {
-        return $this->belongsTo('App\Department', 'DepartmentID', 'DepartmentID');
+        return $this->belongsTo('App\Models\Department', 'DepartmentID', 'DepartmentID');
     }
 
     /**
@@ -57,7 +57,7 @@ class Team extends Model
      */
     public function employees()
     {
-        return $this->hasMany('App\Employee', 'TeamID', 'TeamID');
+        return $this->hasMany('App\Models\Employee', 'TeamID', 'TeamID');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Ticket;
 use App\Models\Queue;
+use App\Models\Representativehandledticket;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -48,6 +49,8 @@ class CommentController extends Controller
 
         $ticket = Ticket::where('TicketNo', $request->input('TicketNo'))
             ->first();
+        $assigneddatetime = $ticket->AssignedDatetime;
+        // dd($ticket->AssignedDatetime);
         $ticket->update([
             'EnqueuedDatetime' => null,
             'AssignedDatetime' => null,
@@ -58,6 +61,16 @@ class CommentController extends Controller
             ->first();
         $queue->update([
             'ActiveTickets' => $queue->employee->tickets->where('EnqueuedDatetime', '<>', null)->count() - 1
+        ]);
+        $assigned = strtotime($assigneddatetime);
+        $done = strtotime(now('Asia/Manila'));
+        $handled = $done - $assigned;
+        Representativehandledticket::create([
+            'TicketNo' => $request->input('TicketNo'), 
+            'AssignedDatetime' => $assigneddatetime, 
+            'EmployeeID' => $request->input('ReplyingRepId'), 
+            'ActionTaken' => 'Responded', 
+            'HandlingTime' => $handled
         ]);
         return $createdRow;
         

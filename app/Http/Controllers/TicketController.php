@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\Employee;
 use App\Models\Queue;
 use App\Models\Comment;
+use App\Models\Representativehandledticket;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
 
@@ -191,6 +192,13 @@ class TicketController extends Controller
 
     public function transfer(Request $request){
         $ticket = Ticket::where('TicketNo', $request->input('TicketNo'))->first();
+        //info for handling
+        $assigneddatetime = $ticket->AssignedDatetime;
+        $assignedemployee = $ticket->AssignedEmployee;
+        $assigned = strtotime($assigneddatetime);
+        $done = strtotime(now('Asia/Manila'));
+        $handled = $done - $assigned;
+        //end info
         $empid = $ticket->AssignedEmployee;
         $category = TicketCategory::where('CategoryID', $request->input('CategoryID'))->first();
         $newticket = $ticket->update([
@@ -207,7 +215,41 @@ class TicketController extends Controller
         $queue->update([
             'ActiveTickets' => $newcount
         ]);
+        Representativehandledticket::create([
+            'TicketNo' => $request->input('TicketNo'), 
+            'AssignedDatetime' => $assigneddatetime, 
+            'EmployeeID' => $assignedemployee, 
+            'ActionTaken' => 'Transferred', 
+            'HandlingTime' => $handled
+        ]);
         return $newticket;
+    }
+
+    public function escalate(Request $request){
+        $ticket = Ticket::find($request->TicketNo);
+        //info for handling
+        $assigneddatetime = $ticket->AssignedDatetime;
+        $assignedemployee = $ticket->AssignedEmployee;
+        $assigned = strtotime($assigneddatetime);
+        $done = strtotime(now('Asia/Manila'));
+        $handled = $done - $assigned;
+        //end info
+        $update = $ticket->update([
+            'AssignedEmployee' => $request->AssignedEmployee,
+            'AssignedDatetime' => now('Asia/Manila')
+        ]);
+        $queue = Queue::where('EmployeeID', $request->EmployeeID)->first();
+        $queue->update([
+            'ActiveTickets' => $queue->ActiveTickets - 1
+        ]);
+        Representativehandledticket::create([
+            'TicketNo' => $request->input('TicketNo'), 
+            'AssignedDatetime' => $assigneddatetime, 
+            'EmployeeID' => $assignedemployee, 
+            'ActionTaken' => 'Escalated', 
+            'HandlingTime' => $handled
+        ]);
+        return $update;
     }
     
 }

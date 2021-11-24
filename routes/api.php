@@ -5,6 +5,8 @@ use App\Http\Controllers\TicketcategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\QueueController;
+use App\Http\Controllers\EmployeeController;
+use App\Models\Employee;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,7 @@ Route::get('/ticketsfor/{employee}', [TicketController::class, 'ticketsfor']);
 Route::get('/countticketsfor/{employee}', [TicketController::class, 'countticketsfor']);
 Route::get('/ticket/{ticket}', [TicketController::class, 'ticket']);
 Route::post('/ticket/transfer', [TicketController::class, 'transfer']);
+Route::post('/ticket/escalate', [TicketController::class, 'escalate']);
 
 Route::get('/commentsforticket/{ticket}', [CommentController::class, 'getcommentsforticket']);
 Route::get('/countcommentsforticket/{ticket}', [CommentController::class, 'countcommentsforticket']);
@@ -43,6 +46,8 @@ Route::post('/comment/store', [CommentController::class, 'store']);
 
 Route::post('/assignTicket', [QueueController::class, 'assign']);
 Route::get('/queue', [QueueController::class, 'show']);
+
+Route::get('/leaders/{team}', [EmployeeController::class, 'getleaders']);
 
 
 

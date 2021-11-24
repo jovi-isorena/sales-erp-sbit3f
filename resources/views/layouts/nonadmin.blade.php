@@ -66,6 +66,8 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                     <input type="hidden" id="hiddenid" value = {{ auth()->user()->EmployeeID }}>
+                                    <input type="hidden" id="hiddenteamid" value = {{ auth()->user()->employee->TeamID }}>
+                                    <input type="hidden" id="hiddenpositionid" value = {{ auth()->user()->employee->Position }}>
                                 </form>
                             </div>
                         </li>

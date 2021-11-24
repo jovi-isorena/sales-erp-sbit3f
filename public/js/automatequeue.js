@@ -1,8 +1,9 @@
 document.onreadystatechange = function(){
     if(document.readyState == 'complete'){
         
-        setInterval(checkQueue, 2000);
-        setTimeout(1000);
+        // setInterval(checkQueue, 2000);
+        // setTimeout(1000);
+        checkQueue();
         setInterval(refreshQueue, 2000);
     }
 }
@@ -21,10 +22,11 @@ function checkQueue(){
                 },
                 success: function (data) {
                     console.log(data);
-                   
+                    checkQueue();
                 },
                 error: function (err) {
                     console.log(err.responseText);
+                    checkQueue();
                 }
             });
         }

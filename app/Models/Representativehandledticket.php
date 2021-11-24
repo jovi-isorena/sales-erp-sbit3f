@@ -38,6 +38,8 @@ class Representativehandledticket extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public $timestamps = false;
+
     public function ticket()
     {
         return $this->belongsTo('App\Ticket', 'TicketNo', 'TicketNo');
