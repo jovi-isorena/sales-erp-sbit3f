@@ -26,8 +26,23 @@ class HomeController extends Controller
     {
         if(auth()->user()->employee->Position == 1)
             return view('home');
+        else if(auth()->user()->employee->Position == 7){
+            $tickets = Ticket::whereMonth('RatingDatetime', now('Asia/Manila')->month)
+                ->where('AssignedEmployee', auth()->user()->EmployeeID)
+                ->get();
+            return view('nonadmin.rep_dashboard', [
+                'tickets' => $tickets
+            ]);
+        }
+        
+        else if(auth()->user()->employee->Position == 8){
+            return view('nonadmin.lead_dashboard');
+        }
 
-        return view('nonadmin.dashboard');
+        else if(auth()->user()->employee->Position == 9){
+            return view('nonadmin.manager_dashboard');
+        }
+
     }
     public function tickets()
     {

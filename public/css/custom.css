@@ -1,0 +1,89 @@
+.gauge-container{
+	width:400px;
+	height:200px;
+	position: relative;
+	/* top: 30%; */
+	left: 50%;
+	overflow: hidden;
+	text-align: center;
+	transform: translate(-50%, 0%);
+	border: 1px solid rgba(255,255,255,1);
+	/* padding: 100px; */
+}
+
+
+.gauge-a{
+	z-index: 1;
+	position: absolute;
+	background-color: rgba(200,200,200,1);
+	/* width: 400px;
+	height: 200px; */
+	width: 100%;
+	height: 100%;
+	top: 0%;
+	border-radius:250px 250px 0px 0px ;
+    border: 1px sold black;
+}
+.gauge-b{
+	z-index: 3;
+	position: absolute;
+	background-color: rgba(255,255,255,1);
+	/* background-color: transparent; */
+	/* width: 250px;
+	height: 125px; */
+	width: 63%;
+	height: 63%;
+	
+	top: 75px;
+	margin-left: 75px;
+	margin-right: auto;
+	border-radius:250px 250px 0px 0px ;
+}
+.gauge-c{
+	z-index: 2;
+	position: absolute;
+	background-color:  rgb(0,69,139); /*#00458B*/
+	/* width: 400px;
+	height: 200px; */
+	width: 100%;
+	height: 100%;
+	
+	top: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius:0px 0px 200px 200px ;
+  transform-origin:center top;
+	/* transition: all 1.3s ease-in-out; */
+	/* transform:rotate(.5turn); */
+
+}
+/* 
+.container:hover .gauge-c{
+	transform:rotate(.4turn);
+}
+.container:hover .gauge-data{
+	color: rgba(255,255,255,1);
+} */
+
+.gauge-data{
+	z-index: 4;
+	/* color: rgba(255,255,255,.2); */
+	font-size: 1.5em;
+	line-height: 25px;
+	position: absolute;
+	width: 400px;
+	height: 200px;
+	top: 90px;
+	margin-left: auto;
+	margin-right: auto;
+	transition: all 1s ease-out;
+	/* color: rgba(255,255,255,1); */
+
+}
+.dashboard-tooltip{
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    width: 1.5rem;
+    height: 1.5rem;
+}

@@ -125,10 +125,11 @@ class TicketController extends Controller
 
     private function generateNo()
     {
-        $currCount = Ticket::count();
-        $newid = $currCount + 1;
-        $newid = '00000000000' . $newid;
-        $newid = substr($newid, strlen($newid)-10);
+        $maxid = Ticket::max('TicketNo');
+        $newid = intval($maxid) + 1;
+        $newid = str_pad($newid,10,"0");
+        // $newid = '00000000000' . $newid;
+        // $newid = substr($newid, strlen($newid)-10);
         return $newid;
     }
 

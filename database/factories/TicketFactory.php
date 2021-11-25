@@ -28,7 +28,7 @@ class TicketFactory extends Factory
                 ->get()), 
             'Content' => $this->faker->paragraph(5), 
             'CreatedBy' => 'CUS0000001', 
-            'TicketStatus' => 'unassigned'
+            'TicketStatus' => 'Unassigned'
         ];
     }
     
@@ -40,11 +40,12 @@ class TicketFactory extends Factory
                     Ticketcategory::select('CategoryID')
                     ->where('AssignedTeam', 1)
                     ->where('isActive', 1)
-                    ->get())
+                    ->get()),
+                'AssignedTeam' => 1    
             ];
         });
     }
-
+    
     public function tech()
     {
         return $this->state(function (array $attributes) {
@@ -53,17 +54,60 @@ class TicketFactory extends Factory
                     Ticketcategory::select('CategoryID')
                     ->where('AssignedTeam', 2)
                     ->where('isActive', 1)
-                    ->get())
+                    ->get()),
+                    'AssignedTeam' => 2  
             ];
         });
     }
 
+    public function withScore()
+    {
+        return $this->state(function(array $attributes){
+            return [
+                'CSAT1' => $this->faker->numberBetween(1, 5),
+                'CSAT2' => $this->faker->numberBetween(1, 5),
+                'NPS' => $this->faker->numberBetween(1, 5),
+                'Feedback' => $this->faker->paragraph(5),
+                
+            ];
+        });
+    }
+
+    public function thisYear()
+    {
+        return $this->state(function(array $attributes){
+            $randomdate = $this->faker->dateTimeThisYear();
+            return [
+                'RatingDatetime' => $randomdate,
+                'ClosedDatetime' => $randomdate,
+                'CreatedDatetime' => $randomdate, 
+                'EnqueuedDatetime'=> null,
+                'TicketStatus' => 'Closed'
+            ];
+        });
+    }
+    public function thisMonth()
+    {
+        return $this->state(function(array $attributes){
+            $randomdate = $this->faker->dateTimeThisMonth();
+            return [
+                'RatingDatetime' => $randomdate,
+                'ClosedDatetime' => $randomdate,
+                'CreatedDatetime' => $randomdate, 
+                'EnqueuedDatetime'=> null,
+                'TicketStatus' => 'Closed'
+            ];
+        });
+    }
+
+
     private function generateNo()
     {
-        $currCount = Ticket::count();
-        $newid = $currCount + 1;
-        $newid = '00000000000' . $newid;
-        $newid = substr($newid, strlen($newid)-10);
+        $maxid = Ticket::max('TicketNo');
+        $newid = intval($maxid) + 1;
+        $newid = str_pad($newid,10,"0", STR_PAD_LEFT);
+        // $newid = '00000000000' . $newid;
+        // $newid = substr($newid, strlen($newid)-10);
         return $newid;
     }
 
