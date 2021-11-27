@@ -35,7 +35,8 @@ class CustomerController extends Controller
     {
         $customer = Customer::where('CustomerID', $request->input('customerId'))
             ->first();
-           
+            $customers = Customer::all();
+        // dd($customers);
         session([
             'CustomerID' => $customer->CustomerID,
             'FirstName' => $customer->FirstName, 

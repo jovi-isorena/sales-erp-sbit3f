@@ -61,8 +61,7 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['ID', 
-];
+    protected $fillable = ['CustomerID', 'ID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Address', 'Barangay', 'City', 'Zip', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
 
     /**
      * Indicates if the model should be timestamped.

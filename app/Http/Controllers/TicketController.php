@@ -51,6 +51,7 @@ class TicketController extends Controller
         // dd($this->generateNo());
         $ticket = Ticket::create([
             'TicketNo' => $this->generateNo(),
+            'CreatedDatetime' => now('Asia/Manila'),
             'PriorityLevel' => $category->DefaultPriority,
             'CategoryID' => $request->input('category'),
             'AssignedTeam' => $category->AssignedTeam,
@@ -127,7 +128,7 @@ class TicketController extends Controller
     {
         $maxid = Ticket::max('TicketNo');
         $newid = intval($maxid) + 1;
-        $newid = str_pad($newid,10,"0");
+        $newid = str_pad($newid,10,"0", STR_PAD_LEFT);
         // $newid = '00000000000' . $newid;
         // $newid = substr($newid, strlen($newid)-10);
         return $newid;

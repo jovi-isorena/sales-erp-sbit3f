@@ -21,9 +21,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css')
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<body  style="overflow-x:hidden;scrollbar-gutter: none;">
+    <div id="app" class="row justify-content-center">
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -76,11 +76,53 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
+        <div class="sidenav py-2 px-2 " style="">
+            <div class=" h-100 d-flex flex-column justify-content-between">
+                <img src="{{ asset('images/3gency-logo.png') }}" alt="3Gency Logo" class="brandlogo rounded">
+                <div>
+                    <ul class="custom-navbar">
+                        <a class="nav-link" href="{{ route('home') }}"><li class="custom-btn-outline-primary custom-rounded py-2 fs-4"><i class="fas fa-chart-line mr-4"></i>Dashboard</li></a>
+                        <a class="nav-link" href="{{ route('repTickets') }}"><li class="custom-btn-outline-primary custom-rounded py-2 fs-4 "><i class="far fa-sticky-note mr-4"></i>Tickets<div class=" badge custom-bg-secondary text-white ml-5"> 2</div></li> </a>
+                        <a class="nav-link" href="#"><li class="custom-btn-outline-primary custom-rounded py-2 fs-4"><i class="far fa-address-card mr-4"></i>Profile</li></a>
+                    
+                    
+                    </ul>
+                </div>
 
-        <main class="py-4 container">
-            @yield('content')
-        </main>
+                <div class="bg-danger text-center text-white custom-rounded p-1">
+                    {{-- <span class="fs-4">Logout</span> --}}
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                        <input type="hidden" id="hiddenid" value = {{ auth()->user()->EmployeeID }}>
+                        <input type="hidden" id="hiddenteamid" value = {{ auth()->user()->employee->TeamID }}>
+                        <input type="hidden" id="hiddenpositionid" value = {{ auth()->user()->employee->Position }}>
+                    </form>
+                </div>
+
+                <button class="custom-bg-primary text-light custom-border-primary rounded-circle navtoggle" style="display: block"> <i class="fas fa-chevron-left pl-4"></i></button>
+                <button class="custom-bg-primary text-light custom-border-primary rounded-circle navtoggle" style="display:none;"><i class="fas fa-chevron-right pl-4"></i></button>
+            </div>
+        </div>
+        <div class="maindisplay" style="">
+            <div class=" sticky-top pt-2 bg-light">
+                <div class="custom-bg-primary custom-rounded  px-3 p-1 w-100 text-light fs-5 justify-content-between d-flex">
+                    <span>Hi, {{ auth()->user()->employee->FirstName.' '. auth()->user()->employee->LastName}}</span>
+                    <span>{{ auth()->user()->employee->position->PositionName }}</span>
+                </div>
+            </div>
+
+            <main class="py-4 container">
+                @yield('content')
+            </main>
+        </div>
+        
     </div>
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
