@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $ID
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Representativehandledticket extends Model
 {
+    use HasFactory;
     /**
      * The table associated with the model.
      * 

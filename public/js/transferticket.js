@@ -52,7 +52,7 @@ function categorychanged(targetShowDiv){
 function resetEscalate(ticketno){
     let sel = $(`#escalateLeader-${ticketno}`);
     sel.empty();
-    sel.append('<option hidden selected>Select new Category</option>');
+    sel.append('<option hidden selected>Select Leader</option>');
     $(`#escalateFooter-${ticketno}`).hide();
     
 }

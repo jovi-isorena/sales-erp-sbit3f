@@ -14,11 +14,11 @@
                     <input class="form-check-input switch" type="checkbox" role="switch" id="switch-{{ $team->TeamID }}" name="switch-{{ $team->TeamID }}" value="{{ $team->TeamID }}" data-bs-toggle="#btn-{{ $team->TeamID }}" onchange="checkQueue()">
                     <label class="form-check-label" for="switch-{{ $team->TeamID }}">Automate</label>
                 </div>
-                <form action="{{ route('assign') }}" method="post">
-                    @csrf
+                {{-- <form action="{{ route('assign') }}" method="post">
+                    @csrf --}}
                     <input type="hidden" name="team" value="{{ $team->TeamID }}">
-                    <input type="submit" value="ASSIGN TICKET" class="btn btn-info" id="btn-{{ $team->TeamID }}">
-                </form>
+                    <input type="submit" value="ASSIGN TICKET" class="btn btn-info" id="btn-{{ $team->TeamID }}" onclick="assignSingleTicket({{ $team->TeamID }})">
+                {{-- </form> --}}
             </div>
             
         @endforeach

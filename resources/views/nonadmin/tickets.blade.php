@@ -1,30 +1,55 @@
 @extends('layouts.nonadmin')
 
 @section('content')
-<h1>test</h1>
-<div class="row" style="">
-    <div class="col-9">
-        <h1>Tickets</h1>
+{{-- style="overflow-x: hidden" --}}
+<div class="row p-0 justify-content-evenly pb-3" >
+    <div class="col-8">
+        {{-- <h1>Tickets</h1> --}}
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
         </ul>
-        <div class="tab-content" id="pills-tabContent">
+        <br>
+        <div class="tab-content mt-3" id="pills-tabContent">
 
         </div>
     </div>
-    <div class="col-3 border rounded p-0 shadow-sm">
-        <div class="row">
-            <div class="col">
-                <div class="input-group mb-3">
+    <div class="col-3 custom-rounded p-0 custom-shadow overflow-hidden">
+        <div class=" h-100">
+            <div>
+                <div class="custom-bg-secondary text-white pt-3 pb-1 ">
+                    <h3 class="text-center"><i class="fas fa-book mr-3"></i>NullEdge Search</h3>
+                </div>
+                <div class="input-group mb-3 ">
                     <input type="text" class="form-control" placeholder="Search here..." aria-label="Recipient's username" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="pl-2">
+                    <div class="form-check form-check-inline ">
+                        <input class="form-check-input" type="checkbox" id="productSearch" value="productSearch">
+                        <label class="form-check-label " for="productSearch" style="font-size: .7rem;">Product</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="troubleshootingSearch" value="troubleshootingSearch">
+                        <label class="form-check-label" for="troubleshootingSearch"  style="font-size: .7rem;">Troubleshooting</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="promoSearch" value="promoSearch" >
+                        <label class="form-check-label" for="promoSearch"  style="font-size: .7rem;">Promo</label>
+                      </div>
+                </div> 
+            </div>
+            <div id="searchResult">
+                <div class="searchResult">
+                    <div class="searchResultHeader"></div>
+                    <div class="searchResultBody"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-   
+    
 
+   
 @endsection
 
 @section('scripts')

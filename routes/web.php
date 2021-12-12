@@ -20,9 +20,7 @@ use App\Http\Controllers\TicketController;
 |
 */
 //TESTING PAGE
-Route::get('/test', function (){
-    return view('test');
-});
+Route::get('/test', [HomeController::class, 'test']);
 //HOME
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
@@ -43,6 +41,8 @@ Route::get('/ticketcategory/edit/{ticketcategory:categoryid}', [TicketcategoryCo
     ->name('categoryEdit');
 Route::put('/ticketcategory/update/{ticketcategory:categoryid}', [TicketcategoryController::class, 'update'])
     ->name('categoryUpdate');
+    Route::get('/ticketcategory/archive/{ticketcategory:categoryid}', [TicketcategoryController::class, 'destroy'])
+    ->name('categoryArchive');
 
 
 //SLA

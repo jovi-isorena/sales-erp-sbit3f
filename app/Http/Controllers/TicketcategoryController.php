@@ -17,7 +17,8 @@ class TicketcategoryController extends Controller
      */
     public function index()
     {
-        $categories = Ticketcategory::all()->load('team');
+        $categories = Ticketcategory::where('isActive', 1)
+            ->get()->load('team');
         return view('ticketcategory.index', [
             'categories' => $categories
         ]);
@@ -47,7 +48,7 @@ class TicketcategoryController extends Controller
     {
         // ddd($request);
         $request->validate([
-            'name' => 'required|max:255|unique:TicketCategory,name',
+            'name' => 'required|max:255|unique:ticketcategory,name',
             'assignedTeam' => 'required',
             'priorityLevel' => 'required'
         ]);
@@ -104,7 +105,7 @@ class TicketcategoryController extends Controller
         //
         // ddd($request);
         $request->validate([
-            'name' => 'required|max:255|unique:TicketCategory,name',
+            'name' => 'required|max:255|unique:ticketcategory,name',
             'assignedTeam' => 'required',
             'priorityLevel' => 'required'
         ]);
@@ -132,7 +133,10 @@ class TicketcategoryController extends Controller
      */
     public function destroy(Ticketcategory $ticketcategory)
     {
-        //
+        $ticketcategory->update([
+            'isActive' => 0
+        ]);
+        return redirect( route('categories'));
     }
 
     public function getall(Ticketcategory $ticketcategory){

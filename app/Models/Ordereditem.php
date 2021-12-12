@@ -38,7 +38,7 @@ class Ordereditem extends Model
      */
     public function order()
     {
-        return $this->belongsTo('App\Order', 'OrderID', 'OrderID');
+        return $this->belongsTo('App\Models\Order', 'OrderID', 'OrderID');
     }
 
     /**
@@ -46,6 +46,6 @@ class Ordereditem extends Model
      */
     public function product()
     {
-        return $this->belongsTo('App\Product', 'ProductID', 'ProductID');
+        return $this->belongsTo('App\Models\Product', 'ProductID', 'ProductID');
     }
 }

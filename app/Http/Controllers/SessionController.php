@@ -6,6 +6,9 @@ use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use App\Models\Ticket;
+use App\Models\Queue;
 
 class SessionController extends Controller
 {
@@ -37,6 +40,21 @@ class SessionController extends Controller
                 Auth::loginUsingId($getUser->EmployeeID);
                 // dd('true');
                 $request->session()->regenerate();
+                if( auth()->user()->employee->Position == 7){
+                    DB::table('queue')
+                        ->updateOrInsert(
+    
+                            ['EmployeeID' => auth()->user()->employee->EmployeeID],
+                            ['TeamID' => auth()->user()->employee->TeamID,
+                            'EnqueueTime' => now('Asia/Manila'),
+                            // 'ActiveTickets' => $employee->tickets->count(),
+                            'ActiveTickets' => Ticket::where('AssignedEmployee', auth()->user()->EmployeeID)
+                                ->where('AssignedDatetime', '<>', null )
+                                ->count(),
+                            'OnlineStatus' => 'Hold'
+                            ]
+                        );
+                }
                 return redirect()->intended('home');
             }
         }
@@ -52,7 +70,9 @@ class SessionController extends Controller
 
     public function logout()
     {
+        $employeeID = auth()->user()->EmployeeID;
         Auth::logout();
+        Queue::where('EmployeeID', $employeeID)->delete();
         return redirect(route('home'));
     }
 }

@@ -21,7 +21,7 @@ class QueueController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['assign','show']);
+        $this->middleware('auth')->except(['assign','show','apiEnqueue']);
     }
         
     public function index()
@@ -41,6 +41,7 @@ class QueueController extends Controller
                 ->get(),
                 // ->count()
             'teams' => Team::where('isActive', 1)
+                ->where('DepartmentID', 4)
                 ->get()
             // 'salesCount' => Ticket::where('AssignedEmployee', null)
             //     ->where('AssignedTeam', 1)
@@ -75,7 +76,7 @@ class QueueController extends Controller
         $employee = Employee::where('EmployeeID', $request->input('EmployeeID'))
             ->first();
             // dd($employee);
-        DB::table('Queue')
+        DB::table('queue')
             ->updateOrInsert(
 
                 ['EmployeeID' => $employee->EmployeeID],
@@ -91,6 +92,28 @@ class QueueController extends Controller
         return redirect('queue');
     }
 
+    public function apiEnqueue(Request $request)
+    {
+        // return $request;
+        // return $request;
+        $employee = Employee::where('EmployeeID', $request->input('EmployeeID'))
+            ->first();
+            // dd($employee);
+        DB::table('queue')
+            ->updateOrInsert(
+                ['EmployeeID' => $employee->EmployeeID],
+                ['TeamID' => $employee->TeamID,
+                'EnqueueTime' => now('Asia/Manila'),
+                // 'ActiveTickets' => $employee->tickets->count(),
+                'ActiveTickets' => Ticket::where('AssignedEmployee', $employee->EmployeeID)
+                    ->where('AssignedDatetime', '<>', null )
+                    ->count(),
+                'OnlineStatus' => $request->input('status')
+                ]
+            );
+        $newQueue = new QueueResource(Queue::where('EmployeeID', $employee->EmployeeID)->first());
+        return $newQueue;
+    }
     public function assign(Request $request)
     {
 

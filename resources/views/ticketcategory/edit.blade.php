@@ -12,7 +12,7 @@
                     {{ $message }}
                 @enderror
             </span>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Required" value={{ old('name')??$category->Name }}>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Required" value="{{ old('name')??$category->Name }}">
         </div>
         <div class="mb-3">
             <label for="assignedTeam" class="form-label">Assigned Team</label>

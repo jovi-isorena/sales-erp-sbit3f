@@ -76,7 +76,7 @@ class TicketFactory extends Factory
     public function thisYear()
     {
         return $this->state(function(array $attributes){
-            $randomdate = $this->faker->dateTimeThisYear();
+            $randomdate = $this->faker->dateTimeThisYear('now', 'Asia/Manila');
             return [
                 'RatingDatetime' => $randomdate,
                 'ClosedDatetime' => $randomdate,
@@ -89,7 +89,8 @@ class TicketFactory extends Factory
     public function thisMonth()
     {
         return $this->state(function(array $attributes){
-            $randomdate = $this->faker->dateTimeThisMonth();
+            $randomdate = $this->faker->dateTimeThisMonth('now', 'Asia/Manila');
+            // $randomdate = now('Asia/Manila');
             return [
                 'RatingDatetime' => $randomdate,
                 'ClosedDatetime' => $randomdate,

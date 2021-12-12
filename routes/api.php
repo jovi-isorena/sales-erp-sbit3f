@@ -46,8 +46,11 @@ Route::post('/comment/store', [CommentController::class, 'store']);
 
 Route::post('/assignTicket', [QueueController::class, 'assign']);
 Route::get('/queue', [QueueController::class, 'show']);
+Route::post('/queue/enqueue', [QueueController::class, 'apiEnqueue']);
 
 Route::get('/leaders/{team}', [EmployeeController::class, 'getleaders']);
 
+Route::get('ticket/scores/{month}/{employee}', [TicketController::class, 'score']);
 
+Route::post('/histograms', [TicketController::class, 'histograms']);
 

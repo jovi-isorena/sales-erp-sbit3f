@@ -35,6 +35,23 @@ function checkQueue(){
     });
 }
 
+function assignSingleTicket(teamid){
+    $.ajax({
+        url: '/api/assignTicket',
+        method: "POST",
+        data: {
+            'team' : teamid  
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (err) {
+            console.log(err.responseText);
+        }
+    });
+
+}
+
 function refreshQueue(){
     $.ajax({
         url: '/api/queue',

@@ -45,13 +45,14 @@ function addTicketAccordion(ticket)
             aria-expanded="true" 
             aria-controls="panelbody-${ticket['id']}">
             Ticket #${ticket['id']}
+            [${ticket['attributes'].TicketStatus}]
         </button>
         </h2>
         <div id="panelbody-${ticket['id']}" 
             class="accordion-collapse collapse" 
             aria-labelledby="heading-${ticket['id']}">
         <div class="accordion-body">
-            Amount: ${ticket['attributes'].Content}
+            Concern:<br/> <span class="fw-bold">${ticket['attributes'].Content}</span>
         </div>
         </div>
     </div>` ; 

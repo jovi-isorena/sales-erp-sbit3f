@@ -29,7 +29,7 @@
                     <td>
                         <a href="{{ route('categoryShow', $category->CategoryID ) }}" class="btn btn-info">Details</a>
                         <a href="{{ route('categoryEdit', $category->CategoryID ) }}" class="btn btn-warning">Edit</a>
-                        <a href="ticketcategory/delete/{{ $category->CategoryID }}" class="btn btn-danger">Archive</a>
+                        <a href="{{ route('categoryArchive', $category->CategoryID ) }}" class="btn btn-danger">Archive</a>
                     </td>
                 </tr>
             @endforeach

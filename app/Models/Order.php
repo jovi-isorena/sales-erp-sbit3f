@@ -62,7 +62,7 @@ class Order extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('App\Customer', 'CustomerID', 'CustomerID');
+        return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -70,7 +70,7 @@ class Order extends Model
      */
     public function ordereditems()
     {
-        return $this->hasMany('App\Ordereditem', 'OrderID', 'OrderID');
+        return $this->hasMany('App\Models\Ordereditem', 'OrderID', 'OrderID');
     }
 
     /**
@@ -78,6 +78,6 @@ class Order extends Model
      */
     public function returneditems()
     {
-        return $this->hasMany('App\Returneditem', 'OrderID', 'OrderID');
+        return $this->hasMany('App\Models\Returneditem', 'OrderID', 'OrderID');
     }
 }

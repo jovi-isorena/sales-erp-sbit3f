@@ -59,7 +59,7 @@ function loadTickets(userid, loadedtickets){
 function createTicketTabPill(ticket){
     let ret = `
         <li class="nav-item mr-3" role="presentation">
-            <button class="nav-link btn border" 
+            <button class="nav-link btn border rounded-pill custom-border-primary shadow-sm" 
                 id="${ticket['id']}-tab" data-bs-toggle="tab" 
                 data-bs-toggle="pill"
                 data-bs-target="#content${ticket['id']}" 
@@ -82,7 +82,7 @@ function createTicketTabContent(ticket){
     if($('#hiddenpositionid').val() == 7){
         transferDiv = `
             <div id="transferDiv-${ticket['id']}">
-                <button type="button" class="btn btn-primary rounded-pill" id="transfer-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#transferModal-${ticket['id']}">Transfer</button>
+                <button type="button" class="btn custom-btn-primary rounded-pill" id="transfer-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#transferModal-${ticket['id']}">Transfer</button>
                 <div class="modal fade" id="transferModal-${ticket['id']}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -104,7 +104,7 @@ function createTicketTabContent(ticket){
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary rounded-pill" id="escalate-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#escalateModal-${ticket['id']}" onclick=loadleaders('escalateLeader-${ticket['id']}')>Escalate</button>
+                <button type="button" class="btn custom-btn-primary rounded-pill" id="escalate-${ticket['id']}" data-bs-toggle="modal" data-bs-target="#escalateModal-${ticket['id']}" onclick=loadleaders('escalateLeader-${ticket['id']}')>Escalate</button>
                 <div class="modal fade" id="escalateModal-${ticket['id']}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -130,8 +130,8 @@ function createTicketTabContent(ticket){
         `;
     }
     let ret = `
-        <div class="tab-pane fade" id="content${ticket['id']}" role="tabpanel" aria-labelledby="${ticket['id']}-tab">
-            <div class="card">
+        <div class="tab-pane fade pb-3" id="content${ticket['id']}" role="tabpanel" aria-labelledby="${ticket['id']}-tab">
+            <div class="card custom-shadow">
                 <div class="card-header d-md-flex justify-content-between align-items-center">
                     <span class="card-title align-items-center">
                         <strong>Ticket# ${ticket['id']}</strong>
@@ -148,7 +148,7 @@ function createTicketTabContent(ticket){
                     <p>${ticket['attributes'].Content }</p>
 
                     <div class="mb-3">
-                        <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#responses-${ticket['id']}" aria-expanded="false" aria-controls="collapseExample" onclick="loadcomment('${ticket['id']}', ${ticket['attributes'].Comments.length})">
+                        <button class="btn custom-btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#responses-${ticket['id']}" aria-expanded="false" aria-controls="collapseExample" onclick="loadcomment('${ticket['id']}', ${ticket['attributes'].Comments.length})">
                             Responses (${ticket['attributes'].Comments.length})
                         </button>
                         <div class="collapse border border-2 p-2" id="responses-${ticket['id']}" style="max-height:200px;overflow-y:scroll;scroll:auto">
@@ -166,17 +166,17 @@ function createTicketTabContent(ticket){
                             <textarea placeholder="Enter your response here..." class="form-control" name="response-${ticket['id']}" style="height:100px" id="response-${ticket['id']}" onkeyup="revalidateTextArea(this)"></textarea>
                         </div>
                         <div class="d-md-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-primary" onclick="submitResponse('${ticket['id']}', this)">Submit</button>
+                            <button type="button" class="btn custom-btn-secondary" onclick="submitResponse('${ticket['id']}', this)">Submit</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div>
-                        <nav>
+                        <nav class='pb-3'>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist2">
-                                <button class="nav-link active" id="nav-custprofile-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custprofile-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custprofile-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="true">Customer Profile</button>
-                                <button class="nav-link" id="nav-custticket-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custticket-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custticket-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="false" onclick="loadtickets(this,'${ ticket['attributes'].CreatedBy }')" data-value="${ ticket['attributes'].CreatedBy }-${ ticket['id'] }">Tickets</button>
-                                <button class="nav-link" id="nav-custorder-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custorder-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custorder-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="false" onclick="loadorders(this,'${ ticket['attributes'].CreatedBy }')" data-value="${ ticket['attributes'].CreatedBy }-${ ticket['id'] }">Orders</button>
+                                <button class="nav-link active rounded-pill" id="nav-custprofile-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custprofile-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custprofile-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="true">Customer Profile</button>
+                                <button class="nav-link rounded-pill" id="nav-custticket-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custticket-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custticket-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="false" onclick="loadtickets(this,'${ ticket['attributes'].CreatedBy }')" data-value="${ ticket['attributes'].CreatedBy }-${ ticket['id'] }">Tickets</button>
+                                <button class="nav-link rounded-pill" id="nav-custorder-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" data-bs-toggle="tab" data-bs-target="#nav-custorder-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" type="button" role="tab" aria-controls="nav-custorder-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" aria-selected="false" onclick="loadorders(this,'${ ticket['attributes'].CreatedBy }')" data-value="${ ticket['attributes'].CreatedBy }-${ ticket['id'] }">Orders</button>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -187,7 +187,26 @@ function createTicketTabContent(ticket){
                                 <div>Birthdate:  ${ticket['attributes'].Customer['Birthdate']}</div>
                                 <div>Mobile:  ${ticket['attributes'].Customer['Mobile']}</div>
                                 <div>Email:  ${ticket['attributes'].Customer['Email']}</div>
-                                
+                                <div>
+                                    <h5>Customer Satisfaction</h3>
+                                    <table class='table border w-25'>
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <td scope='row'>CSAT 1</td>
+                                                <td>3.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope='row'>CSAT 2</td>
+                                                <td>4.0</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope='row'>NPS</td>
+                                                <td>3.85</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="nav-custticket-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }" role="tabpanel" aria-labelledby="nav-custticket-tab-${ ticket['attributes'].CreatedBy }-${ ticket['id'] }">
                                 <h3>Customer's Tickets</h3>
@@ -222,7 +241,7 @@ function createCategorySelectList(ticketno, currentTeam){
             data['data'].map( category => {
                 if(category['attributes'].AssignedTeam != currentTeam){
                     $('#newcategory-' + ticketno).append(`<option value=${category['id']}>[${category['attributes'].AssignedTeamName}] ${category['attributes'].Name}</option>`);
-                    console.log(category);
+                    // console.log(category);
                 }
             });
         },

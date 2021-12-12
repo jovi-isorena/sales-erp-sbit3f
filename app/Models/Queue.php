@@ -21,7 +21,7 @@ class Queue extends Model
      * 
      * @var string
      */
-    protected $table = 'Queue';
+    protected $table = 'queue';
 
     /**
      * The primary key for the model.

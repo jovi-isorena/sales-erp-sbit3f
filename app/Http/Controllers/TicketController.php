@@ -186,7 +186,7 @@ class TicketController extends Controller
             'Feedback' => $request->input('feedback'),
             'ClosedDatetime' => now('Asia/Manila'),
             'TicketStatus' => 'Closed',
-            'RatingDateTime' => now('Asia/Manila')
+            'RatingDatetime' => now('Asia/Manila')
         ]);
 
         return redirect( route('myTicket'));
@@ -253,5 +253,33 @@ class TicketController extends Controller
         ]);
         return $update;
     }
+
+    public function score(string $month, Employee $employee){
+
+        $tickets = Ticket::select()
+            ->whereMonth('RatingDatetime', $month)
+            ->where('AssignedEmployee', $employee->EmployeeID)
+            ->where('TicketStatus')
+            ->get();
+        return TicketResource::collection($tickets);
+    }
     
+
+    public function histograms(Request $request){
+        // $scope = $hScope;
+        $scope = $request->scope;
+        if($scope == 'rep'){
+            $tickets = Ticket::where('AssignedEmployee', $request->id)
+                ->whereMonth('RatingDatetime', now('Asia/Manila')->month)
+                ->get();
+            $csat1 = $tickets->sum('CSAT1');    
+            $csat2 = $tickets->sum('CSAT2');    
+            $nps = $tickets->sum('NPS');    
+        }else if($scope == 'team'){
+
+        }else if($scope == 'department'){
+
+        }
+        return ['csat1'=>$csat1, 'csat2'=>$csat2, 'nps'=>$nps, 'tickets'=>$tickets];
+    }
 }

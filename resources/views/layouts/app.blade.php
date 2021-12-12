@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="shortcut icon" href="{{ asset("images/3gency-logo-3gonly-white.svg") }}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -19,15 +19,17 @@
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
 
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md custom-bg-primary  shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}" style="text-decoration: none">
+                    <img src="{{ asset('images/3gency-logo-3gonly-white.svg') }}" alt="" style="width: 50px">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -37,24 +39,24 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                     @auth
                         
-                        <ul class="navbar-nav mr-auto">
+                        <ul class="navbar-nav mr-auto ">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('categories') }}">Ticket Category</a>
+                                <a class="nav-link text-white" href="{{ route('categories') }}">Ticket Category</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('sla') }}">Service Level Agreement</a>
+                                <a class="nav-link text-white" href="{{ route('sla') }}">Service Level Agreement</a>
                             </li>
                             @if(!session()->has('CustomerID'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('customer') }}">Customer Load</a>
+                                    <a class="nav-link text-white" href="{{ route('customer') }}">Customer Load</a>
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('myTicket') }}">Customer's Tickets</a>
+                                    <a class="nav-link text-white" href="{{ route('myTicket') }}">Customer's Tickets</a>
                                 </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('queue') }}">Queue Simulation</a>
+                                <a class="nav-link text-white" href="{{ route('queue') }}">Queue Simulation</a>
                             </li>
                         </ul>
                         
@@ -74,7 +76,7 @@
                             @endif --}}
                         @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                    <span>Hi, {{ auth()->user()->employee->FirstName }}</span>
                                 </a>
 
