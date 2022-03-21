@@ -1,9 +1,9 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+@extends('layouts.customerui')
 
 @section('content')
-tickets for {{ session('CustomerID') }}
 <div class="mb-3">
-    <a href="{{ route('customerUnload') }}" class="btn btn-danger">Unload Customer</a>
+    {{-- <a href="{{ route('customerUnload') }}" class="btn btn-danger">Logout Customer</a> --}}
     <a href="{{ route('newTicket') }}" class="btn btn-success">New Ticket</a>
 
 </div>

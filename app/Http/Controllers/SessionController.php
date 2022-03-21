@@ -73,6 +73,7 @@ class SessionController extends Controller
         $employeeID = auth()->user()->EmployeeID;
         Auth::logout();
         Queue::where('EmployeeID', $employeeID)->delete();
+        
         return redirect(route('home'));
     }
 }

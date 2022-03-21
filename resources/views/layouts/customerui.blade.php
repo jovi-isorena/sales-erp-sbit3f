@@ -30,14 +30,15 @@
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}" style="text-decoration: none">
                     <img src="{{ asset('images/3gency-logo-3gonly-white.svg') }}" alt="" style="width: 50px">
-                    {{ config('app.name', 'Laravel') }}
+                    {{-- {{ config('app.name', 'Laravel') }} --}}
+                    3Gency Order Processing
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                    @auth
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    {{-- @auth
                         
                         <ul class="navbar-nav mr-auto ">
                             <li class="nav-item">
@@ -56,13 +57,13 @@
                                 </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('queue') }}">Queue Monitoring</a>
+                                <a class="nav-link text-white" href="{{ route('queue') }}">Queue Simulation</a>
                             </li>
                         </ul>
                         
-                    @endauth
+                    @endauth --}}
                     
-                    <ul class="navbar-nav ml-auto">
+                    {{-- <ul class="navbar-nav ml-auto"> --}}
                         <!-- Authentication Links -->
                         {{-- @guest --}}
                             {{-- @if(!auth()->check()) --}}
@@ -74,7 +75,7 @@
                                     <a class="nav-link btn btn-primary text-light" href="{{ route('logout') }}">{{ __('Logout') }}</a>
                                 </li>  
                             @endif --}}
-                        @auth
+                        {{-- @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                    <span>Hi, {{ auth()->user()->employee->FirstName }}</span>
@@ -92,7 +93,15 @@
                                     </form>
                                 </div>
                             </li>
-                        @endauth
+                        @endauth --}}
+                        @if(Session('CustomerID') != null)
+                            <li class="nav-link">
+                                <div>
+
+                                </div>
+                                <a href="{{ route('customerUnload') }}" class="btn btn-danger">Logout</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

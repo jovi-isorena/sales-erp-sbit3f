@@ -76,9 +76,34 @@ function refreshQueue(){
 }
 
 function refreshEmployeeComponents(data){
+    $('.repQueueBox ').each(function(index, queueBox){
+        let vis = false;
+        $(data).each(function(index,employeeData){
+            if(employeeData['attributes'].EmployeeID == $(queueBox).attr('id')){
+                vis = true;
+            }
+        });
+        if(!vis){
+            $(queueBox).hide();
+        }
+    });
     $(data).each(function(index,employeeData){
         let employeeID = employeeData['attributes'].EmployeeID;
         $(`#${employeeID} span.ticketCount`).text(employeeData['attributes'].ActiveTickets);
+        $(`#${employeeID} span.onlineStatus`).text(employeeData['attributes'].OnlineStatus);
+        console.log(employeeData['attributes'].OnlineStatus);
+        if(employeeData['attributes'].OnlineStatus == '' || employeeData['attributes'].OnlineStatus == null){
+            $(`#${employeeID}`).hide();
+        }else{
+            $(`#${employeeID}`).show();
+            if(employeeData['attributes'].OnlineStatus == 'Active' ){
+                $(`#${employeeID}`).removeClass('bg-danger');
+                $(`#${employeeID}`).addClass('bg-success');
+            }else{
+                $(`#${employeeID}`).removeClass('bg-success');
+                $(`#${employeeID}`).addClass('bg-danger');
+            }
+        }
     });
 }
 

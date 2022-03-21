@@ -25,7 +25,7 @@
     </div>
     <div id="repDiv">
         @foreach ($reps as $rep)
-            <div class=" border rounded p-2 mb-2 {{ $rep->queue != null ? $rep->queue->OnlineStatus == 'active' ? 'bg-success' : 'bg-danger' : 'bg-secondary'}} bg-gradient text-white" id={{ $rep->EmployeeID }}>
+            <div class=" repQueueBox border rounded p-2 mb-2 {{ $rep->queue != null ? $rep->queue->OnlineStatus == 'active' ? 'bg-success' : 'bg-danger' : 'bg-secondary'}} bg-gradient text-white" id={{ $rep->EmployeeID }} style= "display: {{ $rep->queue == null ? 'none':'block' }};" >
                 <form action="{{ route('enqueue') }}" method="POST" class="">
                     @csrf
                     <div class="row align-items-center">
@@ -39,7 +39,7 @@
                         <div class="col">
                             Active Tickets: <br><span class="ticketCount">{{ $rep->tickets->where('EnqueuedDatetime', '<>', null)->count() }}</span>
                         </div>
-                        <div class="col">
+                        {{-- <div class="col">
                             <select name="status" id="status" class="form-select custom-select ">
                                 <option hidden>Offline</option>  
                                 
@@ -49,24 +49,24 @@
                                 <option value="break" {{ $rep->queue['OnlineStatus'] == 'break' ? 'selected' : '';}}>Break</option>
                                 <option value="lunch" {{ $rep->queue['OnlineStatus'] == 'lunch' ? 'selected' : '';}}>Lunch</option>
                             </select>
-                            <div>
-                                Status: <span class="onlineStatus text-capitalize">{{ $rep->queue['OnlineStatus'] }}</span>
-                            </div>
-                        </div>
+                        </div> --}}
                         <div class="col">
-                            <input type="submit" value="Update Status" class="btn btn-warning">
+                            Status: <span class="onlineStatus text-capitalize">{{ $rep->queue['OnlineStatus'] }}</span>
                         </div>
+                        {{-- <div class="col">
+                            <input type="submit" value="Update Status" class="btn btn-warning">
+                        </div> --}}
                         
                     </div>
                     
                 </form>
-                <div class="col">
+                {{-- <div class="col">
                     <form action="{{ route('dequeue') }}" method="get">
                         @csrf
                         <input type="hidden" name="EmployeeID" value={{ $rep->EmployeeID }}>
                         <input type="submit" value="Logout" class="btn btn-secondary {{ $rep->queue == null ? 'pe-none' : '' }}">
                     </form>
-                </div>
+                </div> --}}
             </div>
         @endforeach
     </div>
