@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $CustomerID
- * @property int $ID
  * @property string $FirstName
  * @property string $MiddleName
  * @property string $LastName
+ * @property string $Suffix
  * @property string $Birthdate
  * @property string $Mobile
  * @property string $Email
@@ -61,7 +61,7 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['CustomerID', 'ID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Address', 'Barangay', 'City', 'Zip', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
+    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
 
     /**
      * Indicates if the model should be timestamped.

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $CommentID
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    use HasFactory;
+    public $timestamps = false;
+    
     /**
      * The table associated with the model.
      * 
@@ -34,13 +38,6 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = ['TicketNo', 'CreatedDatetime', 'FromRep', 'ReplyingRepId', 'Content'];
-
-    /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

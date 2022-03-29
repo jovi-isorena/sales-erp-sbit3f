@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $PositionID
  * @property string $PositionName
+ * @property int $InitialSalary
  * @property boolean $isActive
+ * @property Salarygrade $salarygrade
  * @property Employee[] $employees
  */
 class Position extends Model
@@ -29,20 +31,21 @@ class Position extends Model
     /**
      * @var array
      */
-    protected $fillable = ['PositionName', 'isActive'];
+    protected $fillable = ['PositionName', 'InitialSalary', 'isActive'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public $timestamps = false;
+    public function salarygrade()
+    {
+        return $this->belongsTo('App\Salarygrade', 'InitialSalary', 'SalaryGradeID');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function employees()
     {
-        return $this->hasMany('App\Models\Employee', 'Position', 'PositionID');
+        return $this->hasMany('App\Employee', 'Position', 'PositionID');
     }
 }

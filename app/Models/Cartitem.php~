@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $CartID
  * @property string $CustomerID
- * @property int $ProductID
+ * @property string $ProductID
  * @property int $CartQuantity
  * @property float $CartPrice
  * @property Customer $customer
@@ -35,18 +35,11 @@ class Cartitem extends Model
     protected $fillable = ['CustomerID', 'ProductID', 'CartQuantity', 'CartPrice'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
+        return $this->belongsTo('App\Customer', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -54,6 +47,6 @@ class Cartitem extends Model
      */
     public function product()
     {
-        return $this->belongsTo('App\Models\Product', 'ProductID', 'ProductID');
+        return $this->belongsTo('App\Product', 'ProductID', 'ProductID');
     }
 }

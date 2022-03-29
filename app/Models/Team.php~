@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Employee $employee
  * @property Department $department
  * @property Employee[] $employees
- * @property Queue[] $queues
- * @property Ticket[] $tickets
  * @property Ticketcategory[] $ticketcategories
  */
 class Team extends Model
@@ -37,13 +35,6 @@ class Team extends Model
      * @var array
      */
     protected $fillable = ['DepartmentID', 'TeamLeader', 'TeamName', 'isActive'];
-
-    /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -72,24 +63,8 @@ class Team extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function queues()
-    {
-        return $this->hasMany('App\Models\Queue', 'TeamID', 'TeamID');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tickets()
-    {
-        return $this->hasMany('App\Models\Ticket', 'AssignedTeam', 'TeamID');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function ticketcategories()
     {
-        return $this->hasMany('App\Models\Ticketcategory', 'AssignedTeam', 'TeamID');
+        return $this->hasMany('App\Ticketcategory', 'AssignedTeam', 'TeamID');
     }
 }

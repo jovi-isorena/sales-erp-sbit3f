@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @property string $TicketNo
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $TransferringTeam
  * @property string $AssignedEmployee
  * @property int $CategoryID
+ * @property int $AssignedTeam
  * @property string $Content
  * @property string $CreatedBy
  * @property string $TicketStatus
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $CSAT2
  * @property int $NPS
  * @property string $RatingDatetime
+ * @property Team $team
  * @property Employee $employee
  * @property Ticketcategory $ticketcategory
  * @property Customer $customer
@@ -59,11 +62,28 @@ class Ticket extends Model
      */
     public $incrementing = false;
 
-    public $timestamps = false;
     /**
      * @var array
      */
-    protected $fillable = ['TicketNo','CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'RatingDatetime'];
+    protected $fillable = ['TicketNo', 'CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
+
+    // public function getCreatedDatetimeAttribute($value){
+    //     return date($value);
+    // }
+    /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team', 'AssignedTeam', 'TeamID');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -103,5 +123,13 @@ class Ticket extends Model
     public function representativehandledtickets()
     {
         return $this->hasMany('App\Models\Representativehandledticket', 'TicketNo', 'TicketNo');
+    }
+    public function messages()
+    {
+        return [
+            'csat1.required' => 'Do not forget this one!',
+            'csat2.required' => 'Do not forget this one!',
+            'nps.required' => 'Do not forget this one!',
+        ];
     }
 }

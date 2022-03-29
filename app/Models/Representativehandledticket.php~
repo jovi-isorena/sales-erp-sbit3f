@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $ID
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Representativehandledticket extends Model
 {
+    use HasFactory;
     /**
      * The table associated with the model.
      * 
@@ -36,18 +38,13 @@ class Representativehandledticket extends Model
     protected $fillable = ['TicketNo', 'AssignedDatetime', 'EmployeeID', 'ActionTaken', 'HandlingTime'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public $timestamps = false;
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function ticket()
     {
-        return $this->belongsTo('App\Models\Ticket', 'TicketNo', 'TicketNo');
+        return $this->belongsTo('App\Ticket', 'TicketNo', 'TicketNo');
     }
 
     /**
@@ -55,6 +52,6 @@ class Representativehandledticket extends Model
      */
     public function employee()
     {
-        return $this->belongsTo('App\Models\Employee', 'EmployeeID', 'EmployeeID');
+        return $this->belongsTo('App\Employee', 'EmployeeID', 'EmployeeID');
     }
 }

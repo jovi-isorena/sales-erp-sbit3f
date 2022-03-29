@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string $ProductID
+ * @property int $ProductID
  * @property int $AvailableStock
  * @property int $MinimumStockLimit
  * @property Product $product
@@ -27,13 +27,6 @@ class Storestock extends Model
     protected $primaryKey = 'ProductID';
 
     /**
-     * The "type" of the auto-incrementing ID.
-     * 
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the IDs are auto-incrementing.
      * 
      * @var bool
@@ -46,10 +39,17 @@ class Storestock extends Model
     protected $fillable = ['AvailableStock', 'MinimumStockLimit'];
 
     /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function product()
     {
-        return $this->belongsTo('App\Product', 'ProductID', 'ProductID');
+        return $this->belongsTo('App\Models\Product', 'ProductID', 'ProductID');
     }
 }

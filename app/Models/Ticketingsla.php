@@ -46,5 +46,4 @@ class Ticketingsla extends Model
      * @var bool
      */
     public $timestamps = false;
-
 }

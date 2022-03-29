@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $ProductID
+ * @property string $ProductID
  * @property string $Name
  * @property string $Brand
  * @property string $Category
@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $isActive
  * @property Cartitem[] $cartitems
  * @property Ordereditem[] $ordereditems
+ * @property Purchaseorderitem[] $purchaseorderitems
  * @property Rating[] $ratings
  * @property Releaseorder[] $releaseorders
  * @property Returneditem[] $returneditems
@@ -39,23 +40,30 @@ class Product extends Model
     protected $primaryKey = 'ProductID';
 
     /**
-     * @var array
+     * The "type" of the auto-incrementing ID.
+     * 
+     * @var string
      */
-    protected $fillable = ['Name', 'Brand', 'Category', 'Specification', 'SellingPrice', 'OnSale', 'Image', 'isActive'];
+    protected $keyType = 'string';
 
     /**
-     * Indicates if the model should be timestamped.
+     * Indicates if the IDs are auto-incrementing.
      * 
      * @var bool
      */
-    public $timestamps = false;
+    public $incrementing = false;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['Name', 'Brand', 'Category', 'Specification', 'SellingPrice', 'OnSale', 'Image', 'isActive'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cartitems()
     {
-        return $this->hasMany('App\Models\Cartitem', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Cartitem', 'ProductID', 'ProductID');
     }
 
     /**
@@ -63,7 +71,15 @@ class Product extends Model
      */
     public function ordereditems()
     {
-        return $this->hasMany('App\Models\Ordereditem', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Ordereditem', 'ProductID', 'ProductID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function purchaseorderitems()
+    {
+        return $this->hasMany('App\Purchaseorderitem', 'ProductID', 'ProductID');
     }
 
     /**
@@ -71,7 +87,7 @@ class Product extends Model
      */
     public function ratings()
     {
-        return $this->hasMany('App\Models\Rating', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Rating', 'ProductID', 'ProductID');
     }
 
     /**
@@ -79,7 +95,7 @@ class Product extends Model
      */
     public function releaseorders()
     {
-        return $this->hasMany('App\Models\Releaseorder', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Releaseorder', 'ProductID', 'ProductID');
     }
 
     /**
@@ -87,7 +103,7 @@ class Product extends Model
      */
     public function returneditems()
     {
-        return $this->hasMany('App\Models\Returneditem', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Returneditem', 'ProductID', 'ProductID');
     }
 
     /**
@@ -95,7 +111,7 @@ class Product extends Model
      */
     public function storestock()
     {
-        return $this->hasOne('App\Models\Storestock', 'ProductID', 'ProductID');
+        return $this->hasOne('App\Storestock', 'ProductID', 'ProductID');
     }
 
     /**
@@ -103,6 +119,6 @@ class Product extends Model
      */
     public function warehousestock()
     {
-        return $this->hasOne('App\Models\Warehousestock', 'ProductID', 'ProductID');
+        return $this->hasOne('App\Warehousestock', 'ProductID', 'ProductID');
     }
 }

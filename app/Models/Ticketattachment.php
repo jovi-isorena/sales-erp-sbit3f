@@ -5,35 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $CommentID
+ * @property int $ID
  * @property string $TicketNo
- * @property string $CreatedDatetime
- * @property boolean $FromRep
- * @property string $ReplyingRepId
- * @property string $Content
+ * @property string $Attachment
  * @property Ticket $ticket
- * @property Employee $employee
  */
-class Comment extends Model
+class Ticketattachment extends Model
 {
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'comment';
+    protected $table = 'ticketattachment';
 
     /**
      * The primary key for the model.
      * 
      * @var string
      */
-    protected $primaryKey = 'CommentID';
+    protected $primaryKey = 'ID';
 
     /**
      * @var array
      */
-    protected $fillable = ['TicketNo', 'CreatedDatetime', 'FromRep', 'ReplyingRepId', 'Content'];
+    protected $fillable = ['TicketNo', 'Attachment'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -48,13 +44,5 @@ class Comment extends Model
     public function ticket()
     {
         return $this->belongsTo('App\Models\Ticket', 'TicketNo', 'TicketNo');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function employee()
-    {
-        return $this->belongsTo('App\Models\Employee', 'ReplyingRepId', 'EmployeeID');
     }
 }
