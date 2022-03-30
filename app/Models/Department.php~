@@ -34,18 +34,11 @@ class Department extends Model
     protected $fillable = ['DepartmentName', 'DepartmentHeadName', 'isActive'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function employees()
     {
-        return $this->hasMany('App\Models\Employee', 'DepartmentID', 'DepartmentID');
+        return $this->hasMany('App\Employee', 'DepartmentID', 'DepartmentID');
     }
 
     /**
@@ -53,6 +46,6 @@ class Department extends Model
      */
     public function teams()
     {
-        return $this->hasMany('App\Models\Team', 'DepartmentID', 'DepartmentID');
+        return $this->hasMany('App\Team', 'DepartmentID', 'DepartmentID');
     }
 }

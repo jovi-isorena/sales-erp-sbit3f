@@ -50,17 +50,10 @@ class Systemaccount extends Model
     protected $fillable = ['Username', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'isActive'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function employee()
     {
-        return $this->belongsTo('App\Models\Employee', 'EmployeeID', 'EmployeeID');
+        return $this->belongsTo('App\Employee', 'EmployeeID', 'EmployeeID');
     }
 }

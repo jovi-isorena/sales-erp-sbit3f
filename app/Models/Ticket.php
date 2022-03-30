@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Date;
 
 /**
  * @property string $TicketNo
@@ -23,17 +21,19 @@ use Illuminate\Support\Facades\Date;
  * @property int $CSAT1
  * @property int $CSAT2
  * @property int $NPS
+ * @property string $Feedback
  * @property string $RatingDatetime
+ * @property boolean $Unread
  * @property Team $team
- * @property Employee $employee
  * @property Ticketcategory $ticketcategory
+ * @property Employee $employee
  * @property Customer $customer
  * @property Comment[] $comments
  * @property Representativehandledticket[] $representativehandledtickets
+ * @property Ticketattachment[] $ticketattachments
  */
 class Ticket extends Model
 {
-    use HasFactory;
     /**
      * The table associated with the model.
      * 
@@ -65,11 +65,8 @@ class Ticket extends Model
     /**
      * @var array
      */
-    protected $fillable = ['TicketNo', 'CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
+    protected $fillable = ['CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
 
-    // public function getCreatedDatetimeAttribute($value){
-    //     return date($value);
-    // }
     /**
      * Indicates if the model should be timestamped.
      * 
@@ -88,17 +85,17 @@ class Ticket extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function employee()
+    public function ticketcategory()
     {
-        return $this->belongsTo('App\Models\Employee', 'AssignedEmployee', 'EmployeeID');
+        return $this->belongsTo('App\Models\Ticketcategory', 'CategoryID', 'CategoryID');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function ticketcategory()
+    public function employee()
     {
-        return $this->belongsTo('App\Models\Ticketcategory', 'CategoryID', 'CategoryID');
+        return $this->belongsTo('App\Models\Employee', 'AssignedEmployee', 'EmployeeID');
     }
 
     /**
@@ -124,12 +121,12 @@ class Ticket extends Model
     {
         return $this->hasMany('App\Models\Representativehandledticket', 'TicketNo', 'TicketNo');
     }
-    public function messages()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ticketattachments()
     {
-        return [
-            'csat1.required' => 'Do not forget this one!',
-            'csat2.required' => 'Do not forget this one!',
-            'nps.required' => 'Do not forget this one!',
-        ];
+        return $this->hasMany('App\Models\Ticketattachment', 'TicketNo', 'TicketNo');
     }
 }

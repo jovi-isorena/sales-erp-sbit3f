@@ -40,7 +40,7 @@ class GenerateAllModels extends Command
             if($table === 'migrations') continue;
             $className = Str::camel(Str::singular($table));
             $className = ucfirst($className);
-            Artisan::call('krlove:generate:model', ['class-name' => $className, '--table-name' => $table]);
+            Artisan::call('krlove:generate:model', ['class-name' => $className, '--table-name' => $table, 'no-timestamps']);
         }
     }
 }

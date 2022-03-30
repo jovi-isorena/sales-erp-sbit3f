@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $ID
  * @property string $EmployeeID
+ * @property int $TeamID
  * @property string $EnqueueTime
  * @property int $ActiveTickets
  * @property string $OnlineStatus
+ * @property Team $team
  * @property Employee $employee
  */
 class Queue extends Model
@@ -19,7 +21,7 @@ class Queue extends Model
      * 
      * @var string
      */
-    protected $table = 'Queue';
+    protected $table = 'queue';
 
     /**
      * The primary key for the model.
@@ -31,7 +33,7 @@ class Queue extends Model
     /**
      * @var array
      */
-    protected $fillable = ['EmployeeID', 'EnqueueTime', 'ActiveTickets', 'OnlineStatus'];
+    protected $fillable = ['EmployeeID', 'TeamID', 'EnqueueTime', 'ActiveTickets', 'OnlineStatus'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -43,9 +45,16 @@ class Queue extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team', 'TeamID', 'TeamID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function employee()
     {
         return $this->belongsTo('App\Models\Employee', 'EmployeeID', 'EmployeeID');
     }
-
 }

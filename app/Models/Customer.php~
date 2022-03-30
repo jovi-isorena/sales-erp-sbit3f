@@ -6,15 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $CustomerID
+ * @property int $ID
  * @property string $FirstName
  * @property string $MiddleName
  * @property string $LastName
- * @property string $Suffix
  * @property string $Birthdate
- * @property string $Address
- * @property string $Barangay
- * @property string $City
- * @property string $Zip
  * @property string $Mobile
  * @property string $Email
  * @property string $Password
@@ -25,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $CustomerStatus
  * @property string $JoinDate
  * @property Cartitem[] $cartitems
+ * @property Customeraddress[] $customeraddresses
  * @property Order[] $orders
  * @property Paymentmethod[] $paymentmethods
  * @property Rating[] $ratings
@@ -64,14 +61,29 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Address', 'Barangay', 'City', 'Zip', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
+    protected $fillable = ['CustomerID', 'ID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Address', 'Barangay', 'City', 'Zip', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cartitems()
     {
-        return $this->hasMany('App\Cartitem', 'CustomerID', 'CustomerID');
+        return $this->hasMany('App\Models\Cartitem', 'CustomerID', 'CustomerID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function customeraddresses()
+    {
+        return $this->hasMany('App\Models\Customeraddress', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -79,7 +91,7 @@ class Customer extends Model
      */
     public function orders()
     {
-        return $this->hasMany('App\Order', 'CustomerID', 'CustomerID');
+        return $this->hasMany('App\Models\Order', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -87,7 +99,7 @@ class Customer extends Model
      */
     public function paymentmethods()
     {
-        return $this->hasMany('App\Paymentmethod', 'CustomerID', 'CustomerID');
+        return $this->hasMany('App\Models\Paymentmethod', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -95,7 +107,7 @@ class Customer extends Model
      */
     public function ratings()
     {
-        return $this->hasMany('App\Rating', 'CustomerID', 'CustomerID');
+        return $this->hasMany('App\Models\Rating', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -103,7 +115,7 @@ class Customer extends Model
      */
     public function returneditems()
     {
-        return $this->hasMany('App\Returneditem', 'CustomerID', 'CustomerID');
+        return $this->hasMany('App\Models\Returneditem', 'CustomerID', 'CustomerID');
     }
 
     /**
@@ -111,6 +123,6 @@ class Customer extends Model
      */
     public function tickets()
     {
-        return $this->hasMany('App\Ticket', 'CreatedBy', 'CustomerID');
+        return $this->hasMany('App\Models\Ticket', 'CreatedBy', 'CustomerID');
     }
 }
