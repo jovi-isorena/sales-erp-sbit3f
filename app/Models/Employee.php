@@ -106,9 +106,9 @@ class Employee extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function queues()
+    public function queue()
     {
-        return $this->hasMany('App\Models\Queue', 'EmployeeID', 'EmployeeID');
+        return $this->hasOne('App\Models\Queue', 'EmployeeID', 'EmployeeID');
     }
 
     /**

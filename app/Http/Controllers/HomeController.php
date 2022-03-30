@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -29,66 +29,93 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->employee->Position == 1)
-            return view('home');
-        else if(auth()->user()->employee->Position == 7){
-            $empid = auth()->user()->EmployeeID;
-            $tickets = Ticket::whereMonth('RatingDatetime', now('Asia/Manila')->month)
-                ->where('AssignedEmployee', $empid)
-                ->get();
-            $handled = Representativehandledticket::where('EmployeeID', $empid
-                )->get();
-            return view('nonadmin.rep_dashboard', [
-                'tickets' => $tickets,
-                'handled' => $handled
-            ]);
-        }
+        return view('home');
+        //index function redirect the 
+        // if(auth()->user()->employee->Position == 9)
+        //     return view('crmadmin_dashboard');
+        // else if(auth()->user()->employee->Position == 7){
+        //     $empid = auth()->user()->EmployeeID;
+        //     $tickets = Ticket::whereMonth('RatingDatetime', now('Asia/Manila')->month)
+        //         ->where('AssignedEmployee', $empid)
+        //         ->get();
+        //     $handled = Representativehandledticket::where('EmployeeID', $empid
+        //         )->get();
+        //     return view('nonadmin.rep_dashboard', [
+        //         'tickets' => $tickets,
+        //         'handled' => $handled
+        //     ]);
+        // }
         
-        else if(auth()->user()->employee->Position == 8){
-            $team =  auth()->user()->employee->team;
-            $tickets = Ticket::where('TicketStatus','Open')
-                ->where('AssignedEmployee', null)
-                ->where('AssignedTeam', $team->TeamID)
-                ->where('EnqueuedDatetime', '<>', null)
-                ->get();
-            $reps = Queue::where('TeamID', $team->TeamID)
-                ->get();
-            $feedbacks = Ticket::where('RatingDatetime', '<>', null)
-                ->where('AssignedTeam', $team->TeamID)
-                ->get();
-            $teammates = Employee::select('EmployeeID')
-                ->where('TeamID', $team->TeamID)
-                ->get()
-                ->toArray();
-            $handled = Representativehandledticket::whereIn('EmployeeID', $teammates)
-                ->get(); 
-            $sla = Ticketingsla::find(1);
-            return view('nonadmin.lead_dashboard', [
-                'tickets' => $tickets,
-                'reps' => $reps,
-                'feedbacks' => $feedbacks,
-                'handled' => $handled,
-                'sla' => $sla
-            ]);
-        }
-
-        else if(auth()->user()->employee->Position == 9){
-            $tickets = Ticket::where('TicketStatus','Open')
-                ->where('AssignedEmployee', null)
-                ->where('EnqueuedDatetime', '<>', null)
-                ->get();
-            $reps = Queue::all();
-            $feedbacks = Ticket::where('TicketStatus','Closed')
-                ->whereMonth('RatingDatetime', now('Asia/Manila')->month)
-                ->get();
-            return view('nonadmin.manager_dashboard', [
-                'tickets' => $tickets,
-                'reps' => $reps,
-                'feedbacks' => $feedbacks
-            ]);
-        }
-
+        // else if(auth()->user()->employee->Position == 8){
+        //     $team =  auth()->user()->employee->team;
+        //     $tickets = Ticket::where('TicketStatus','Open')
+        //         ->where('AssignedEmployee', null)
+        //         ->where('AssignedTeam', $team->TeamID)
+        //         ->where('EnqueuedDatetime', '<>', null)
+        //         ->get();
+        //     $reps = Queue::where('TeamID', $team->TeamID)
+        //         ->get();
+        //     $feedbacks = Ticket::where('RatingDatetime', '<>', null)
+        //         ->where('AssignedTeam', $team->TeamID)
+        //         ->get();
+        //     $teammates = Employee::select('EmployeeID')
+        //         ->where('TeamID', $team->TeamID)
+        //         ->get()
+        //         ->toArray();
+        //     $handled = Representativehandledticket::whereIn('EmployeeID', $teammates)
+        //         ->get(); 
+        //     $sla = Ticketingsla::find(1);
+        //     return view('nonadmin.lead_dashboard', [
+        //         'tickets' => $tickets,
+        //         'reps' => $reps,
+        //         'feedbacks' => $feedbacks,
+        //         'handled' => $handled,
+        //         'sla' => $sla
+        //     ]);
+        // }
     }
+
+    public function repDashboard(){
+        $empid = auth()->user()->EmployeeID;
+        $tickets = Ticket::whereMonth('RatingDatetime', now('Asia/Manila')->month)
+            ->where('AssignedEmployee', $empid)
+            ->get();
+        $handled = Representativehandledticket::where('EmployeeID', $empid
+            )->get();
+        return view('nonadmin.rep_dashboard', [
+            'tickets' => $tickets,
+            'handled' => $handled
+        ]);
+    }
+
+    public function leadDashboard(){
+        $team =  auth()->user()->employee->team;
+        $tickets = Ticket::where('TicketStatus','Open')
+            ->where('AssignedEmployee', null)
+            ->where('AssignedTeam', $team->TeamID)
+            ->where('EnqueuedDatetime', '<>', null)
+            ->get();
+        $reps = Queue::where('TeamID', $team->TeamID)
+            ->get();
+        $feedbacks = Ticket::where('RatingDatetime', '<>', null)
+            ->where('AssignedTeam', $team->TeamID)
+            ->get();
+        $teammates = Employee::select('EmployeeID')
+            ->where('TeamID', $team->TeamID)
+            ->get()
+            ->toArray();
+        $handled = Representativehandledticket::whereIn('EmployeeID', $teammates)
+            ->get(); 
+        $sla = Ticketingsla::find(1);
+        return view('nonadmin.lead_dashboard', [
+            'tickets' => $tickets,
+            'reps' => $reps,
+            'feedbacks' => $feedbacks,
+            'handled' => $handled,
+            'sla' => $sla
+        ]);
+    }
+
     public function tickets()
     {
         
