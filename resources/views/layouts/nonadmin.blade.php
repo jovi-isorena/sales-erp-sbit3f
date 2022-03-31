@@ -91,7 +91,7 @@
                     <img src="{{ asset('images/3gency-logo-3gonly-blue.svg') }}" alt="3Gency Logo" class="brandlogo custom-border-primary rounded-circle border-2" id="smalllogo" style="display:none">
                     <div id="navbar-full" class=" " style="display:block;">
                         <ul class="custom-navbar">
-                            <a class="nav-link" href="{{ route('home') }}"><li class="custom-btn-outline-primary custom-rounded py-2 text-nowrap "><i class="fas fa-chart-line mr-4"></i>Dashboard</li></a>
+                            <a class="nav-link" href="{{ route('repDashboard') }}"><li class="custom-btn-outline-primary custom-rounded py-2 text-nowrap "><i class="fas fa-chart-line mr-4"></i>Dashboard</li></a>
                             <a class="nav-link" href="{{ route('repTickets') }}"><li class="custom-btn-outline-primary custom-rounded py-2 text-nowrap "><i class="fas fa-receipt mr-4"></i>Tickets</li> </a>
                             <a class="nav-link" href="#"><li class="custom-btn-outline-primary custom-rounded py-2 text-nowrap "><i class="far fa-address-card mr-4"></i>Profile</li></a>
                         </ul>

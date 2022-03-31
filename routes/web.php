@@ -70,10 +70,24 @@ Route::post('/ticket/store', [TicketController::class, 'store'])
 Route::get('/ticket/show/{ticket}', [TicketController::class, 'show']);
 Route::put('/ticket/{ticket}', [TicketController::class, 'closeTicket']);
 
-//SESSION
-Route::get('/login', [SessionController::class, 'login'])
+//SESSION or PORTAL
+//portal for admin module
+Route::get('/admin_login', [SessionController::class, 'adminlogin'])
     ->middleware('guest')
-    ->name('login');
+    ->name('adminlogin');
+//portal for inventory module
+Route::get('/inventory_login', [SessionController::class, 'inventorylogin'])
+    ->middleware('guest')
+    ->name('inventorylogin');
+//portal for ecommerce module
+Route::get('/ecommerce_login', [SessionController::class, 'ecommercelogin'])
+    ->middleware('guest')
+    ->name('ecommercelogin');
+//portal for crm module
+Route::get('/crm_login', [SessionController::class, 'crmlogin'])
+    // ->middleware('guest')
+    ->name('crmlogin');
+
 Route::post('/logout', [SessionController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
@@ -95,3 +109,11 @@ Route::get('queue/dequeue', [QueueController::class, 'dequeue'])
 
 //COMMENT
 Route::post('/comment/customercomment', [CommentController::class, 'storeCustomerComment']);
+
+//CRM MODULE
+Route::get('/crm_dashboard', function (){ return view('nonadmin.crmadmin_dashboard');})
+    ->name('crmAdminDashboard');
+Route::get('/rep_dashboard', [HomeController::class, 'repDashboard'])
+    ->name('repDashboard');
+Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
+    ->name('leadDashboard');

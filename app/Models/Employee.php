@@ -106,15 +106,15 @@ class Employee extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function queues()
+    public function queue()
     {
-        return $this->hasMany('App\Models\Queue', 'EmployeeID', 'EmployeeID');
+        return $this->hasOne('App\Models\Queue', 'EmployeeID', 'EmployeeID');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function releaseorders()
+    public function approvedreleaseorders()
     {
         return $this->hasMany('App\Models\Releaseorder', 'ApprovedBy', 'EmployeeID');
     }
@@ -122,7 +122,7 @@ class Employee extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function releaseorders()
+    public function createdreleaseorders()
     {
         return $this->hasMany('App\Models\Releaseorder', 'CreatedBy', 'EmployeeID');
     }

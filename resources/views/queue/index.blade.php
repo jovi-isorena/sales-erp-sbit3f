@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.crmadmin')
 
 @section('content')
     <form action="{{ route('resetQueue') }}" method="get">
