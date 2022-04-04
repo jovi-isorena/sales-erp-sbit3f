@@ -9,6 +9,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ecommController;
+use App\Http\Controllers\EcommSessionsController;
+use App\Http\Controllers\EcommLoginSessionsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -117,3 +120,27 @@ Route::get('/rep_dashboard', [HomeController::class, 'repDashboard'])
     ->name('repDashboard');
 Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
     ->name('leadDashboard');
+
+
+//Ecomm module
+
+//Route::get('/ecomm_customer/index', [ecommController::class, 'index'])
+    //    ->name('ecommHomeLog');
+
+Route::get('/ecomm_customer/login', [EcommSessionsController::class, 'login'])
+        ->name('ecommlogin');
+
+Route::get('/ecomm_customer/register', [ecommController::class, 'register'])
+        ->name('ecommregister');
+
+
+//Ecomm customer sessions
+
+Route::post('ecomm_customer/store', [EcommSessionsController::class, 'store'])
+        ->name('createUser');
+
+Route::post('ecomm_customer/access', [EcommSessionsController::class, 'access'])
+        ->name('loginCustomer');
+
+
+

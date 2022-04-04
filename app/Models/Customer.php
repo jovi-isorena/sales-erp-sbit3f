@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Models;
-
+//nadagdag
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+//nadagdag
 /**
  * @property string $CustomerID
  * @property string $FirstName
@@ -61,7 +66,7 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
+    protected $fillable = ['CustomerID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
 
     /**
      * Indicates if the model should be timestamped.

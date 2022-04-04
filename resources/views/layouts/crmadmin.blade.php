@@ -37,6 +37,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                    
                     @auth
                         
                         <ul class="navbar-nav mr-auto ">
