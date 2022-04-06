@@ -65,7 +65,7 @@ class Ticket extends Model
     /**
      * @var array
      */
-    protected $fillable = ['CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
+    protected $fillable = ['TicketNo', 'CreatedDatetime', 'EnqueuedDatetime', 'AssignedDatetime', 'ClosedDatetime', 'PriorityLevel', 'TransferringTeam', 'AssignedEmployee', 'CategoryID', 'AssignedTeam', 'Content', 'CreatedBy', 'TicketStatus', 'CSAT1', 'CSAT2', 'NPS', 'Feedback', 'RatingDatetime', 'Unread'];
 
     /**
      * Indicates if the model should be timestamped.

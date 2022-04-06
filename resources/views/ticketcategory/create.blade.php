@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.crmadmin')
 
 @section('content')
     <a href="{{ route('categories') }}" class="btn btn-secondary">Back to List</a>

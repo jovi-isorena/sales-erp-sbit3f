@@ -58,6 +58,17 @@ class SessionController extends Controller
 
                 //for inventory module user
                 if($getUser->employee->DepartmentID == 2){
+                    Auth::loginUsingId($getUser->EmployeeID);
+                    $request->session()->regenerate();
+                    
+                    //inventory manager
+                    if( auth()->user()->employee->Position == 3){
+                        return redirect(route('inventoryDashboard'));
+                    }
+                    //stockman
+                    else if( auth()->user()->employee->Position == 4){
+                        return redirect(route(''));
+                    }
                 }//end inventory module
 
                 //for e-commerce module user

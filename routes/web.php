@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,8 +42,8 @@ Route::get('/ticketcategory/edit/{ticketcategory:categoryid}', [TicketcategoryCo
     ->name('categoryEdit');
 Route::put('/ticketcategory/update/{ticketcategory:categoryid}', [TicketcategoryController::class, 'update'])
     ->name('categoryUpdate');
-    Route::get('/ticketcategory/archive/{ticketcategory:categoryid}', [TicketcategoryController::class, 'destroy'])
-    ->name('categoryArchive');
+Route::get('/ticketcategory/archive/{ticketcategory:categoryid}', [TicketcategoryController::class, 'destroy'])
+->name('categoryArchive');
 
 
 //SLA
@@ -117,3 +118,19 @@ Route::get('/rep_dashboard', [HomeController::class, 'repDashboard'])
     ->name('repDashboard');
 Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
     ->name('leadDashboard');
+
+//Inventory Module
+Route::get('/inventory_dashboard', [HomeController::class, 'inventoryDashboard'])
+    ->name('inventoryDashboard');
+Route::get('/inventory_maintenance', [ProductController::class, 'index'])
+    ->name('inventoryMaintenance');
+Route::post('/product/store', [ProductController::class, 'store'])
+    ->name('addProduct');
+Route::get('/product/edit/{product:productid}', [ProductController::class, 'edit'])
+    ->name('editProduct');
+Route::put('/product/update/{product:productid}', [ProductController::class, 'update'])
+    ->name('updateProduct');
+Route::get('/product/archive/{product:productid}', [ProductController::class, 'archive'])
+    ->name('archiveProduct');
+Route::get('/product/unarchive/{product:productid}', [ProductController::class, 'unarchive'])
+    ->name('unarchiveProduct');
