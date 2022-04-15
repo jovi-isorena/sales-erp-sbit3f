@@ -62,7 +62,7 @@ class Employee extends Model
     /**
      * @var array
      */
-    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'HomeAddress', 'ContactNo', 'DepartmentID', 'TeamID', 'Position', 'isActive'];
+    protected $fillable = ['EmployeeID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'HomeAddress', 'ContactNo', 'Email', 'DepartmentID', 'TeamID', 'Position', 'isActive'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -140,7 +140,7 @@ class Employee extends Model
      */
     public function systemaccount()
     {
-        return $this->hasOne('App\Models\Systemaccount', 'EmployeeID', 'EmployeeID');
+        return $this->hasOne('App\Models\User', 'EmployeeID', 'EmployeeID');
     }
 
     /**

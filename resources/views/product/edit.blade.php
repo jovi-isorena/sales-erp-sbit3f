@@ -2,12 +2,6 @@
 
 @section('content')
 <a href="{{ route('inventoryMaintenance') }}" class="btn btn-secondary">Back To List</a>
-@if (session()->has('updateSuccess'))
-    <div class="alert alert-success">
-        {{ sesssion()->get('updateSuccess') }}
-    </div>
-
-@endif
     
 <form method="POST" action="{{ route('updateProduct', $product->ProductID) }}">
     @csrf

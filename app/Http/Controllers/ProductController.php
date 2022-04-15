@@ -119,7 +119,7 @@ class ProductController extends Controller
             'OnSale'=>$request->input('onsale'),
             'Image'=>$request->input('image')
         ]);
-        $request->session()->flash('editSuccess','Product Information Successfully Edited');
+        $request->session()->flash('success','Product Information Successfully Edited');
         return redirect()->back();
     }
 

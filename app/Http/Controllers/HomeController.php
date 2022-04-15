@@ -9,9 +9,12 @@ use App\Models\Representativehandledticket;
 use App\Models\Employee;
 use App\Models\Ticketingsla;
 use App\Models\Product;
+use App\Models\SerializedProduct;
 use App\Models\Storestock;
 use App\Models\Warehousestock;
+use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -22,7 +25,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -32,8 +35,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(!Auth::check()){
+            return view('home');
+        }else{
+            if(auth()->user()->employee->DepartmentID == 1){
+                return redirect(route('adminDashboard'));
+            }
+            else if(auth()->user()->employee->DepartmentID == 2){
+                return redirect(route('inventoryDashboard'));
+            }
+            else if(auth()->user()->employee->DepartmentID == 3){
+                return view('home');
+            }
+            else if(auth()->user()->employee->DepartmentID == 4){
+                return redirect(route('crmAdminDashboard'));
+            }
+
+        }
         
+    }
+
+    public function adminDashboard(){
+        return view('nonadmin.admin_dashboard');
     }
 
     public function repDashboard(){
@@ -80,12 +103,14 @@ class HomeController extends Controller
     public function inventoryDashboard(){
         $products = Product::where('isActive', 1)
             ->get();
+        $serials = SerializedProduct::all();
         $storeStock = Storestock::all();
         $warehouseStock = Warehousestock::all();
         return view('inventory.dashboard',[
             'products' => $products,
             'storeStock' => $storeStock,
-            'warehouseStock' => $warehouseStock
+            'warehouseStock' => $warehouseStock,
+            'serials' => $serials
         ]);
     }
 

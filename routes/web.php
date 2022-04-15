@@ -5,11 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketcategoryController;
 use App\Http\Controllers\TicketingslaController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReleaseOrderController;
+use App\Http\Controllers\SerializedProductController;
+use App\Http\Controllers\UserController;
+use App\Models\Releaseorder;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +49,7 @@ Route::get('/ticketcategory/edit/{ticketcategory:categoryid}', [TicketcategoryCo
 Route::put('/ticketcategory/update/{ticketcategory:categoryid}', [TicketcategoryController::class, 'update'])
     ->name('categoryUpdate');
 Route::get('/ticketcategory/archive/{ticketcategory:categoryid}', [TicketcategoryController::class, 'destroy'])
-->name('categoryArchive');
+    ->name('categoryArchive');
 
 
 //SLA
@@ -73,29 +79,18 @@ Route::put('/ticket/{ticket}', [TicketController::class, 'closeTicket']);
 
 //SESSION or PORTAL
 //portal for admin module
-Route::get('/admin_login', [SessionController::class, 'adminlogin'])
+Route::get('/employee_portal', [SessionController::class, 'employeeportal'])
     ->middleware('guest')
-    ->name('adminlogin');
-//portal for inventory module
-Route::get('/inventory_login', [SessionController::class, 'inventorylogin'])
-    ->middleware('guest')
-    ->name('inventorylogin');
-//portal for ecommerce module
-Route::get('/ecommerce_login', [SessionController::class, 'ecommercelogin'])
-    ->middleware('guest')
-    ->name('ecommercelogin');
-//portal for crm module
-Route::get('/crm_login', [SessionController::class, 'crmlogin'])
-    // ->middleware('guest')
-    ->name('crmlogin');
-
+    ->name('employeePortal');    
 Route::post('/logout', [SessionController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 Route::post('/sessionStore', [SessionController::class, 'store'])
     ->middleware('guest')
     ->name('sessionStore');
-
+Route::get('/first_login', [SessionController::class, 'firstlogin'])
+    ->middleware('auth')
+    ->name('firstLogin');
 //QUEUE
 Route::get('/queue', [QueueController::class, 'index'])
     ->name('queue');
@@ -122,6 +117,7 @@ Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
 //Inventory Module
 Route::get('/inventory_dashboard', [HomeController::class, 'inventoryDashboard'])
     ->name('inventoryDashboard');
+//Product Maintenance
 Route::get('/inventory_maintenance', [ProductController::class, 'index'])
     ->name('inventoryMaintenance');
 Route::post('/product/store', [ProductController::class, 'store'])
@@ -134,3 +130,51 @@ Route::get('/product/archive/{product:productid}', [ProductController::class, 'a
     ->name('archiveProduct');
 Route::get('/product/unarchive/{product:productid}', [ProductController::class, 'unarchive'])
     ->name('unarchiveProduct');
+//Serialized Product Maintenance
+Route::get('/serialized', [SerializedProductController::class,'index'])
+    ->name('serializedIndex');
+Route::get('/serialized/create', [SerializedProductController::class, 'create'])
+    ->name('serializedCreate');
+Route::post('/serialized/store', [SerializedProductController::class, 'store'])
+    ->name('serializedStore');
+Route::get('/serialized/edit/{serializedproduct:id}', [SerializedProductController::class, 'edit'])
+    ->name('serializedEdit');
+Route::put('/serialized/update/{serializedproduct:id}', [SerializedProductController::class, 'update'])
+    ->name('serializedUpdate');
+//Release Order
+Route::get('/releaserorders', [ReleaseOrderController::class, 'index'])
+    ->name('releaseOrderIndex');
+Route::get('releaserorders/create', [ReleaseOrderController::class, 'create'])
+    ->name('releaseOrderCreate');
+Route::post('releaserorders/store', [ReleaseOrderController::class, 'store'])
+    ->name('releaseOrderStore');
+Route::get('releaserorders/show/{releaseorder}', [ReleaseOrderController::class, 'show'])
+    ->name('releaseOrderShow');
+
+// ADMIN MODULE
+Route::get('admin_dashboard', [HomeController::class, 'adminDashboard'])
+    ->name('adminDashboard');
+// Employee Maintenance
+Route::get('/employee/index', [EmployeeController::class, 'index'])
+    ->name('employeeIndex');
+Route::get('/employee/create', [EmployeeController::class, 'create'])
+    ->name('employeeCreate');
+Route::post('employee/store', [EmployeeController::class, 'store'])
+    ->name('employeeStore');
+// System Account Maintenance
+Route::get('/systemaccount/create/{employee:employeeid}', [UserController::class, 'create'])
+    ->name('userCreate');
+Route::post('/systemaccount/store/{employee:employeeid}', [UserController::class, 'store'])
+    ->name('userStore');
+Route::get('/systemaccount/edit/{user:employeeid}', [UserController::class, 'edit'])
+    ->name('userEdit');
+Route::put('/systemaccount/update/{user:employeeid}', [UserController::class, 'update'])
+    ->name('userUpdate');
+Route::post('/systemaccount/deactivate/{user:employeeid}', [UserController::class, 'deactivate'])
+    ->name('userDeactivate');
+Route::post('/systemaccount/reactivate/{user:employeeid}', [UserController::class, 'reactivate'])
+    ->name('userReactivate');
+Route::post('/systemaccount/unlock/{user:employeeid}', [UserController::class, 'unlock'])
+    ->name('userUnlock');
+Route::post('/systemaccount/changepassword/{user:employeeid}', [UserController::class, 'changepassword'])
+    ->name('changePassword');

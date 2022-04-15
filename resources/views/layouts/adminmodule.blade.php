@@ -22,17 +22,15 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    
-    @yield('headScripts')
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md custom-bg-primary  shadow-sm">
             <div class="container">
-                <a class="navbar-brand text-white" href="{{ route('inventoryDashboard') }}" style="text-decoration: none">
+                <a class="navbar-brand text-white" href="{{ route('adminDashboard') }}" style="text-decoration: none">
                     <img src="{{ asset('images/3gency-logo-3gonly-white.svg') }}" alt="" style="width: 50px">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Laravel') }} - Admin Module
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -43,16 +41,7 @@
                         
                         <ul class="navbar-nav mr-auto ">
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('inventoryDashboard') }}">Inventory Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('inventoryMaintenance') }}">Product Maintenance</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('serializedIndex') }}">Serialized Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('releaseOrderIndex') }}">Release Orders</a>
+                                <a class="nav-link text-white" href="{{ route('employeeIndex') }}">Employees</a>
                             </li>
                             
                         </ul>
@@ -100,9 +89,7 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/app.js') }}" ></script>
     @yield('scripts')
-    
-    
+    <script src="{{ asset('js/app.js') }}" ></script>
 </body>
 </html>

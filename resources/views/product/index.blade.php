@@ -17,8 +17,8 @@
 
         {{-- <div class="col justify-content-center"> --}}
             <div class="col-2 btn-group" role="group" aria-label="status filter">
-                <button type="button" class="btn btn-outline-primary">Active</button>
-                <button type="button" class="btn btn-outline-primary">Archived</button>
+                <a href="{{ route('inventoryMaintenance') }}" class="btn btn-outline-primary {{ request()->query('status') != 'archived'? 'active' : ''  }}">Active</a>
+                <a href="{{ route('inventoryMaintenance', 'status=archived') }}" class="btn btn-outline-primary {{ request()->query('status') == 'archived'? 'active' : '' }}">Archived</a>
             </div>
         {{-- </div> --}}
 

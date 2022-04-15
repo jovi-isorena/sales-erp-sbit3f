@@ -56,10 +56,10 @@
                 </span>
             </div>
             <div class="card-body">
-                <span class="lead">21</span>
+                <span class="lead">{{ $serials->count() }}</span>
             </div>
             <div class="card-footer text-right">
-                <a href="#">View List</a>
+                <a href="{{ route('serializedIndex') }}">View List</a>
             </div>
         </div>
     </div>

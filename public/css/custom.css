@@ -304,3 +304,26 @@ a.logoutbtn{
 	font-size: .7rem;
 	color:rgba(92, 92, 92, 0.5)
 }
+
+
+/*================== CUSTOMER FLASH ALERTS=============== */
+.custom-alert{
+	position:absolute;
+	bottom: 20px;
+	right: 50px;
+	background-color: #202020;
+	color: white;
+	width: fit-content;
+	min-width: 250px;
+	padding: 1rem;
+	border-radius: 5px;
+}
+.custom-alert-error{
+	border-left: 10px solid red;
+}
+.custom-alert-warning{
+	border-left: 10px solid yellow;
+}
+.custom-alert-success{
+	border-left: 10px solid green;
+}

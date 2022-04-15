@@ -99,6 +99,7 @@
         </nav>
 
         <main class="py-4 container">
+            <x-flash-messages/>
             @yield('content')
         </main>
     </div>

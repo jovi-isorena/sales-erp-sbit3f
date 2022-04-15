@@ -56,7 +56,7 @@ class Releaseorder extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function employee()
+    public function approvedby()
     {
         return $this->belongsTo('App\Models\Employee', 'ApprovedBy', 'EmployeeID');
     }
@@ -64,7 +64,7 @@ class Releaseorder extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function employee()
+    public function createdby()
     {
         return $this->belongsTo('App\Models\Employee', 'CreatedBy', 'EmployeeID');
     }
