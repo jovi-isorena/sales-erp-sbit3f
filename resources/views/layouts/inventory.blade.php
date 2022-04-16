@@ -54,6 +54,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('releaseOrderIndex') }}">Release Orders</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ route('purchaseOrderIndex') }}">Purchase Orders</a>
+                            </li>
                             
                         </ul>
                         

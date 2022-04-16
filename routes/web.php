@@ -11,6 +11,7 @@ use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\ReleaseOrderController;
 use App\Http\Controllers\SerializedProductController;
 use App\Http\Controllers\UserController;
@@ -178,3 +179,24 @@ Route::post('/systemaccount/unlock/{user:employeeid}', [UserController::class, '
     ->name('userUnlock');
 Route::post('/systemaccount/changepassword/{user:employeeid}', [UserController::class, 'changepassword'])
     ->name('changePassword');
+//PURCHASE ORDER
+Route::get('/purchaseorder', [PurchaseOrderController::class, 'index'])
+    ->middleware('auth')
+    ->name('purchaseOrderIndex');
+Route::get('/purchaseorder/create', [PurchaseOrderController::class, 'create'])
+    ->middleware('auth')
+    ->name('purchaseOrderCreate');
+Route::post('/purchaseorder/store', [PurchaseOrderController::class, 'store'])
+    ->middleware('auth')
+    ->name('purchaseOrderStore');
+Route::put('/purchaseorder/update/{purchaseorder:id}', [PurchaseOrderController::class, 'update'])
+    ->middleware('auth')
+    ->name('purchaseOrderUpdate');
+Route::put('/purchaseorder/cancel/{purchaseorder:id}', [PurchaseOrderController::class, 'cancel'])
+    ->middleware('auth')
+    ->name('purchaseOrderCancel');
+Route::get('/purchaseorder/receive/{purchaseorder:id}', [PurchaseOrderController::class, 'receive'])
+    ->middleware('auth')
+    ->name('purchaseOrderReceive');
+Route::get('/purchaseorder/show/{purchaseorder}', [PurchaseOrderController::class, 'show'])
+    ->name('purchaseOrderShow');
