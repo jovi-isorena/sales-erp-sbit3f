@@ -8,6 +8,7 @@ use App\Models\Queue;
 use App\Models\Representativehandledticket;
 use App\Models\Employee;
 use App\Models\Ticketingsla;
+use App\Models\Product;
 use Illuminate\Support\Facades\Date;
 
 class HomeController extends Controller
@@ -29,7 +30,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+      
+
+        
+        $getProduct = Product::all();
+
+       // dd($getProduct);
+        
+
+        return view('home')->with('getProduct', $getProduct);
         //index function redirect the 
         // if(auth()->user()->employee->Position == 9)
         //     return view('crmadmin_dashboard');

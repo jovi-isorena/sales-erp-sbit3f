@@ -50,7 +50,7 @@ class Order extends Model
     /**
      * @var array
      */
-    protected $fillable = ['CustomerID', 'TotalAmount', 'ShippingAddress', 'PaymentMethod', 'OrderedDate', 'ReceivedDate', 'OrderStatus'];
+    protected $fillable = ['OrderID', 'CustomerID', 'TotalAmount', 'ShippingAddress', 'PaymentMethod', 'OrderedDate', 'ReceivedDate', 'OrderStatus'];
 
     /**
      * Indicates if the model should be timestamped.

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\User;
+use App\Models\Customeraddress;
+
 //use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Hash;    
 use Illuminate\Support\Facades\Auth; //nadagdag
@@ -36,7 +39,7 @@ class EcommSessionsController extends Controller
     //Create user
     public function store(Request $request)
     {
-
+    
 
        // dd($request);
 
@@ -50,7 +53,8 @@ class EcommSessionsController extends Controller
 
     //   $id = IdGenerator::generate(['Customer' => 'CustomerID', 'length' => 6, 'prefix' => $prefix]);
         $customID = $prefix."-".$id;
-        
+      
+        $accounttype = 'customer';
 
         $customerStats = 'non-active';
         $customerIDex = 2;
@@ -71,8 +75,15 @@ class EcommSessionsController extends Controller
            'Email' => $request->input('email'),
            'Password' =>  $hashedpass,
            'CustomerStatus' => $customerStats
-
           
+        ]);
+
+        $insertAlso = User::create([
+
+          'AccountType' => $accounttype,
+          'CustomerID' => $customID,
+          'Username' => $request->input('email'),
+          'Password' => $hashedpass 
         ]);
 
 
@@ -86,12 +97,19 @@ class EcommSessionsController extends Controller
     public function access(Request $request)
     {
 
+
+      $currentDate = date('Y-m-d H:i:s');
+    
+
       //  dd($request);
 
        $credentials = $request->validate([
             'email' => 'required|max:255',
             'password' => 'required'
         ]);
+
+     
+      
 
        // $email = $request->input('email');
        //  $password = $request->input('password');
@@ -100,9 +118,10 @@ class EcommSessionsController extends Controller
         $hashedpass = Hash::make($credentials['password']);
 
 
-        $getCustomer = Customer::where('Email', $credentials['email'])
+        $getCustomer = User::where('Username', $credentials['email'])
       //  ->where('Password', $hashedpass)
         ->first();
+
 
         if($getCustomer != null)
         {
@@ -110,18 +129,42 @@ class EcommSessionsController extends Controller
              // $validCustomer = password_verify($credentials['password'], $getCustomer->Password);
        
             //$validCustomer =  $hashedpass == $getCustomer->Password;
-
-
           
-            if(Hash::check($credentials['password'] , $getCustomer->Password))
+            $valid = Hash::check($credentials['password'] , $getCustomer->Password);
+            
+            
+            if($valid)
             {
+            
+                Auth::loginUsingId($getCustomer->ID);
+                    $request->session()->regenerate();
+
+                    DB::table('customer')
+                    ->where('CustomerID', $getCustomer->CustomerID)
+                    ->update(
+                      ['LastLoginAttempt' => $currentDate]
+                    );
 
               
-              Auth::loginUsingId($getCustomer->CustomerID);
-                
-              $request->session()->regenerate();
-               
-               /*
+
+
+                   // auth()->user()->customer->FirstName;
+
+
+
+              
+
+
+            
+              
+              /*
+
+                     Auth::loginUsingId($getCustomer->CustomerID);
+                        
+                      $request->session()->regenerate();
+
+           
+
 
                 if(Auth::check())
               {
@@ -137,8 +180,8 @@ class EcommSessionsController extends Controller
                     );
                 }
                 */
-            
-              //  return redirect()->intended('home');
+         
+                return redirect(route('customerHome'));
      
             }
 
@@ -149,7 +192,37 @@ class EcommSessionsController extends Controller
             'email' => 'Incorrect email and/or password.'
             
         ]);
-       
-        
+   
+     
+    }
+
+    public function upgradeAccount(Request $request)
+    {
+
+     
+
+      $upgradeAccout = Customeraddress::create([
+
+        'CustomerID' => $request->input('id'),
+        'Address' => $request->input('address'),
+        'Barangay' => $request->input('barangay'),
+        'City' => $request->input('city'), 
+        'Zip' => $request->input('zip'), 
+        'Type' => $request->input('type') 
+
+      ]);
+
+      return redirect(route('ecommprofile'));
+
+
+    }
+
+
+
+    public function unload()
+    {
+      $customerID = auth()->user()->CustomerID;
+        Auth::logout();
+        return redirect(route('home'));
     }
 }

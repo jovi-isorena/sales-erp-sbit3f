@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 //nadagdag
@@ -35,6 +34,8 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class Customer extends Model
 {
+   
+
     /**
      * The table associated with the model.
      * 
@@ -67,6 +68,11 @@ class Customer extends Model
      * @var array
      */
     protected $fillable = ['CustomerID', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'Mobile', 'Email', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'Image', 'CustomerStatus', 'JoinDate'];
+
+
+    protected $hidden = [
+        'Password', 'remember_token',
+    ];
 
     /**
      * Indicates if the model should be timestamped.
@@ -130,4 +136,7 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\Ticket', 'CreatedBy', 'CustomerID');
     }
+
+  
+ 
 }

@@ -12,6 +12,9 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ecommController;
 use App\Http\Controllers\EcommSessionsController;
 use App\Http\Controllers\EcommLoginSessionsController;
+use App\Http\Controllers\EcommCartController;
+use App\Http\Controllers\PlaceOrderController;
+use App\Http\Controllers\MyOrdersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -124,14 +127,19 @@ Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
 
 //Ecomm module
 
-//Route::get('/ecomm_customer/index', [ecommController::class, 'index'])
-    //    ->name('ecommHomeLog');
+Route::get('/ecomm_customer/index', [ecommController::class, 'index'])
+     ->name('customerHome');
 
 Route::get('/ecomm_customer/login', [EcommSessionsController::class, 'login'])
         ->name('ecommlogin');
 
 Route::get('/ecomm_customer/register', [ecommController::class, 'register'])
         ->name('ecommregister');
+
+Route::get('/ecomm_customer/profile', [ecommController::class, 'profile'])
+        ->name('ecommprofile');
+
+
 
 
 //Ecomm customer sessions
@@ -141,6 +149,53 @@ Route::post('ecomm_customer/store', [EcommSessionsController::class, 'store'])
 
 Route::post('ecomm_customer/access', [EcommSessionsController::class, 'access'])
         ->name('loginCustomer');
+Route::post('ecomm_customer/upgradeAccount', [EcommSessionsController::class, 'upgradeAccount'])
+        ->name('upgradeAccount');   
+Route::get('ecomm_customer/unload', [EcommSessionsController::class, 'unload'])
+        ->name('logoutCustomer');
+
+//View
+Route::post('ecomm_customer/product', [EcommCartController::class, 'product'])
+        ->name('product');
+// Add to cart
+Route::post('ecomm_customer/cart', [EcommCartController::class, 'cart'])
+        ->name('addtocart');
+// Buy now
+Route::post('ecomm_customer/buynow', [EcommCartController::class, 'buynow'])
+        ->name('buynow');
+//Placeorder
+// Preparation Order
+Route::post('ecomm_customer/prepplaceorder', [PlaceOrderController::class, 'prepplaceorder'])
+        ->name('prepplaceOrdered');
+// Place Order for e-pay
+Route::post('ecomm_customer/placeorder', [PlaceOrderController::class, 'placeorder'])
+        ->name('placeordered');
+// Place Order for credit
+Route::post('ecomm_customer/placeorder2', [PlaceOrderController::class, 'placeorder2'])
+        ->name('placeordered2');
+// Place Order for COD
+Route::post('ecomm_customer/placeorder3', [PlaceOrderController::class, 'placeorder3'])
+        ->name('placeordered3');
+
+
+//for payment
+Route::get('ecomm_customer/cod', [PlaceOrderController::class, 'cod'])
+        ->name('cod');
+
+Route::get('ecomm_customer/epayment', [PlaceOrderController::class, 'epayment'])
+        ->name('epayment');
+
+Route::get('ecomm_customer/credit', [PlaceOrderController::class, 'credit'])
+        ->name('credit');
+
+//View orders
+
+Route::get('/ecomm_customer/myorders', [MyOrdersController::class, 'myorders'])
+        ->name('myordersview');
+
+
+
+
 
 
 

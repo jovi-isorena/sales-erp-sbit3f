@@ -1,13 +1,28 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property int $ID
+ * @property string $AccountType
+ * @property string $EmployeeID
+ * @property string $CustomerID
+ * @property string $Username
+ * @property string $Password
+ * @property string $LastLoginAttempt
+ * @property int $LoginAttemptCount
+ * @property string $LockedUntil
+ * @property boolean $isActive
+ * @property Employee $employee
+ * @property Customer $customer
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -24,26 +39,19 @@ class User extends Authenticatable
      * 
      * @var string
      */
-    protected $primaryKey = 'EmployeeID';
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     * 
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     * 
-     * @var bool
-     */
-    public $incrementing = false;
+    protected $primaryKey = 'ID';
 
     /**
      * @var array
      */
-    protected $fillable = ['Username', 'Password', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'isActive'];
+    protected $fillable = ['AccountType', 'CustomerID', 'Username', 'Password'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -52,8 +60,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Employee', 'EmployeeID', 'EmployeeID');
     }
-    
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
+    }
+
+
+
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -64,52 +82,4 @@ class User extends Authenticatable
         'remember_token'
     ];
 
-    
 }
-?>
-
-
-
-<!-- 
-namespace App\Models;
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-} -->
