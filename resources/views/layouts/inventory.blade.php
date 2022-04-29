@@ -57,6 +57,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('purchaseOrderIndex') }}">Purchase Orders</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ route('qualityControlTestIndex') }}">Quality Control</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ route('productCheckInList') }}">Inventory Check-in</a>
+                            </li>
                             
                         </ul>
                         

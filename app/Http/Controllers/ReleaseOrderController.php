@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ReleaseOrder;
 use App\Models\Product;
+use App\Models\ReleasedItem;
+use App\Models\ReleaseOrderItem;
+use App\Models\SerializedProduct;
 use Illuminate\Http\Request;
 
 class ReleaseOrderController extends Controller
@@ -15,7 +18,8 @@ class ReleaseOrderController extends Controller
      */
     public function index()
     {
-        $orders = ReleaseOrder::all();
+        $orders = ReleaseOrder::with('location')
+            ->get();
         return view('releaseorder.index',[
             'orders' => $orders
         ]);
@@ -44,21 +48,36 @@ class ReleaseOrderController extends Controller
     {
     // protected $fillable = ['ProductID', 'Quantity', 'CreatedBy', 'CreatedDate', 'ApprovedBy', 'ApprovedDate', 'Status'];
         $request->validate([
-            'productid' => 'required|exists:product,productid',
-            'quantity' => 'required|numeric|min:1|max:25'
+            'productid.*' => 'required|exists:product,productid',
+            'quantity.*' => 'required|numeric|min:1|max:25'
         ]);
 
+        $total = array_sum($request->input('quantity'));
         $order = ReleaseOrder::make([
-            'ProductID' => $request->input('productid'),
-            'Quantity' => $request->input('quantity'),
+            'TotalItemQuantity' => $total,
+            'LocationID' => auth()->user()->employee->Location, 
             'CreatedBy' => auth()->user()->EmployeeID,
             'CreatedDate' => now('Asia/Manila'),
             'Status' => 'Pending'
         ]);
 
-        $order->save();
-        $request->session()->flash('success', 'Release Order successfully place.');
-        return redirect()->back();
+        $result = $order->save();
+        if($result){
+            foreach ($request->input('productid') as $key => $value) {
+                $orderitem = ReleaseOrderItem::make([
+                    'ReleaseOrderID' => $order->ReleaseOrderID, 
+                    'ProductID' => $value, 
+                    'Quantity' => $request->input('quantity')[$key], 
+                    'Status' => 'Pending'
+                ]);
+
+                $orderitem->save(); 
+            }
+            $request->session()->flash('success', 'Release Order successfully place.');
+        }else{
+
+        }
+        return redirect(route('releaseOrderIndex'));
         
     }
 
@@ -68,11 +87,11 @@ class ReleaseOrderController extends Controller
      * @param  \App\Models\ReleaseOrder  $releaseOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(ReleaseOrder $releaseOrder)
+    public function show(ReleaseOrder $releaseorder)
     {
-        dd($releaseOrder);
+        
         return view('releaseorder.show', [
-            'order' => $releaseOrder
+            'order' => $releaseorder
         ]);
     }
 
@@ -108,5 +127,38 @@ class ReleaseOrderController extends Controller
     public function destroy(ReleaseOrder $releaseOrder)
     {
         //
+    }
+
+    public function fulfill(ReleaseOrder $releaseorder)
+    {
+        // $serials = $releaseorder->items->select('I')
+        return view('releaseorder.fullfill', [
+            'order' => $releaseorder
+        ]);
+    }
+
+    public function save(Request $request, ReleaseOrder $releaseorder)
+    {
+        $request->validate([
+            'serial.*' => 'required|exists:serializedproduct,SerialNo'
+        ]);
+
+        foreach ($request->input('serial') as $key => $value) {
+            $id = SerializedProduct::select('ID')
+                ->where('SerialNo', $value)
+                ->get();
+            $releasedItem = ReleasedItem::make([
+                'SerializedID' => $id, 
+                'SerialNo' => $value, 
+                'ReleaseOrderID' => $releaseorder->ReleaseOrderID
+            ]);
+
+            $releasedItem->save();
+        }
+
+        $releaseorder->update([
+            'Status' => 'Fulfilled'
+        ]);
+        // return redirect(route('releaseOrderIndex'));
     }
 }

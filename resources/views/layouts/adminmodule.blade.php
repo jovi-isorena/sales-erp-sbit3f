@@ -43,6 +43,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('employeeIndex') }}">Employees</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ route('locationIndex') }}">Locations</a>
+                            </li>
                             
                         </ul>
                         

@@ -18,7 +18,7 @@ class PurchaseOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = [];
+        $orders = PurchaseOrder::where('Status', 'Submitted')->get();
         if($request->has('search')){
             
             $orders = PurchaseOrder::where('ID', 'LIKE', '%'.$request->query('search').'%')

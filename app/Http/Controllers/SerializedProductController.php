@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Serializedproduct;
 use App\Models\Product;
+use App\Models\QualityControlTestItem;
 use Illuminate\Http\Request;
 
 class SerializedProductController extends Controller
@@ -56,6 +57,7 @@ class SerializedProductController extends Controller
             $now = now('Asia/Manila');
             $serialized = SerializedProduct::make([
                 'SerialNo' => $request->input('serial')[$i],
+                'ManufacturerSerialNo' => $this->generateSerialNo(),
                 'ProductID' => $request->input('product'),
                 'AddedOn' => $now,
                 'ModifiedOn' => $now,
@@ -119,6 +121,55 @@ class SerializedProductController extends Controller
         return redirect()->back();
     }
 
+    //get
+    public function checkin(Request $request){
+        if(!empty($request->query('search'))){
+            $products = QualityControlTestItem::where('CheckedIn', 'Perfect Condition')
+                ->where('CheckedIn', false)
+                ->where('ManufacturerSerialNo', $request->query('search'))
+                ->get();
+        }else{
+            $products = QualityControlTestItem::where('Condition', 'Perfect Condition')
+            ->where('CheckedIn', false)
+            ->get();
+        }
+
+
+        return view('serializedproduct.checkin', [
+            'products' => $products
+        ]);
+    }
+
+    //post
+    public function checkinstore(QualityControlTestItem $item){
+        $stringSerial = $this->generateSerialNo();
+        $now = now('Asia/Manila');
+        $serialized = SerializedProduct::make([
+            'SerialNo' => $stringSerial,
+            'ManufacturerSerialNo' => $item->ManufacturerSerialNo,
+            'ProductID' => $item->product->ProductID,
+            'AddedOn' => $now,
+            'ModifiedOn' => $now,
+            'AddedBy' => auth()->user()->EmployeeID,
+            'ModifiedBy' => auth()->user()->EmployeeID,
+            'Location' => 'Warehouse',
+            'Status' => 'Brand New'
+        ]);
+        $result = $serialized->save();
+        if($result){
+            $item->update([
+                'CheckedIn' => true
+            ]);
+            session()->flash('success', 'Product successfully checked-in.');
+        }
+        else{
+            session()->flash('error', 'Product failed to check-in.');
+
+        }
+
+        return redirect(route('productCheckInList'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -128,5 +179,13 @@ class SerializedProductController extends Controller
     public function destroy(serializedproduct $serializedproduct)
     {
         //
+    }
+
+    private function generateSerialNo(){
+        $maxId = Serializedproduct::max('ID');
+        $maxId += 1;
+        $stringId = "000000000000" . $maxId;
+        $stringId = substr($stringId, strlen($stringId)-12);
+        return $stringId;
     }
 }

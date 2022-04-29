@@ -31,7 +31,7 @@
     </div>
 @else
     <table class="table text-center border rounded shadow">
-        <thead class="table-info">
+        <thead class="table-dark">
             <tr>
                 <th>Product ID</th>
                 <th>Name</th>

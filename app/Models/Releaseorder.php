@@ -6,25 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $ReleaseOrderID
- * @property int $ProductID
- * @property int $Quantity
+ * @property int $TotalItemQuantity
+ * @property int $LocationID
  * @property string $CreatedBy
  * @property string $CreatedDate
  * @property string $ApprovedBy
  * @property string $ApprovedDate
  * @property string $Status
- * @property Product $product
  * @property Employee $employee
+ * @property Location $location
  * @property Employee $employee
  */
-class Releaseorder extends Model
+class ReleaseOrder extends Model
 {
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'releaseorder';
+    protected $table = 'ReleaseOrder';
 
     /**
      * The primary key for the model.
@@ -36,7 +36,7 @@ class Releaseorder extends Model
     /**
      * @var array
      */
-    protected $fillable = ['ProductID', 'Quantity', 'CreatedBy', 'CreatedDate', 'ApprovedBy', 'ApprovedDate', 'Status'];
+    protected $fillable = ['TotalItemQuantity', 'LocationID', 'CreatedBy', 'CreatedDate', 'ApprovedBy', 'ApprovedDate', 'Status'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -48,9 +48,17 @@ class Releaseorder extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function product()
+    public function createdby()
     {
-        return $this->belongsTo('App\Models\Product', 'ProductID', 'ProductID');
+        return $this->belongsTo('App\Models\Employee', 'CreatedBy', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function location()
+    {
+        return $this->belongsTo('App\Models\Location', 'LocationID', 'LocationID');
     }
 
     /**
@@ -61,11 +69,8 @@ class Releaseorder extends Model
         return $this->belongsTo('App\Models\Employee', 'ApprovedBy', 'EmployeeID');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function createdby()
+    public function items()
     {
-        return $this->belongsTo('App\Models\Employee', 'CreatedBy', 'EmployeeID');
+        return $this->hasMany('App\Models\ReleaseOrderItem', 'ReleaseOrderID', 'ReleaseOrderID');
     }
 }

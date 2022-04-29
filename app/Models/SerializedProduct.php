@@ -34,7 +34,7 @@ class SerializedProduct extends Model
     /**
      * @var array
      */
-    protected $fillable = ['SerialNo', 'ProductID', 'AddedOn', 'ModifiedOn', 'AddedBy', 'ModifiedBy', 'Location', 'Status'];
+    protected $fillable = ['SerialNo', 'ManufacturerSerialNo', 'ProductID', 'AddedOn', 'ModifiedOn', 'AddedBy', 'ModifiedBy', 'Location', 'Status'];
 
     /**
      * Indicates if the model should be timestamped.

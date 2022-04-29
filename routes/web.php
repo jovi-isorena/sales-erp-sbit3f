@@ -12,9 +12,11 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\QualityControlTestController;
 use App\Http\Controllers\ReleaseOrderController;
 use App\Http\Controllers\SerializedProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LocationController;
 use App\Models\Releaseorder;
 
 /*
@@ -131,7 +133,7 @@ Route::get('/product/archive/{product:productid}', [ProductController::class, 'a
     ->name('archiveProduct');
 Route::get('/product/unarchive/{product:productid}', [ProductController::class, 'unarchive'])
     ->name('unarchiveProduct');
-//Serialized Product Maintenance
+    //Serialized Product Maintenance
 Route::get('/serialized', [SerializedProductController::class,'index'])
     ->name('serializedIndex');
 Route::get('/serialized/create', [SerializedProductController::class, 'create'])
@@ -142,6 +144,10 @@ Route::get('/serialized/edit/{serializedproduct:id}', [SerializedProductControll
     ->name('serializedEdit');
 Route::put('/serialized/update/{serializedproduct:id}', [SerializedProductController::class, 'update'])
     ->name('serializedUpdate');
+Route::get('/serialized/checkin', [SerializedProductController::class, 'checkin'])
+    ->name('productCheckInList');
+Route::post('serialized/checkin/store/{item:testitemno}', [SerializedProductController::class, 'checkinstore'])
+    ->name('productCheckIn');
 //Release Order
 Route::get('/releaserorders', [ReleaseOrderController::class, 'index'])
     ->name('releaseOrderIndex');
@@ -151,6 +157,10 @@ Route::post('releaserorders/store', [ReleaseOrderController::class, 'store'])
     ->name('releaseOrderStore');
 Route::get('releaserorders/show/{releaseorder}', [ReleaseOrderController::class, 'show'])
     ->name('releaseOrderShow');
+Route::get('releaseOrders/fulfill/{releaseorder}', [ReleaseOrderController::class, 'fulfill'])
+    ->name('releaseOrderFulfill');
+Route::post('releaseOrders/save/{releaseorder}', [ReleaseOrderController::class, 'save'])
+    ->name('releaseOrderSave');
 
 // ADMIN MODULE
 Route::get('admin_dashboard', [HomeController::class, 'adminDashboard'])
@@ -179,6 +189,24 @@ Route::post('/systemaccount/unlock/{user:employeeid}', [UserController::class, '
     ->name('userUnlock');
 Route::post('/systemaccount/changepassword/{user:employeeid}', [UserController::class, 'changepassword'])
     ->name('changePassword');
+// LOCATIONS
+Route::get('/locations', [LocationController::class, 'index'])
+    ->middleware('auth')
+    ->name('locationIndex');
+Route::get('/locations/create', [LocationController::class, 'create'])
+    ->middleware('auth')
+    ->name('locationCreate');
+Route::post('/locations/store', [LocationController::class, 'store'])
+    ->middleware('auth')
+    ->name('locationStore');
+Route::get('/locations/edit/{location:locationid}', [LocationController::class, 'edit'])
+    ->middleware('auth')
+    ->name('locationEdit');
+Route::put('/locations/update/{location:locationid}', [LocationController::class, 'update'])
+    ->middleware('auth')
+    ->name('locationUpdate');
+
+
 //PURCHASE ORDER
 Route::get('/purchaseorder', [PurchaseOrderController::class, 'index'])
     ->middleware('auth')
@@ -200,3 +228,12 @@ Route::get('/purchaseorder/receive/{purchaseorder:id}', [PurchaseOrderController
     ->name('purchaseOrderReceive');
 Route::get('/purchaseorder/show/{purchaseorder}', [PurchaseOrderController::class, 'show'])
     ->name('purchaseOrderShow');
+
+// QUALITY CONTROL
+Route::get('/qualitycontroltest', [QualityControlTestController::class, 'index'])
+    ->name('qualityControlTestIndex');
+Route::get('/qualitycontroltest/create', [QualityControlTestController::class, 'create'])
+    ->name('qualityControlTestCreate');
+Route::post('/qualitycontroltest/store', [QualityControlTestController::class, 'store'])
+    ->name('qualityControlTestStore');
+

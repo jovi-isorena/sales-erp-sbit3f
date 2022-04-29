@@ -25,9 +25,12 @@
                 <tr>
                     <td>{{ $order->ReleaseOrderID }}</td>
                     <td>{{ Carbon\Carbon::parse($order->CreatedDate)->diffForHumans() }}</td>
-                    <td>{{ $order->createdby->FirstName . ' ' . $order->createdby->LastName }}</td>
+                    <td>{{ $order->location->Name }}</td>
                     <td>{{ $order->Status }}</td>
-                    <td><a href="{{ route('releaseOrderShow', $order->ReleaseOrderID) }}">Show</a></td>
+                    <td>
+                        <a href="{{ route('releaseOrderShow', $order->ReleaseOrderID) }}">Show</a>
+                        <a href="{{ route( 'releaseOrderFulfill', $order->ReleaseOrderID) }}">Fulfill</a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
