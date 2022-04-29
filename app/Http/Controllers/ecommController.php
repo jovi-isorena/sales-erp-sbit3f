@@ -39,12 +39,11 @@ class ecommController extends Controller
     public function profile()
     {
 
-        $customerID = auth()->user()->customer->CustomerID;
-        
-        //dd($customerID);
+        // $customerID = auth()->user()->customer->CustomerID;
+        $customer = auth()->user()->customer;
+        // dd($customer->customeraddresses);
 
-        $getaddressID = Customeraddress::where('CustomerID', $customerID)
-        ->first();
+        // $getaddressID = $customer->customeraddresses[0]];
 
         // $getorder = Order::select(DB::raw('count(OrderID) AS orders'))
         // ->where('CustomerID', $customerID)
@@ -56,7 +55,7 @@ class ecommController extends Controller
 
 
         return view('ecomm_customer.profile', [
-            'getaddressID' => $getaddressID,
+            'customer' => $customer,
               //'num' => $getorder
         ]);
 

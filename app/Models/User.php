@@ -44,8 +44,7 @@ class User extends Authenticatable
     /**
      * @var array
      */
-    protected $fillable = ['AccountType', 'CustomerID', 'Username', 'Password'];
-
+    
     /**
      * Indicates if the model should be timestamped.
      * 
@@ -77,12 +76,7 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-<<<<<<< HEAD
-    public function customer()
-    {
-        return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
-    }
-=======
+    
     protected $hidden = [
         'Password',
         'remember_token'
@@ -104,7 +98,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
->>>>>>> inventory-module
 
 
 
@@ -119,9 +112,7 @@ use Laravel\Sanctum\HasApiTokens;
         'remember_token'
     ];
 
-<<<<<<< HEAD
 }
-=======
     /**
      * The attributes that should be cast.
      *
@@ -133,4 +124,3 @@ use Laravel\Sanctum\HasApiTokens;
 } -->
 
 
->>>>>>> inventory-module

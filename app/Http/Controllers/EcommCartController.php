@@ -42,9 +42,11 @@ class EcommCartController extends Controller
         ]);
     }
 
-    
+    //add item to cart
     public function cart(Request $request)
     {
+        //if the added item is already in the cart, update the quantity only.
+        //if the added item is new, insert new record
 
         //dd($request);
 
@@ -58,6 +60,7 @@ class EcommCartController extends Controller
         $quan = 0;
 
      //   $customerID = auth()->user()->customer->CustomerID;
+        
 
         $addtocart = Cartitem::create([
             'CustomerID' => $customerID,

@@ -28,24 +28,22 @@
     @auth
 
     
-    <p>Firstname:   {{ auth()->user()->customer->FirstName }}</p>
+    <p>Firstname:   {{ $customer->FirstName }}</p>
    
-    <p>Middlename:   {{ auth()->user()->customer->MiddleName }}</p>
+    <p>Middlename:   {{ $customer->MiddleName }}</p>
    
-    <p>Lastname:   {{ auth()->user()->customer->LastName }}</p>
+    <p>Lastname:   {{ $customer->LastName }}</p>
 
-    <p>Suffix:   {{ auth()->user()->customer->Suffix }}</p>
+    <p>Suffix:   {{ $customer->Suffix }}</p>
 
-    <p>Birthdate:   {{ auth()->user()->customer->Birthdate }}</p>
+    <p>Birthdate:   {{ $customer->Birthdate }}</p>
 
 
     <h4>Contact Information.</h4>
 
-    <p>Mobile:   {{ auth()->user()->customer->Mobile }}</p>
+    <p>Mobile:   {{ $customer->Mobile }}</p>
 
-    <p>Email:   {{ auth()->user()->customer->Email }}</p>
-
-
+    <p>Email:   {{ $customer->Email }}</p>
 
 
 
@@ -56,17 +54,24 @@
 
 
 
-@if($getaddressID->CustomerID)
+
+
+@if($customer->customeraddresses->count() > 0)
   
 <h4>Location</h4>
 
 
-<p>Address: {{ $getaddressID->Address }}</p>
-<p>Barangay: {{ $getaddressID->Barangay }}</p>
-<p>City: {{ $getaddressID->City }}</p>
-<p>Zip: {{ $getaddressID->Zip }}</p>
+{{-- <p>Address: {{ $customer->customeraddresses->first()->Address }}</p>
+<p>Barangay: {{ $customer->customeraddresses->first()->Barangay }}</p>
+<p>City: {{ $customer->customeraddresses->first()->City }}</p>
+<p>Zip: {{ $customer->customeraddresses->first()->Zip }}</p> --}}
         
-               
+@foreach ($customer->customeraddresses as $address)
+<p>Address: {{ $address->Address }}</p>
+<p>Barangay: {{  $address->Barangay }}</p>
+<p>City: {{  $address->City }}</p>
+<p>Zip: {{  $address->Zip }}</p>
+@endforeach               
        
 
 
@@ -79,7 +84,7 @@
 <form action="{{ route('upgradeAccount') }}" method="POST" >
     @csrf
 
-    <input name="id" type="hidden" value="{{ auth()->user()->customer->CustomerID }}">
+    <input name="id" type="hidden" value="{{ $customer->CustomerID }}">
 
     <label for="">Type:</label>
     <select name="type" id="">
