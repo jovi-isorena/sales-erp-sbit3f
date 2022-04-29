@@ -62,6 +62,14 @@ class SessionController extends Controller
 
                 //for e-commerce module user
                 if($getUser->employee->DepartmentID == 3){
+
+                    Auth::loginUsingId($getUser->EmployeeID);
+                    $request->session()->regenerate();
+
+
+                    return redirect(route('orderManagerDashboard'));
+
+
                 }//end e-commerce module
 
                 //for crm module user

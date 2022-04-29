@@ -85,6 +85,37 @@ class HomeController extends Controller
         // }
     }
 
+    //ecomm staff order manager
+
+    public function ordermanagerDashboard()
+    {
+        $empid = auth()->user()->EmployeeID;
+
+        return view('nonadmin.ordermanager_dashboard');
+    }
+
+    public function ordermanagementDashboard()
+    {
+        $empid = auth()->user()->EmployeeID;
+
+        return view('nonadmin.ordermanagements_dashboard');
+    }
+
+
+    public function productmanagementDashboard()
+    {
+        $empid = auth()->user()->EmployeeID;
+
+        return view('nonadmin.manageproducts_dashboard');
+    }
+
+
+
+
+
+
+
+
     public function repDashboard(){
         $empid = auth()->user()->EmployeeID;
         $tickets = Ticket::whereMonth('RatingDatetime', now('Asia/Manila')->month)

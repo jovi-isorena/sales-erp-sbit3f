@@ -46,8 +46,8 @@
 
    <form method="POST" action={{ route('addtocart') }}>
     @csrf
-    <input name="productID" type="text" value="{{ $product->ProductID }}">
-    <input name="customerID" type="text" value="{{ $customerID }}">
+    <input name="productID" type="hidden" value="{{ $product->ProductID }}">
+    <input name="customerID" type="hidden" value="{{ $customerID }}">
 
    
     <button>

@@ -15,6 +15,7 @@ use App\Http\Controllers\EcommLoginSessionsController;
 use App\Http\Controllers\EcommCartController;
 use App\Http\Controllers\PlaceOrderController;
 use App\Http\Controllers\MyOrdersController;
+use App\Http\Controllers\OrderManagementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -123,6 +124,32 @@ Route::get('/rep_dashboard', [HomeController::class, 'repDashboard'])
     ->name('repDashboard');
 Route::get('/lead_dashboard', [HomeController::class, 'leadDashboard'])
     ->name('leadDashboard');
+
+//Order manager ordermanagerDashboard
+
+Route::get('/ordermanager_dashboard', [HomeController::class, 'ordermanagerDashboard'])
+    ->name('orderManagerDashboard');
+
+//Order Management here
+
+Route::get('/ordermanagements_dashboard', [HomeController::class, 'ordermanagementDashboard'])
+    ->name('orderManagementDashboard');
+
+Route::get('/toPay', [OrderManagementController::class, 'toPay'])
+    ->name('toPayPage');
+Route::get('/toShip', [OrderManagementController::class, 'toShip'])
+    ->name('toShipPage');
+Route::get('/toDeliver', [OrderManagementController::class, 'toDeliver'])
+    ->name('toDeliverPage');
+    
+Route::get('/CompletedOrder', [OrderManagementController::class, 'CompletedOrder'])
+    ->name('CompletedOrderPage');
+
+
+Route::get('/manageproducts_dashboard', [HomeController::class, 'productmanagementDashboard'])
+    ->name('productManagementDashboard');
+
+
 
 
 //Ecomm module
