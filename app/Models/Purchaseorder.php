@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $TransactionNumber
- * @property int $SupplierID
+ * @property int $ID
  * @property string $CreatedBy
- * @property float $Total
- * @property string $OrderedDate
- * @property string $EstimatedDeliveryDate
- * @property Supplier $supplier
+ * @property string $CreatedDate
+ * @property string $DeliveredBy
+ * @property string $ReceivedBy
+ * @property string $ReceivedDate
+ * @property string $Status
  * @property Employee $employee
- * @property Delivery $delivery
+ * @property Employee $employee
  * @property Purchaseorderitem[] $purchaseorderitems
  */
-class Purchaseorder extends Model
+class PurchaseOrder extends Model
 {
     /**
      * The table associated with the model.
@@ -30,35 +30,34 @@ class Purchaseorder extends Model
      * 
      * @var string
      */
-    protected $primaryKey = 'TransactionNumber';
+    protected $primaryKey = 'ID';
 
     /**
      * @var array
      */
-    protected $fillable = ['SupplierID', 'CreatedBy', 'Total', 'OrderedDate', 'EstimatedDeliveryDate'];
+    protected $fillable = ['CreatedBy', 'CreatedDate', 'DeliveredBy', 'ReceivedBy', 'ReceivedDate', 'Status'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * 
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function supplier()
+    public function receivedby()
     {
-        return $this->belongsTo('App\Supplier', 'SupplierID', 'SupplierID');
+        return $this->belongsTo('App\Models\Employee', 'ReceivedBy', 'EmployeeID');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function employee()
+    public function createdby()
     {
-        return $this->belongsTo('App\Employee', 'CreatedBy', 'EmployeeID');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function delivery()
-    {
-        return $this->hasOne('App\Delivery', 'TransactionNumber', 'TransactionNumber');
+        return $this->belongsTo('App\Models\Employee', 'CreatedBy', 'EmployeeID');
     }
 
     /**
@@ -66,6 +65,6 @@ class Purchaseorder extends Model
      */
     public function purchaseorderitems()
     {
-        return $this->hasMany('App\Purchaseorderitem', 'TransactionNumber', 'TransactionNumber');
+        return $this->hasMany('App\Models\Purchaseorderitem', 'PurchaseOrderID', 'ID');
     }
 }

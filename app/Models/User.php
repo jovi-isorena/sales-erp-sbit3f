@@ -51,7 +51,20 @@ class User extends Authenticatable
      * 
      * @var bool
      */
-    public $timestamps = false;
+    public $incrementing = false;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['AccountType', 'EmployeeID', 'CustomerID', 'Username', 'Password', 'isFirstLogin', 'LastLoginAttempt', 'LoginAttemptCount', 'LockedUntil', 'isActive'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -64,10 +77,34 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+<<<<<<< HEAD
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer', 'CustomerID', 'CustomerID');
     }
+=======
+    protected $hidden = [
+        'Password',
+        'remember_token'
+    ];
+    
+    public $timestamps = false;
+
+    
+}
+?>
+
+
+
+<!-- 
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+>>>>>>> inventory-module
 
 
 
@@ -82,4 +119,18 @@ class User extends Authenticatable
         'remember_token'
     ];
 
+<<<<<<< HEAD
 }
+=======
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+} -->
+
+
+>>>>>>> inventory-module

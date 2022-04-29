@@ -152,7 +152,13 @@ return [
         'Content' => [
             'required' => 'Looks like you forgot to tell us your concern.'
         ],
-        
+        'productid' => [
+            'required' => 'Please select a product.',
+            
+        ],
+        'conpass' => [
+            'same' => 'Passwords did not match.'
+        ]
     ],
 
     /*

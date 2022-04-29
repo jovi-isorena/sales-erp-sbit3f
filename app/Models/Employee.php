@@ -13,18 +13,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Birthdate
  * @property string $HomeAddress
  * @property string $ContactNo
+ * @property string $Email
+ * @property int $Location
  * @property int $DepartmentID
  * @property int $TeamID
  * @property int $Position
  * @property boolean $isActive
+ * @property Location $location
  * @property Department $department
  * @property Position $position
  * @property Team $team
  * @property Comment[] $comments
+ * @property Purchaseorder[] $purchaseorders
+ * @property Purchaseorder[] $purchaseorders
+ * @property Qualitycontroltest[] $qualitycontroltests
  * @property Queue[] $queues
  * @property Releaseorder[] $releaseorders
  * @property Releaseorder[] $releaseorders
  * @property Representativehandledticket[] $representativehandledtickets
+ * @property Serializedproduct[] $serializedproducts
+ * @property Serializedproduct[] $serializedproducts
  * @property Systemaccount $systemaccount
  * @property Team[] $teams
  * @property Ticket[] $tickets
@@ -62,7 +70,7 @@ class Employee extends Model
     /**
      * @var array
      */
-    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'HomeAddress', 'ContactNo', 'DepartmentID', 'TeamID', 'Position', 'isActive'];
+    protected $fillable = ['FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'HomeAddress', 'ContactNo', 'Email', 'Location', 'DepartmentID', 'TeamID', 'Position', 'isActive'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -70,6 +78,14 @@ class Employee extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function location()
+    {
+        return $this->belongsTo('App\Models\Location', 'Location', 'LocationID');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -106,9 +122,33 @@ class Employee extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function queue()
+    public function createdpurchaseorders()
     {
-        return $this->hasOne('App\Models\Queue', 'EmployeeID', 'EmployeeID');
+        return $this->hasMany('App\Models\Purchaseorder', 'CreatedBy', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function receivedpurchaseorders()
+    {
+        return $this->hasMany('App\Models\Purchaseorder', 'ReceivedBy', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function qualitycontroltests()
+    {
+        return $this->hasMany('App\Models\Qualitycontroltest', 'Tester', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function queues()
+    {
+        return $this->hasMany('App\Models\Queue', 'EmployeeID', 'EmployeeID');
     }
 
     /**
@@ -133,6 +173,22 @@ class Employee extends Model
     public function representativehandledtickets()
     {
         return $this->hasMany('App\Models\Representativehandledticket', 'EmployeeID', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modifiedserializedproducts()
+    {
+        return $this->hasMany('App\Models\Serializedproduct', 'ModifiedBy', 'EmployeeID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addedserializedproducts()
+    {
+        return $this->hasMany('App\Models\Serializedproduct', 'AddedBy', 'EmployeeID');
     }
 
     /**
