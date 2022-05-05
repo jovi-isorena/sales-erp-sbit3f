@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $PositionID
  * @property string $PositionName
+ * @property boolean $AddItem
+ * @property boolean $ItemListDetail
+ * @property boolean $ModifyArchiveItem
+ * @property boolean $CreatePurchaseOrder
+ * @property boolean $PurchaseOrderListDetail
+ * @property boolean $PurchaseOrderApprove
+ * @property boolean $PurchaseOrderReceive
+ * @property boolean $InitiateQualityControl
+ * @property boolean $QualityControlListDetail
+ * @property boolean $CreateRestockRequest
+ * @property boolean $CancelRestockRequest
+ * @property boolean $RestockRequestListDetail
+ * @property boolean $RestockApproveDeny
  * @property boolean $isActive
  * @property Employee[] $employees
  */
@@ -29,7 +42,7 @@ class Position extends Model
     /**
      * @var array
      */
-    protected $fillable = ['PositionName', 'isActive'];
+    protected $fillable = ['PositionName', 'AddItem', 'ItemListDetail', 'ModifyArchiveItem', 'CreatePurchaseOrder', 'PurchaseOrderListDetail', 'PurchaseOrderApprove', 'PurchaseOrderReceive', 'InitiateQualityControl', 'QualityControlListDetail', 'CreateRestockRequest', 'CancelRestockRequest', 'RestockRequestListDetail', 'RestockApproveDeny', 'isActive'];
 
     /**
      * Indicates if the model should be timestamped.

@@ -30,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md custom-bg-primary  shadow-sm">
             <div class="container">
-                <a class="navbar-brand text-white" href="{{ route('inventoryDashboard') }}" style="text-decoration: none">
+                <a class="navbar-brand text-white" href="{{ route('inventoryLandingPage') }}" style="text-decoration: none">
                     <img src="{{ asset('images/3gency-logo-3gonly-white.svg') }}" alt="" style="width: 50px">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -41,15 +41,15 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                     @auth
                         
-                        <ul class="navbar-nav mr-auto ">
+                        {{-- <ul class="navbar-nav mr-auto ">
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('inventoryDashboard') }}">Inventory Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('inventoryMaintenance') }}">Product Maintenance</a>
+                                <a class="nav-link text-white" href="{{ route('inventoryMaintenance') }}">Item Maintenance</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('serializedIndex') }}">Serialized Products</a>
+                                <a class="nav-link text-white" href="{{ route('serializedIndex') }}">Serialized Item</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('releaseOrderIndex') }}">Release Orders</a>
@@ -64,7 +64,7 @@
                                 <a class="nav-link text-white" href="{{ route('productCheckInList') }}">Inventory Check-in</a>
                             </li>
                             
-                        </ul>
+                        </ul> --}}
                         
                     @endauth
                     

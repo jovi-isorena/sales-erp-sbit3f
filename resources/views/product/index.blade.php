@@ -1,7 +1,7 @@
 @extends('layouts.inventory')
 
 @section('content')
-<h1>Product Maintenance</h1>
+<h1>Item Maintenance</h1>
 <div class="mb-3">
     @if (session()->has('success'))
         <span class="alert alert-success">{{ session()->get('success') }}</span>
@@ -11,7 +11,7 @@
     <div class="row justify-content-between">
         <div class="col">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                New Product
+                New Item
             </button>
         </div>
 
@@ -27,14 +27,14 @@
 </div>
 @if ($products->count() <= 0)
     <div class="row text-center">
-        <span class="lead">No Product.</span>
+        <span class="lead">No Item.</span>
     </div>
 @else
     <table class="table text-center border rounded shadow">
         <thead class="table-dark">
             <tr>
-                <th>Product ID</th>
-                <th>Name</th>
+                <th>Item ID</th>
+                <th>Item Name</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Actions</th>
@@ -63,7 +63,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Archive Product</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Archive Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -98,14 +98,14 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add New Product</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Add New Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{{ route('addProduct') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Product Name</label>
+                        <label for="name" class="form-label">Item Name</label>
                         <span class="text-danger text-sm fst-italic"> *
                             @error('name')
                                 {{ $message }}
@@ -150,7 +150,7 @@
                         <input type="text" class="form-control" id="price" name="price" placeholder="Required" value={{ old('price') }}>
                     </div>
                     <div class="mb-3">
-                        <label for="brand" class="form-label">Product Image</label>
+                        <label for="brand" class="form-label">Item Image</label>
                         <span class="text-danger text-sm fst-italic"> *
                             @error('image')
                                 {{ $message }}

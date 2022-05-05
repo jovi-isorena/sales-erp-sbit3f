@@ -78,15 +78,7 @@ class SessionController extends Controller
 
                 //for inventory module user
                 if($getUser->employee->DepartmentID == 2){
-                    
-                    //inventory manager
-                    if( auth()->user()->employee->Position == 3){
-                        return redirect(route('inventoryDashboard'));
-                    }
-                    //stockman
-                    else if( auth()->user()->employee->Position == 4){
-                        return redirect(route(''));
-                    }
+                    return redirect((route('inventoryLandingPage')));
                 }//end inventory module
 
                 //for e-commerce module user
@@ -203,5 +195,7 @@ class SessionController extends Controller
         return redirect(route('home'));
     }
 
-
+    public function landingPage(){
+        return view('nonadmin.inventory_landing_page');
+    }
 }

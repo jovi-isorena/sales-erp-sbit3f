@@ -1,7 +1,6 @@
 @extends('layouts.crmadmin')
 
 @section('content')
-<h1>Welcome to Employee Portal</h1>
 <div class="container">
     <div class="d-flex flex-column justify-content-center align-items-center">
         {{-- <div class=" justify-content-center py-3 px-5 custom-border-primary custom-rounded mb-3">
@@ -10,10 +9,11 @@
         </div> --}}
         <div class="col-md-8">
             <div class="card custom-shadow border-0">
-                <div class="card-header custom-bg-secondary  custom-text-primary fs-5">{{ __('Welcome! Please log-in to proceed.') }}</div>
+                <div class="card-header custom-bg-secondary  custom-text-primary fs-5">
+                    {{ __('Welcome! Please log-in to proceed.') }}
+                </div>
 
                 <div class="card-body">
-
                     <form method="POST" action="{{ route('sessionStore') }}">
                         @csrf
                         <div class="row">

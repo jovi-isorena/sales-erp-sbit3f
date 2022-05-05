@@ -12,12 +12,8 @@
             </div>
             <div class="col">
                 Testing Site: 
-                <select name="testingsite" id="testingsite" class="form-select">
-                    <option value="Warehouse">Warehouse</option>
-                    <option value="Store-Batasan Branch">Store-Batasan Branch</option>
-                    <option value="Store-San Francisco Branch">Store-San Francisco Branch</option>
-                    <option value="Store-San Bartolome Branch">Store-San Bartolome Branch</option>
-                </select>
+                <input type="text" class="form-control" name="testingsite" id="testingsite" value="{{ auth()->user()->location->Name }}" readonly>
+                
             </div>
         </div>
         <hr>
