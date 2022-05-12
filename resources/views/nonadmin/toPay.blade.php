@@ -6,6 +6,7 @@
 <div style="height: 100vh; width: 100%;">
 
     <div class="row">
+
         <div class="col-sm-5 col-md-2">
             
             <div class="side">
@@ -14,7 +15,7 @@
                 <br>
                 <label for=""> <a href="{{ route('toShipPage') }}"> To Ship </a></label>
                 <br>
-                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Deliver </a></label>
+                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Receive </a></label>
                 <br>
                 <label for=""> <a href="{{ route('CompletedOrderPage') }}"> Completed </a></label>
             
@@ -35,21 +36,6 @@
 
 
 <div class="row " style="margin-top: 30px;">
-    <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
-        
-    </div>
-    <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
-        
-    </div>
-    <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
-        
-    </div>
-    <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
-        
-    </div>
-    <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
-        
-    </div>
     
 </div>
 
@@ -108,7 +94,15 @@
                                             <p>{{ $pendings->PaymentMethod  }}</p>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary">To Ship</button>
+                                       
+                                            <form action="{{ route("toPayViews") }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="orderID" value="{{ $pendings->OrderID }}">
+                                               
+                                                <button class="btn btn-primary">View</button>
+                                       
+                                             </form>
+                                       
                                         </td>
                                     </tr>
                                     @endforeach

@@ -14,7 +14,7 @@
                 <br>
                 <label for=""> <a href="{{ route('toShipPage') }}"> To Ship </a></label>
                 <br>
-                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Deliver </a></label>
+                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Receive </a></label>
                 <br>
                 <label for=""> <a href="{{ route('CompletedOrderPage') }}"> Completed </a></label>
             
@@ -34,22 +34,22 @@
 
             <div class="row " style="margin-top: 30px;">
    
-                <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
+                <div class="card" onclick="window.location.href='{{ route('toPayPage') }}'" style="width: 100px; height: 100px; margin-right: 40px;"> 
                     <p>To Pay</p>
                     
-                    <h3>50</h3>
+                    <h3>{{ $data->where('OrderStatus', 'Pending')->count() }}</h3>
                 </div> 
-                <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
+                <div class="card " onclick="window.location.href='{{ route('toShipPage') }}'" style="width: 100px; height: 100px; margin-right: 40px;"> 
                     <p>To Ship</p>
-                    <h3>10</h3>
+                    <h3>{{ $data->where('OrderStatus', 'To Ship')->count() }}</h3>
                 </div>
-                <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
+                <div class="card" onclick="window.location.href='{{ route('toDeliverPage') }}'" style="width: 100px; height: 100px; margin-right: 40px;"> 
                     <p>To Deliver</p>
-                    <h3>5</h3>
+                    <h3>{{ $data->where('OrderStatus', 'To Receive')->count() }}</h3>
                 </div>
-                <div class="card bg-primary" style="width: 100px; height: 100px; margin-right: 40px;"> 
+                <div class="card " onclick="window.location.href='{{ route('CompletedOrderPage') }}'" style="width: 100px; height: 100px; margin-right: 40px;"> 
                     <p>Completed</p>
-                    <h3>10</h3>
+                    <h3>{{ $data->where('OrderStatus', 'Completed')->count() }}</h3>
                 </div>
             
                 
@@ -87,11 +87,30 @@
                         </thead>
 
                         <tbody>
+
+                            @foreach ($data as $item)
+                                
+                           
                             <tr>
                                 <td>
-
+                                    {{ $item->OrderID }}
+                                </td>
+                                <td>
+                                    {{ $item->CustomerID }}
+                                </td>
+                                <td>
+                                    {{ $item->TotalAmount }}
+                                </td>
+                                <td>
+                                    {{ $item->ShippingAddress }}
+                                </td>
+                                <td>
+                                    {{ $item->PaymentMethod }}
                                 </td>
                             </tr>
+
+
+                            @endforeach
                         </tbody>
                     </table>
 

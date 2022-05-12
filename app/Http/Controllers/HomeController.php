@@ -11,6 +11,7 @@ use App\Models\Ticketingsla;
 use App\Models\Product;
 use App\Models\SerializedProduct;
 use App\Models\Storestock;
+use App\Models\Order;
 use App\Models\Warehousestock;
 use Illuminate\Cache\RedisTaggedCache;
 use Illuminate\Support\Facades\Date;
@@ -39,7 +40,8 @@ class HomeController extends Controller
       
 
         
-        $getProduct = Product::all();
+        $getProduct = Product::where('isActive', '=', '1')
+        ->get();
 
        // dd($getProduct);
         
@@ -95,9 +97,14 @@ class HomeController extends Controller
 
     public function ordermanagementDashboard()
     {
+
+        $get = Order::all();
+
         $empid = auth()->user()->EmployeeID;
 
-        return view('nonadmin.ordermanagements_dashboard');
+        return view('nonadmin.ordermanagements_dashboard', [
+            'data' => $get
+        ]);
     }
 
 

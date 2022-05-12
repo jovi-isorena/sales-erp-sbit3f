@@ -33,6 +33,8 @@ class EcommSessionsController extends Controller
         ]);
         */
 
+      
+
         return view('ecomm_customer.login');
     }
 
@@ -42,6 +44,20 @@ class EcommSessionsController extends Controller
     
 
        // dd($request);
+
+       $validate = $request->validate([
+         'customerImg' => 'required',
+        'firstname' => 'required|max:30|min:1',
+        'middlename' => 'required|max:30|min:1',
+        'lastname' => 'required|max:30|min:1',
+        'suffix' => 'required|max:4',
+        'birthdate' => 'required|date_format:Y-m-d|before:today',
+        'mobile' => 'required|max:11|min:11',
+        'email' => 'required|unique:customer|email',
+        'password' => 'required|required_with:confirmPassword|same:confirmPassword',
+        'confirmPassword' => 'required'
+      ]);
+
 
         $newImage = time() . '-' . $request->firstname . '.' .
         $request->customerImg->extension();
@@ -61,6 +77,9 @@ class EcommSessionsController extends Controller
 
         $password = $request->input('password');
         $hashedpass = Hash::make($password);
+
+
+   
 
         $newCustomer = Customer::create([
 
@@ -199,6 +218,14 @@ class EcommSessionsController extends Controller
     public function upgradeAccount(Request $request)
     {
 
+
+      $valid = $request->validate([
+        'type' => 'required',
+        'address' => 'required',
+        'barangay' => 'required',
+        'city' => 'required',
+        'zip' => 'required|max:4|min:4'
+      ]);
      
 
       $upgradeAccout = Customeraddress::create([

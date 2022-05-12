@@ -133,20 +133,36 @@ Route::get('/ordermanager_dashboard', [HomeController::class, 'ordermanagerDashb
 
 Route::get('/ordermanagements_dashboard', [HomeController::class, 'ordermanagementDashboard'])
     ->name('orderManagementDashboard');
-
+    
 Route::get('/toPay', [OrderManagementController::class, 'toPay'])
     ->name('toPayPage');
+
 Route::get('/toShip', [OrderManagementController::class, 'toShip'])
     ->name('toShipPage');
+
 Route::get('/toDeliver', [OrderManagementController::class, 'toDeliver'])
     ->name('toDeliverPage');
-    
 Route::get('/CompletedOrder', [OrderManagementController::class, 'CompletedOrder'])
     ->name('CompletedOrderPage');
-
-
 Route::get('/manageproducts_dashboard', [HomeController::class, 'productmanagementDashboard'])
     ->name('productManagementDashboard');
+
+//view to pay details  toReceiveView
+Route::post('/toPayView', [OrderManagementController::class, 'toPayView'])
+    ->name('toPayViews');
+Route::post('/toShipView', [OrderManagementController::class, 'toShipView'])
+    ->name('toShipViews');
+
+Route::post('/toReceiveView', [OrderManagementController::class, 'toReceiveView'])
+    ->name('toReceiveViews');
+
+// to pay -> to ship
+Route::post('/toPayView/toBeShipped', [OrderManagementController::class, 'toBeShipped'])
+    ->name('toshipped');
+// to ship -> to receive
+Route::post('/toShipView/toBeReceived', [OrderManagementController::class, 'toBeReceived'])
+    ->name('toReceive');
+
 
 
 
@@ -190,9 +206,14 @@ Route::post('ecomm_customer/cart', [EcommCartController::class, 'cart'])
 Route::post('ecomm_customer/buynow', [EcommCartController::class, 'buynow'])
         ->name('buynow');
 //Placeorder
-// Preparation Order
+
+// Preparation Order 
 Route::post('ecomm_customer/prepplaceorder', [PlaceOrderController::class, 'prepplaceorder'])
         ->name('prepplaceOrdered');
+//Preparation cart checkout
+Route::post('ecomm_customer/prepplaceorderCart', [PlaceOrderController::class, 'prepplaceorderCart'])
+        ->name('prepplaceOrderCart');
+
 // Place Order for e-pay
 Route::post('ecomm_customer/placeorder', [PlaceOrderController::class, 'placeorder'])
         ->name('placeordered');
@@ -202,6 +223,17 @@ Route::post('ecomm_customer/placeorder2', [PlaceOrderController::class, 'placeor
 // Place Order for COD
 Route::post('ecomm_customer/placeorder3', [PlaceOrderController::class, 'placeorder3'])
         ->name('placeordered3');
+
+
+// Place Order for e-paycart
+Route::post('ecomm_customer/placeordercart', [PlaceOrderController::class, 'placeordercart'])
+        ->name('placeorderedcart');
+// Place Order for creditcart
+Route::post('ecomm_customer/placeorder2cart', [PlaceOrderController::class, 'placeorder2cart'])
+        ->name('placeordered2cart');
+// Place Order for CODcart
+Route::post('ecomm_customer/placeorder3cart', [PlaceOrderController::class, 'placeorder3cart'])
+        ->name('placeordered3cart');
 
 
 //for payment
@@ -214,10 +246,57 @@ Route::get('ecomm_customer/epayment', [PlaceOrderController::class, 'epayment'])
 Route::get('ecomm_customer/credit', [PlaceOrderController::class, 'credit'])
         ->name('credit');
 
-//View orders
+
+//for payment in Cart
+Route::get('ecomm_customer/codcart', [PlaceOrderController::class, 'codcart'])
+        ->name('codcart');
+
+Route::get('ecomm_customer/epaymentcart', [PlaceOrderController::class, 'epaymentcart'])
+        ->name('epaymentcart');
+
+Route::get('ecomm_customer/creditcart', [PlaceOrderController::class, 'creditcart'])
+        ->name('creditcart');
+
+
+
+//View my cart
+Route::get('/ecomm_customer/mycart', [EcommCartController::class, 'mycart'])
+        ->name('mycartview');
+        
+//View my cart checkout
+Route::post('/ecomm_customer/mycartcheckout', [EcommCartController::class, 'mycartcheckout'])
+        ->name('mycartcheckouts');
+
+//View my cart remove
+Route::post('/ecomm_customer/removecart', [EcommCartController::class, 'removecart'])
+        ->name('removeCart');
+
+
+//View my orders
 
 Route::get('/ecomm_customer/myorders', [MyOrdersController::class, 'myorders'])
         ->name('myordersview');
+
+Route::get('/ecomm_customer/pendingorders', [MyOrdersController::class, 'pendingorders'])
+        ->name('myorderspending');
+
+Route::get('/ecomm_customer/shippedorders', [MyOrdersController::class, 'shippedorders'])
+        ->name('myordersshipped');
+
+Route::get('/ecomm_customer/receivedorders', [MyOrdersController::class, 'receivedorders'])
+        ->name('myordersreceived');
+
+Route::get('/ecomm_customer/completedorders', [MyOrdersController::class, 'completedorders'])
+        ->name('myorderscompleted');
+
+
+
+
+
+//Customer Received
+
+Route::post('/ecomm_customer/myorders', [MyOrdersController::class, 'myordersReceive'])
+        ->name('myordersReceive');
 
 
 

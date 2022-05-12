@@ -5,26 +5,30 @@
 
 
 
-<div class="container">
-    
+<div class="container card" style="text-align: center; margin-top: 30px;  width: 500px;">
+
+
+    <div class="row">
+        <h3 style="padding-top: 50px;">Login</h3>
+    </div>
+
     <div class="form">
         <form action="{{ route('loginCustomer') }}" method="POST" >
         @csrf
-            <label for="">Email</label><input type="text" name="email">
+            
+            <br>
             <br>
 
-            @error('email')
-            <p>
-                {{ $message }}
-            </p>
-            @enderror
-
-            <label for="">Password</label><input type="password" name="password">
+            <input type="text" name="email" placeholder="Email">
             <br>
-            <button>Login</button>
+            <br>
+            <input type="password" name="password" placeholder="Password">
+            <br>
+            <br>
+            <button class="btn btn-primary">Login</button>
 
 
-     
+            <p style="padding-top: 50px;"></p>
 
 
 

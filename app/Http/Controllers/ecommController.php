@@ -22,7 +22,9 @@ class ecommController extends Controller
     {
 
 
-        $getProduct = Product::all();
+        $getProduct = Product::where('isActive', '=', '1')
+        ->get();
+
         $id =  auth()->user()->customer->CustomerID;
 
        // dd($getProduct);

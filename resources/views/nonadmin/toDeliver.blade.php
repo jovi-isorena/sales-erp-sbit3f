@@ -14,7 +14,7 @@
                 <br>
                 <label for=""> <a href="{{ route('toShipPage') }}"> To Ship </a></label>
                 <br>
-                <label for=""> <a style="color:red;" href="{{ route('toDeliverPage') }}"> To Deliver </a></label>
+                <label for=""> <a style="color:red;" href="{{ route('toDeliverPage') }}"> To Receive </a></label>
                 <br>
                 <label for=""> <a href="{{ route('CompletedOrderPage') }}"> Completed </a></label>
             
@@ -83,7 +83,12 @@
                                     <p>{{ $todelivers->PaymentMethod  }}</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary">Completed</button>
+                                    <form action="{{ route('toReceiveViews') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="orderID" value="{{ $todelivers->OrderID }}">
+                                        <button class="btn btn-primary">View</button>
+                                    </form>
+                                    
                                 </td>
                             </tr>
                             @endforeach

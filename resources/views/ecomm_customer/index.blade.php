@@ -12,7 +12,7 @@
 
 
 
-<div class="mx-auto" style="width: 98%; height: 100px; margin-top: 50px;">
+<div class="container" style="width: 98%; height: 900%; margin-top: 50px;">
 
 <div class="row" >
     <center>
@@ -28,13 +28,13 @@
     
   
   
-    <div class="card" style="width: 18rem; margin-right: 20px;">
-        <img class="card-img-top" src=".../100px180/?text=Image cap" alt="Card image cap">
+    <div class="card" style="width: 18rem; margin-left:40px; margin-right: 20px; margin-bottom: 40px; ">
+       
         <div class="card-body">
           <p class="card-text">Name: {{ $product->Name }}</p>
           <p class="card-text">Brand: {{ $product->Brand }}</p>
           <p class="card-text">Brand: {{ $product->Category }}</p>
-          <p class="card-text">Brand: {{ $product->Price }}</p>
+          <p class="card-text">Brand: {{ $product->SellingPrice }}</p>
         
           <form method="POST" action={{ route('product') }}>
             @csrf

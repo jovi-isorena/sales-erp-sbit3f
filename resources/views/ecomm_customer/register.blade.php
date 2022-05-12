@@ -5,7 +5,13 @@
 
 
 
-<div class="container">
+<div class="card container" style=" text-align: center; margin-top: 30px;  width: 500px;">
+
+
+    <div class="row">
+        <h3 style="padding-top: 50px;">Personal Information</h3>
+       
+    </div>
 
 
 
@@ -14,33 +20,110 @@
         <form action="{{ route('createUser') }}" method="POST" enctype="multipart/form-data">
              @csrf
             
-            
-            <label for="">Personal Information</label>
+         
             <br>
-            <label for="">Profile Image</label> <input type="file" name="customerImg">
+            <label for="">Profile Image</label>
             <br>
-            <label for="">FirstName</label> <input type="text" name="firstname">
+            <input type="file" name="customerImg" value="{{ old('customerImg') }}">
             <br>
-            <label for="">Middlename</label> <input type="text" name="middlename">
-            <br>
-            <label for="">Lastname</label> <input type="text" name="lastname">
-            <br>
-            <label for="">Suffix</label> <input type="text" name="suffix">
-            <br>
-            <label for="">Birthdate</label> <input type="date" name="birthdate">
-            <br>
-            <label for="">User Information</label>
-            <br>
-            <label for="">Mobile number</label> <input type="number" name="mobile">
-            <br>
-            <label for="">Email</label> <input type="email" name="email">
-            <br>
-            <label for="">Password</label> <input type="password" name="password">
-            <br>
-            <label for="">Confirm Password</label> <input type="password" name="confirmPassword">
             <br>
 
-            <button>Sign in</button>
+       
+                     <input type="text" name="firstname" placeholder="Firstname" value="{{ old('firstname') }}">
+                     @error('firstname')
+                     <p style="color: red;">
+                         {{ $message }}
+                     </p>
+                     @enderror
+            <br>
+            <br>
+
+                     <input type="text" name="middlename" placeholder="Middlename" value="{{ old('middlename') }}">
+                     @error('middlename')
+                     <p style="color: red;">
+                         {{ $message }}
+                     </p>
+                     @enderror
+            <br>
+            <br>
+
+                     <input type="text" name="lastname" placeholder="Lastname" value="{{ old('lastname') }}"> 
+                     @error('lastname')
+                     <p style="color: red;">
+                         {{ $message }}
+                     </p>
+                     @enderror
+            <br>
+            <br>
+
+                     <input type="text" name="suffix" placeholder="Suffix" value="{{ old('suffix') }}">
+                     @error('suffix')
+                     <p style="color: red;">
+                         {{ $message }}
+                     </p>
+                     @enderror
+                     <br>
+                     <br>
+
+            <label for="">Birthdate</label>
+            <br>
+            <input type="date" name="birthdate" value="{{ old('birthdate') }}">
+            @error('birthdate')
+            <p style="color: red;">
+                {{ $message }}
+            </p>
+            @enderror
+
+            <br>
+
+          
+            
+                <br>
+                <br>
+
+                <h3>User Information</h3>
+
+
+                <br>
+                <input type="number" name="mobile" placeholder="Mobile Number" value="{{ old('mobile') }}">
+                @error('mobile')
+                <p style="color: red;">
+                    {{ $message }}
+                </p>
+                @enderror
+                <br>
+                <br>
+
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="Email">
+                @error('email')
+                <p style="color: red;">
+                    {{ $message }}
+                </p>
+                @enderror
+
+                <br>
+                <br>
+                <input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
+                @error('password')
+                <p style="color: red;">
+                    {{ $message }}
+                </p>
+                @enderror
+                <br>
+                <br>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" value="{{ old('confirmPassword') }}">
+                @error('confirmPassword')
+                <p style="color: red;">
+                    {{ $message }}
+                </p>
+                @enderror
+                <br>
+                <br>
+                <button >Sign in</button>
+    
+    
+
+            <p style="padding-bottom: 50px;"></p>
 
         </form>
 

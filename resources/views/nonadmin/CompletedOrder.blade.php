@@ -15,7 +15,7 @@
                 <br>
                 <label for=""> <a href="{{ route('toShipPage') }}"> To Ship </a></label>
                 <br>
-                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Deliver </a></label>
+                <label for=""> <a href="{{ route('toDeliverPage') }}"> To Receive </a></label>
                 <br>
                 <label for=""> <a style="color:red;" href="{{ route('CompletedOrderPage') }}"> Completed </a></label>
             
@@ -61,7 +61,7 @@
                                 </th>
 
                                 <th>
-                                    <p>Action</p>
+                                    <p>Status</p>
                                 </th>
                             </tr>
                         </thead>
@@ -70,22 +70,22 @@
                             @foreach ($completed as $completeds )
                             <tr>
                                 <td>
-                                    <p>{{ $completed->OrderID }}</p>
+                                    <p>{{ $completeds->OrderID }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $completed->CustomerID }}</p>
+                                    <p>{{ $completeds->CustomerID }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $completed->TotalAmount  }}</p>
+                                    <p>{{ $completeds->TotalAmount  }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $completed->ShippingAddress }}</p>
+                                    <p>{{ $completeds->ShippingAddress }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $completed->PaymentMethod  }}</p>
+                                    <p>{{ $completeds->PaymentMethod  }}</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary"></button>
+                                    Completed
                                 </td>
                             </tr>
                             @endforeach

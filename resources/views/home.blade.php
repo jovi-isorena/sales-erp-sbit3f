@@ -1,36 +1,59 @@
-@extends('./layouts.eCommCustomerui')
+@extends('layouts.eCommCustomerui')
 
 
 @section('content')
 
 
+<div class="container" style="width: 98%; height: 900%; margin-top: 50px;">
 
+<div class="row">
 
-<h4>Products</h4>
-
-<div class="container">
-
-@foreach ($getProduct as $product )
-
-
-<h4> {{ $product->Name }} </h4>
-<h4> {{ $product->Brand }} </h4>
-<h4> {{ $product->Category }} </h4>
-<h4> {{ $product->Specification }} </h4>
-<h4> {{ $product->SellingPrice }} </h4>
-
-<button>Buy</button>
-
-
-     
-@endforeach
+        <center>
+            <h4>Products</h4>
+        </center>
 
 </div>
 
+<div class="row" style="margin-top: 40px;">
+
+    
+    @foreach ($getProduct as $product )
+    
+  
+  
+    <div class="card" style="width: 18rem; margin-left:40px; margin-right: 20px; margin-bottom: 40px; ">
+       
+        <div class="card-body">
+          <p class="card-text">Name: {{ $product->Name }}</p>
+          <p class="card-text">Brand: {{ $product->Brand }}</p>
+          <p class="card-text">Brand: {{ $product->Category }}</p>
+          <p class="card-text">Brand: {{ $product->SellingPrice }}</p>
+        
+        
+          <button class="btn-primary">Buy</button>
+
+        
+
+
+        </div>
+      </div>
+
+@endforeach
+  
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
 <x-flash-messages/>
 
-<h1>E-commerce Homepage</h1>
 
-<ul>
-    <li><a href="{{ route('employeePortal') }}">Employee Portal</a></li>
-</ul>
+
+@endsection
