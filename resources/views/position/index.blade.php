@@ -1,6 +1,13 @@
 @extends('layouts.adminmodule')
 
 @section('content')
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{{ route('adminDashboard') }}" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Back</a>
+        </div>
+    </div>
+    <h1>Roles and Access</h1>
+    <hr>
     <div class="row">
         <div class="col">
             <a href="{{ route('positionCreate') }}" class="btn btn-success">Create Position</a>

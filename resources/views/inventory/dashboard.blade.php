@@ -1,54 +1,59 @@
 @extends('layouts.inventory')
 
 @section('content')
+<div class="row mb-3">
+    <div class="col">
+        <a href="{{ route('inventoryLandingPage') }}" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Back</a>
+    </div>
+</div>
 <h1>Inventory dashboard</h1>
 <div class="row mb-5">
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card text-center shadow">
-            <div class="card-header bg-success">
+            <div class="card-header bg-success text-white">
                 <span class="card-title">
-                    Total Products
+                    Registered Items
                 </span>
             </div>
             <div class="card-body">
-                <span class="lead">{{  $products->count() }}</span>
+                <h2>{{  $products }}</h2>
             </div>
             <div class="card-footer text-right">
                 <a href="{{ route('inventoryMaintenance') }}">View List</a>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card text-center shadow">
             <div class="card-header bg-warning">
                 <span class="card-title">
-                    Products Running Low
+                    Low Stock
                 </span>
             </div>
             <div class="card-body">
-                <span class="lead">10</span>
+                <h2>{{ $low }}</h2>
             </div>
             <div class="card-footer text-right">
-                <a href="#">View List</a>
+                <a href="{{ route('warehouseStockIndex',['level'=>'low']) }}">View List</a>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card text-center shadow">
-            <div class="card-header bg-danger">
+            <div class="card-header bg-danger text-white">
                 <span class="card-title">
-                    Out of Stock
+                    Critical Level
                 </span>
             </div>
             <div class="card-body">
-                <span class="lead">7</span>
+                <h2>{{ $critical }}</h2>
             </div>
             <div class="card-footer text-right">
-                <a href="#">View List</a>
+                <a href="{{ route('warehouseStockIndex',['level'=>'critical']) }}">View List</a>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-12">
+    {{-- <div class="col-lg-3 col-md-6 col-sm-12">
         <div class="card text-center shadow">
             <div class="card-header bg-info">
                 <span class="card-title">
@@ -62,7 +67,7 @@
                 <a href="{{ route('serializedIndex') }}">View List</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 <hr>
 <div class="row">

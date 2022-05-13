@@ -26,6 +26,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\WarehousestockController;
+
 use App\Models\Releaseorder;
 
 /*
@@ -379,3 +381,11 @@ Route::get('/position/archive/{position:positionid}', [PositionController::class
     ->name('archivePosition');
 Route::get('/position/unarchive/{position:positionid}', [PositionController::class, 'unarchive'])
     ->name('unarchivePosition');
+
+//WAREHOUSE STOCK
+Route::get('/warehouse_stock', [WarehousestockController::class, 'index'])
+    ->name('warehouseStockIndex');
+Route::put('/warehouse_stock/update/{warehousestock}', [WarehousestockController::class, 'update'])
+    ->name('warehouseStockUpdate');
+Route::get('/warehouse_stock/details/{warehousestock}', [WarehousestockController::class, 'show'])
+    ->name('warehouseStockShow');

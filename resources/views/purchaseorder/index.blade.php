@@ -3,20 +3,25 @@
 @section('content')
     <h1>Purchase Orders</h1>
     <hr>
-    <div class="row mb-3">
+    {{-- <div class="row mb-3">
         <div class="col">
             <a href="{{ route('purchaseOrderCreate') }}" class="btn btn-success">Create Purchase Order</a>
         </div>
-    </div>
+    </div> --}}
     <div class="row mb-3">
         <div class="col-3">
             <form action="">
-                <input type="text" name="search" id="search" class="form-control" value={{ request()->query('search') ?? '' }}>
-
+                {{-- <input type="text" name="search" id="search" class="form-control" value={{ request()->query('search') ?? '' }}> --}}
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Order ID" value={{ request()->query('search') ?? '' }}>
+                    
+                </div>
             </form>
 
         </div>
     </div>
+    
     <table class="table">
         <thead>
             <tr>

@@ -47,4 +47,9 @@ class Supplier extends Model
     {
         return $this->hasMany('App\Models\SupplierProduct', 'SupplierID', 'SupplierID');
     }
+
+    public function products()
+    {
+        return $this->hasManyThrough('App\Models\Product', 'App\Models\SupplierProduct', 'SupplierID', 'ProductID', 'SupplierID','ProductID');
+    }
 }

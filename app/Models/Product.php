@@ -16,10 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $isActive
  * @property Cartitem[] $cartitems
  * @property Ordereditem[] $ordereditems
+ * @property Purchaseorderitem[] $purchaseorderitems
+ * @property Qualitycontroltestitem[] $qualitycontroltestitems
  * @property Rating[] $ratings
- * @property Releaseorder[] $releaseorders
+ * @property Releaseorderitem[] $releaseorderitems
  * @property Returneditem[] $returneditems
+ * @property Serializedproduct[] $serializedproducts
  * @property Storestock $storestock
+ * @property SupplierProduct[] $supplierProducts
  * @property Warehousestock $warehousestock
  */
 class Product extends Model
@@ -69,6 +73,22 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function purchaseorderitems()
+    {
+        return $this->hasMany('App\Models\Purchaseorderitem', 'ProductID', 'ProductID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function qualitycontroltestitems()
+    {
+        return $this->hasMany('App\Models\Qualitycontroltestitem', 'ProductID', 'ProductID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function ratings()
     {
         return $this->hasMany('App\Models\Rating', 'ProductID', 'ProductID');
@@ -77,9 +97,9 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function releaseorders()
+    public function releaseorderitems()
     {
-        return $this->hasMany('App\Models\Releaseorder', 'ProductID', 'ProductID');
+        return $this->hasMany('App\Models\Releaseorderitem', 'ProductID', 'ProductID');
     }
 
     /**
@@ -91,11 +111,27 @@ class Product extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function serializedproducts()
+    {
+        return $this->hasMany('App\Models\Serializedproduct', 'ProductID', 'ProductID');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function storestock()
     {
         return $this->hasOne('App\Models\Storestock', 'ProductID', 'ProductID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function supplierProducts()
+    {
+        return $this->hasMany('App\Models\SupplierProduct', 'ProductID', 'ProductID');
     }
 
     /**

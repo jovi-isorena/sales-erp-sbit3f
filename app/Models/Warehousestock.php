@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $ProductID
  * @property int $AvailableStock
- * @property int $MinimumStockLimit
+ * @property int $RestockLevel
+ * @property int $CriticalLevel
+ * @property int $BufferLimit
+ * @property int $Capacity
  * @property Product $product
  */
 class Warehousestock extends Model
@@ -36,7 +39,7 @@ class Warehousestock extends Model
     /**
      * @var array
      */
-    protected $fillable = ['AvailableStock', 'MinimumStockLimit'];
+    protected $fillable = ['ProductID', 'AvailableStock', 'RestockLevel', 'CriticalLevel', 'BufferLimit', 'Capacity'];
 
     /**
      * Indicates if the model should be timestamped.
