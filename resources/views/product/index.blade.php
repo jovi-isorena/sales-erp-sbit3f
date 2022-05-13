@@ -1,17 +1,13 @@
 @extends('layouts.inventory')
 
 @section('content')
-<h1>Product Maintenance</h1>
-<div class="mb-3">
-    @if (session()->has('success'))
-        <span class="alert alert-success">{{ session()->get('success') }}</span>
-    @endif
-</div>
+<h1>Item Maintenance</h1>
+
 <div class="mb-3">
     <div class="row justify-content-between">
         <div class="col">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                New Product
+                New Item
             </button>
         </div>
 
@@ -27,14 +23,14 @@
 </div>
 @if ($products->count() <= 0)
     <div class="row text-center">
-        <span class="lead">No Product.</span>
+        <span class="lead">No Item.</span>
     </div>
 @else
     <table class="table text-center border rounded shadow">
         <thead class="table-dark">
             <tr>
-                <th>Product ID</th>
-                <th>Name</th>
+                <th>Item ID</th>
+                <th>Item Name</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Actions</th>
@@ -49,12 +45,12 @@
                     <td>{{ $product->Category }}</td>
                     
                     <td>
-                        <a href="" class="btn btn-info">Details</a>
-                        <a href="{{ route('editProduct',$product->ProductID) }}" class="btn btn-warning">Edit</a>
+                        <a href="" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('editProduct',$product->ProductID) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         @if ($product->isActive)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#archiveProduct{{ $product->ProductID }}">Archive</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#archiveProduct{{ $product->ProductID }}"><i class="fas fa-archive"></i></button>
                         @else
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#archiveProduct{{ $product->ProductID }}">Unarchive</button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#archiveProduct{{ $product->ProductID }}"><i class="fas fa-box-open"></i></button>
                         @endif
                     </td>
                 </tr>
@@ -63,7 +59,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Archive Product</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Archive Item</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -98,20 +94,47 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add New Product</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Add New Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('addProduct') }}" method="POST">
+                <form action="{{ route('addProduct') }}" method="POST"  enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Product Name</label>
-                        <span class="text-danger text-sm fst-italic"> *
-                            @error('name')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Required" value={{ old('name') }}>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="name" class="form-label">Item Name</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('name')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Required" value={{ old('name') }}>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="brand" class="form-label">Category</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('category')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            {{-- <input type="text" class="form-control" id="category" name="category" placeholder="Required" value={{ old('category') }}> --}}
+                            <select name="category" id="category" class="w-100 form-select">
+                                <option value="CPU Cooler">CPU Cooler</option>
+                                <option value="Desk Mat">Desk Mat</option>
+                                <option value="Gaming Desktop">Gaming Desktop</option>
+                                <option value="Graphics Card">Graphics Card</option>
+                                <option value="Hard Drive">Hard Drive</option>
+                                <option value="Lan Card">Lan Card</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Memory Module">Memory Module</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Motherboard">Motherboard</option>
+                                <option value="Mouse">Mouse</option>
+                                <option value="Power Supply">Power Supply</option>
+                                <option value="Processor">Processor</option>
+                            </select>
+                        </div>
+
                     </div>
                     <div class="mb-3">
                         <label for="brand" class="form-label">Brand</label>
@@ -123,15 +146,6 @@
                         <input type="text" class="form-control" id="brand" name="brand" placeholder="Required" value={{ old('brand') }}>
                     </div>
                     <div class="mb-3">
-                        <label for="brand" class="form-label">Category</label>
-                        <span class="text-danger text-sm fst-italic"> *
-                            @error('category')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <input type="text" class="form-control" id="category" name="category" placeholder="Required" value={{ old('category') }}>
-                    </div>
-                    <div class="mb-3">
                         <label for="brand" class="form-label">Specification</label>
                         <span class="text-danger text-sm fst-italic"> *
                             @error('specification')
@@ -140,23 +154,67 @@
                         </span>
                         <textarea class="form-control" id="specification" name="specification" placeholder="Required" >{{ old('specification') }}</textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="brand" class="form-label">Selling Price</label>
-                        <span class="text-danger text-sm fst-italic"> *
-                            @error('price')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Required" value={{ old('price') }}>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="brand" class="form-label">Selling Price</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('price')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Required" value={{ old('price') }}>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="image" class="form-label">Item Image</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('image')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="file" class="form-control" id="image" name="image" placeholder="Required" value={{ old('image') }}>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="brand" class="form-label">Product Image</label>
-                        <span class="text-danger text-sm fst-italic"> *
-                            @error('image')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <input type="file" class="form-control" id="image" name="image" placeholder="Required" value={{ old('image') }}>
+                    <hr>
+                    <h3>Stock Control</h3>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="capacity" class="form-label">Capacity</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('capacity')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Required" value={{ old('capacity') }} min=0>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="restock" class="form-label">Restock Level</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('restock')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="number" class="form-control" id="restock" name="restock" placeholder="Required" value={{ old('restock') }} min=0>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="critical" class="form-label">Critical Level</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('critical')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="number" class="form-control" id="critical" name="critical" placeholder="Required" value={{ old('critical') }} min=0>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="buffer" class="form-label">Buffer Level</label>
+                            <span class="text-danger text-sm fst-italic"> *
+                                @error('buffer')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                            <input type="number" class="form-control" id="buffer" name="buffer" placeholder="Required" value={{ old('buffer') }} min=0>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

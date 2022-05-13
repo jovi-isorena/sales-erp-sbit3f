@@ -1,6 +1,11 @@
 @extends('layouts.adminmodule')
 
 @section('content')
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{{ route('adminDashboard') }}" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Back</a>
+        </div>
+    </div>
     <h1>Locations</h1>
     <hr>
     <div class="row mb-3">

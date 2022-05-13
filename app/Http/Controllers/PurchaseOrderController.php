@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\Supplier;
 use Clockwork\Storage\Search;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class PurchaseOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = PurchaseOrder::where('Status', 'Submitted')->get();
+        $orders = PurchaseOrder::all();
         if($request->has('search')){
             
             $orders = PurchaseOrder::where('ID', 'LIKE', '%'.$request->query('search').'%')
@@ -36,11 +37,23 @@ class PurchaseOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $products = Product::where('isActive', 1)->get();
+        $supplier = NULL;
+        if($request->has('supplier')){
+            $supplier = Supplier::where('SupplierID', $request->query('supplier'))
+                ->first();
+        }
+        // dd($supplier);
+        $suppliers = Supplier::where('isActive', 1)
+                        ->with('supplierProducts')
+                        ->get();
+        // dd($suppliers);
         return view('purchaseorder.create', [
-            'products' => $products
+            'products' => $products,    
+            'suppliers' => $suppliers,
+            'supplier' => $supplier
         ]);
     }
 

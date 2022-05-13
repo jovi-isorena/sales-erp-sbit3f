@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $ContactNumber
  * @property string $Address
  * @property boolean $isActive
- * @property SupplierProduct[] $supplierProducts
+ * @property Purchaseorder[] $purchaseorders
  */
 class Supplier extends Model
 {
@@ -34,22 +34,10 @@ class Supplier extends Model
     protected $fillable = ['CompanyName', 'ContactNumber', 'Address', 'isActive'];
 
     /**
-     * Indicates if the model should be timestamped.
-     * 
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function supplierProducts()
+    public function purchaseorders()
     {
-        return $this->hasMany('App\Models\SupplierProduct', 'SupplierID', 'SupplierID');
-    }
-
-    public function products()
-    {
-        return $this->hasManyThrough('App\Models\Product', 'App\Models\SupplierProduct', 'SupplierID', 'ProductID', 'SupplierID','ProductID');
+        return $this->hasMany('App\Purchaseorder', 'SupplierID', 'SupplierID');
     }
 }

@@ -165,15 +165,21 @@ class HomeController extends Controller
 
     public function inventoryDashboard(){
         $products = Product::where('isActive', 1)
-            ->get();
+            ->count();
         $serials = SerializedProduct::all();
-        $storeStock = Storestock::all();
         $warehouseStock = Warehousestock::all();
+        $low = Warehousestock::whereRaw('`AvailableStock` <= `RestockLevel`')
+            ->whereRaw('`AvailableStock` > `CriticalLevel`')
+            ->count();
+        $critical = Warehousestock::whereRaw('`AvailableStock` <= `CriticalLevel`')
+            ->count();
         return view('inventory.dashboard',[
             'products' => $products,
-            'storeStock' => $storeStock,
             'warehouseStock' => $warehouseStock,
-            'serials' => $serials
+            'serials' => $serials,
+            'low' => $low,
+            'critical' => $critical
+
         ]);
     }
 

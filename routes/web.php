@@ -24,6 +24,10 @@ use App\Http\Controllers\ReleaseOrderController;
 use App\Http\Controllers\SerializedProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\WarehousestockController;
+
 use App\Models\Releaseorder;
 
 /*
@@ -101,6 +105,9 @@ Route::post('/sessionStore', [SessionController::class, 'store'])
 Route::get('/first_login', [SessionController::class, 'firstlogin'])
     ->middleware('auth')
     ->name('firstLogin');
+Route::get('/inventory_landing_page', [SessionController::class, 'landingPage'])
+    ->middleware('auth')
+    ->name('inventoryLandingPage');
 //QUEUE
 Route::get('/queue', [QueueController::class, 'index'])
     ->name('queue');
@@ -422,4 +429,42 @@ Route::get('/qualitycontroltest/create', [QualityControlTestController::class, '
     ->name('qualityControlTestCreate');
 Route::post('/qualitycontroltest/store', [QualityControlTestController::class, 'store'])
     ->name('qualityControlTestStore');
+//SUPPLIER
+Route::get('supplier/index', [SupplierController::class, 'index'])
+    ->name('supplierIndex');
+Route::get('supplier/create', [SupplierController::class, 'create'])
+    ->name('supplierCreate');
+Route::post('supplier/store', [SupplierController::class, 'store'])
+    ->name('supplierStore');
+Route::get('supplier/show/{supplier:supplierid}', [SupplierController::class, 'show'])
+    ->name('supplierShow');
+Route::get('supplier/edit/{supplier:supplierid}', [SupplierController::class, 'edit'])
+    ->name('supplierEdit');
+Route::put('supplier/update/{supplier:supplierid}', [SupplierController::class, 'update'])
+    ->name('supplierUpdate');
+Route::get('supplier/archive/{supplier:supplierid', [SupplierController::class, 'archive'])
+    ->name('supplierArchive');
 
+//POSITION
+Route::get('/position', [PositionController::class, 'index'])
+    ->name('positionIndex');
+Route::get('/position/show/{position:positionid}', [PositionController::class, 'show'])
+    ->name('positionShow');
+Route::get('/position/create', [PositionController::class, 'create'])
+    ->name('positionCreate');
+Route::post('position/store', [PositionController::class, 'store'])
+    ->name('positionStore');
+Route::put('/position/update/{position}', [PositionController::class, 'update'])
+    ->name('positionUpdate');
+Route::get('/position/archive/{position:positionid}', [PositionController::class, 'archive'])
+    ->name('archivePosition');
+Route::get('/position/unarchive/{position:positionid}', [PositionController::class, 'unarchive'])
+    ->name('unarchivePosition');
+
+//WAREHOUSE STOCK
+Route::get('/warehouse_stock', [WarehousestockController::class, 'index'])
+    ->name('warehouseStockIndex');
+Route::put('/warehouse_stock/update/{warehousestock}', [WarehousestockController::class, 'update'])
+    ->name('warehouseStockUpdate');
+Route::get('/warehouse_stock/details/{warehousestock}', [WarehousestockController::class, 'show'])
+    ->name('warehouseStockShow');

@@ -6,6 +6,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProductController;
 use App\Models\Employee;
 use App\Models\Ticketcategory;
 use Illuminate\Http\Request;
@@ -40,6 +41,9 @@ Route::get('/ticket/{ticket}', [TicketController::class, 'ticket']);
 Route::post('/ticket/transfer', [TicketController::class, 'transfer']);
 Route::post('/ticket/escalate', [TicketController::class, 'escalate']);
 
+//product apiEnqueue
+Route::get('/products',[ProductController::class, 'getallactive']);
+
 Route::get('/commentsforticket/{ticket}', [CommentController::class, 'getcommentsforticket']);
 Route::get('/countcommentsforticket/{ticket}', [CommentController::class, 'countcommentsforticket']);
 Route::post('/comment/store', [CommentController::class, 'store']);
@@ -53,4 +57,7 @@ Route::get('/leaders/{team}', [EmployeeController::class, 'getleaders']);
 Route::get('ticket/scores/{month}/{employee}', [TicketController::class, 'score']);
 
 Route::post('/histograms', [TicketController::class, 'histograms']);
+
+// PRODUCTS
+Route::get('/products/supplier/{supplier}', [ProductController::class, 'getsupplierproducts']);
 

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Http\Resources\ProductResource;
+use App\Models\Supplier;
+use App\Models\SupplierProduct;
+use App\Models\Warehousestock;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -51,20 +55,39 @@ class ProductController extends Controller
             'brand' => 'required|max:255',
             'category' => 'required|max:255',
             'specification' => 'required|max:255',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
+            'restock' => 'required|numeric|min:0|max:99999999999',
+            'critical' => 'required|numeric|min:0|max:99999999999',
+            'buffer' => 'required|numeric|min:0|max:99999999999',
+            'capacity' => 'required|numeric|min:0|max:99999999999'
         ]);
 
+        $newImage = time() . '-' . $request->input('name') . '.' . $request->image->extension();
+        $request->image->move(public_path('productImg'), $newImage);
+        
         $newProduct = Product::make([
             'Name' => $request->input('name'),
             'Brand' => $request->input('brand'),
             'Category' => $request->input('category'),
             'Specification' => $request->input('specification'),
             'SellingPrice' => $request->input('price'),
-            'OnSale' => false,
-            'Image' => $request->input('image')
+            'Image' => $newImage,
+            'OnSale' => false
         ]);
-        $newProduct->save();
-        $request->session()->flash('success', 'Product successfully added!');
+        // dd($newProduct->Image);
+        $result = $newProduct->save();
+        if($result){
+            $warehouseStock = Warehousestock::make([
+                'ProductID' => $newProduct->ProductID,
+                'AvailableStock' => 0, 
+                'RestockLevel' => $request->input('restock'), 
+                'CriticalLevel' => $request->input('critical'), 
+                'BufferLimit' => $request->input('buffer'),
+                'Capacity' => $request->input('capacity')
+            ]);
+            $warehouseStock->save();
+            $request->session()->flash('success', 'Product successfully added!');
+        }
         return redirect(route('inventoryMaintenance'));
     }
 
@@ -144,5 +167,16 @@ class ProductController extends Controller
         ]);
         session()->flash('success', 'Product successfully restored!');
         return redirect()->back();
+    }
+
+    public function getallactive(){
+        return ProductResource::collection(Product::where('isActive', true)->get());
+
+    }
+
+    public function getsupplierproducts(Supplier $supplier){
+        // dd(SupplierProduct::where('SupplierID', $supplier->SupplierID)->with('product')->get());
+        
+        return ProductResource::collection($supplier->products);
     }
 }

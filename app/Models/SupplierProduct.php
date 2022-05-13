@@ -5,40 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property int $ID
+ * @property int $SupplierID
  * @property int $ProductID
- * @property int $AvailableStock
- * @property int $RestockLevel
- * @property int $CriticalLevel
- * @property int $BufferLimit
  * @property Product $product
+ * @property Supplier $supplier
  */
-class Warehousestock extends Model
+class SupplierProduct extends Model
 {
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'warehousestock';
+    protected $table = 'supplier_product';
 
     /**
      * The primary key for the model.
      * 
      * @var string
      */
-    protected $primaryKey = 'ProductID';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     * 
-     * @var bool
-     */
-    public $incrementing = false;
+    protected $primaryKey = 'ID';
 
     /**
      * @var array
      */
-    protected $fillable = ['ProductID', 'AvailableStock', 'RestockLevel', 'CriticalLevel', 'BufferLimit'];
+    protected $fillable = ['SupplierID', 'ProductID'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -53,5 +45,13 @@ class Warehousestock extends Model
     public function product()
     {
         return $this->belongsTo('App\Models\Product', 'ProductID', 'ProductID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function supplier()
+    {
+        return $this->belongsTo('App\Models\Supplier', 'SupplierID', 'SupplierID');
     }
 }
