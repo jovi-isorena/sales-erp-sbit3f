@@ -6,6 +6,11 @@
             <a href="{{ route('inventoryLandingPage') }}" class="btn btn-secondary"><i class="fas fa-chevron-circle-left"></i> Back</a>
         </div>
     </div>
+    <div class="row">
+        <h1>
+            Create Purchase Order
+        </h1>
+    </div>
     <div>
         <form action="#" method="GET" id="supplierForm">
             @csrf
@@ -17,7 +22,7 @@
                         @enderror
                     </span>
                 </label>
-                <select name="supplier" id="supplier" class="form-select" onchange="updateProductDropdown()">
+                <select name="supplier" id="supplier" class="form-select" >
                     <option value="" hidden>Select Supplier</option>
                     @foreach ($suppliers as $supplier)
                         <option value={{ $supplier->SupplierID }}>{{ $supplier->CompanyName }}</option>
@@ -26,7 +31,7 @@
             </div>
         </form>
         <hr>
-        @if ($supplier === NULL)
+        {{-- @if ($supplier === NULL) --}}
             <form action="{{ route('purchaseOrderStore') }}" method="post">
                 @csrf
                 <h3>Order Items</h3>
@@ -40,7 +45,7 @@
                                 @endforeach --}}
                                 @foreach ($suppliers as $supplier)
                                     @foreach ($supplier->products as $product)
-                                        <option value="{{ $product->ProductID }}" data-bind="{{ $supplier->SupplierID }}" hidden>{{ $product->Name }}</option>
+                                        <option value="{{ $product->ProductID }}" data-bind="{{ $supplier->SupplierID }}" >{{ $product->Name }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
@@ -68,7 +73,7 @@
                 </div>
             </form>
            
-        @endif
+        {{-- @endif --}}
     </div>
 @endsection
 

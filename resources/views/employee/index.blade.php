@@ -24,7 +24,7 @@
                     <td>{{ $employee->EmployeeID }}</td>
                     <td>{{ $employee->FirstName . ' ' . $employee->LastName . ' ' . $employee->Suffix}}</td>
                     <td>{{ $employee->isActive == 1 ? 'Regular' : 'Contractual' }}</td>
-                    <td>{{ $employee->systemaccount != null ? 'Meron' : 'Wala' }}</td>
+                    <td>{{ $employee->systemaccount != null ? 'Yes' : 'No' }}</td>
                     <td>
                         @if ($employee->systemaccount == null )
                             <a href="{{ route('userCreate', $employee->EmployeeID) }}" class="btn btn-primary">Create Account</a>

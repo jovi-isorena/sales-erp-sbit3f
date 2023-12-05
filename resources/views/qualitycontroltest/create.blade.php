@@ -12,7 +12,8 @@
             </div>
             <div class="col">
                 Testing Site: 
-                <input type="text" class="form-control" name="testingsite" id="testingsite" value="{{ auth()->user()->location->Name }}" readonly>
+                {{-- <input type="text" class="form-control" name="testingsite" id="testingsite" value="{{ auth()->user()->location->Name }}" readonly> --}}
+                <input type="text" class="form-control" name="testingsite" id="testingsite" value="Warehouse" readonly>
                 
             </div>
         </div>
